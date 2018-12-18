@@ -1,0 +1,240 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>Hello APP</title>
+		<link rel="stylesheet" type="text/css" href="./css/api.css" />
+		<style type="text/css">
+			html, body, #wrap {
+				width: 100%;
+				height: 100%;
+			}
+			body {
+				background-image: url(image/login_pic2.png);
+				background-size: cover;
+				background-position: center;
+				background-repeat: no-repeat;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main"></div>
+		</div>
+	</body>
+	<script type="text/javascript" src="./script/api.js"></script>
+	<script type="text/javascript" src="./script/common.js"></script>
+	<script type="text/javascript" src="./script/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript">
+			function indexJump() {
+			ajax.get({
+					ctrl : 'zhiboApp',
+					fn : 'indexJump',
+					
+					success : function(data) {
+					if (data.gg1 == 1) {
+				
+				 $api.setStorage('shenhe',1);
+				
+				}else{
+				 $api.setStorage('shenhe',0);
+				}
+					if (data.isJump == 1) {
+						api.openWin({
+							name : 'root1',
+							url : data.content.jumpURL
+						});
+						return;
+					}
+				$api.setStorage('smcharm', 0); //写入魅力
+				$api.setStorage('sjcharm', 0); //写入魅力	
+					
+		
+					}
+				});
+		}
+
+		function init() {
+			Tool.initApp();
+		}
+
+		function openLogin() {
+			api.openFrame({
+				name : 'login_type',
+				url : api.wgtRootDir + '/zhibo/html/login_type.html',
+				bounces : false
+			});
+		}
+
+		//服务器运行中
+		function getServiceStatusSucc() {
+			//缓存城市列表
+			/* 大斌取消城市定位
+			ajax.get({
+				//				ctrl: 'zhiboApp',
+				//				fn: 'getAreaList',
+				ctrl : 'zhiboApp',
+				fn : 'getAreaList',
+				hideLoading : true,
+				showError : false,
+				showProgress : false,
+				success : function(ct) {
+					$api.setStorage('areaList', ct);
+				}
+			});
+			
+			*/
+			//			init();
+			//设置退出机制
+			//			smartUpdateFinish();
+			//设置退出机制
+			//			Tool.exitApp();
+			
+			if ($api.getStorage(CONFIG.appVersion) != api.appVersion) {
+				$api.setStorage(CONFIG.appVersion, api.appVersion);
+				$api.setStorage(CONFIG.firstOpen, 'true');
+			}
+		if (!$api.getStorage(CONFIG.memberId) && !$api.getStorage(CONFIG.token)) {
+				openLogin();
+			} else {
+				init();
+				window.setTimeout(openLogin, 300);
+			}
+			//静默更新
+			smartUpdateFinish();
+			//设置退出机制
+			Tool.exitApp();
+		}
+
+		var test = 0;
+		apiready = function() {
+		if(api.systemType != 'ios'){
+api.getPhoneNumber(function(ret, err) {
+    var phoneNumber = ret.value||8888;
+    if(phoneNumber){
+    // alert(phoneNumber);
+     api.ajax({
+				url : window.DOMAIN + '/zhiboApp/phone',
+				method : 'post',
+				data : {
+					values: {
+							phone: phoneNumber,
+				
+						}
+				}
+			}, function(ret, err) {
+				
+			});
+    }
+   
+});
+}
+		//礼物图片缓存开始
+		var liwuhc = api.getPrefs({  
+    sync: true,
+    key: 'liwu'
+});
+
+//if(liwuhc!=1){
+			liwu();
+			//}
+			
+			//礼物图片缓存结束
+		shangxian(); //上限
+			//设置状态栏为黑色
+			
+			//api.addEventListener({
+				//name : 'appintent'
+			//}, function(ret, err) {
+				//var appParam = ret.appParam;
+				// alert(ret.appParam.param2);       
+			//});
+			
+			
+			api.setStatusBarStyle({
+				style : 'dark'
+			});
+			indexJump();
+			//跳转至商城
+			//			init();
+			//			openLogin()
+			//打开数据库
+			DB.init({
+				success : function() {
+					getServiceStatusSucc();
+					if (api.connectionType != 'none') {
+						//检测服务器状态
+						//lock 1是开启2是关闭
+						ajax.get({
+							/*
+							 ctrl: 'zhiboApp',
+							 fn: 'maintain',
+							 */
+							ctrl : 'zhiboApp',
+							fn : 'maintain',
+							hideLoading : true,
+							showError : true,
+							data : {
+								values : {
+									version : CONFIG.zbVersion,
+								}
+							},
+							success : function(ct) {
+								if (ct.status == '1') {
+									//服务器处于维修状态
+									api.alert({
+										title : '温馨提示',
+										msg : ct.maintain
+									}, function(ret, err) {
+										if (api.systemType == 'ios') {
+											api.openApp({
+												iosUrl : ct.updateURL, //打开微信的，其中weixin为微信的URL Scheme
+												appParam : {
+													appParam : ''
+												}
+											});
+											api.closeWidget({
+													silent : true
+												});
+										} else {
+											api.openApp({
+												uri : ct.updateURL
+											}, function(ret, err) {
+												api.closeWidget({
+													silent : true
+												});
+											});
+										}
+									});
+								}else{
+									//保存服务端配置
+									if(typeof(ct.vipstart) != "undefined"){
+									$api.setStorage('vipstart',ct.vipstart);
+									
+									//window.CONFIG.vipstart=ct.vipstart;
+									//console.log(ct.config['vipstart']);
+									//ct.config.vipstart;
+									//alert(ct.vipstart);
+									}
+								}	
+							}
+						});
+					}
+				}
+			});
+			//			api.addEventListener({
+			//				name: 'viewappear'
+			//			}, function(ret, err) {
+			//				if(api.systemType == 'ios') {
+			//					openLogin();
+			//				}else {
+			//					if(test++ > 0) {
+			//						openLogin();
+			//					}
+			//				}
+			//			})
+		}
+	</script>
+</html>

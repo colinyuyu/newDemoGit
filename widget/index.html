@@ -2,239 +2,752 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
 		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
 		<title>Hello APP</title>
 		<link rel="stylesheet" type="text/css" href="./css/api.css" />
-		<style type="text/css">
-			html, body, #wrap {
-				width: 100%;
-				height: 100%;
-			}
-			body {
-				background-image: url(image/login_pic2.png);
-				background-size: cover;
-				background-position: center;
-				background-repeat: no-repeat;
-			}
-		</style>
+		<link rel="stylesheet" type="text/css" href="./css/aui/aui.css" />
+		<link rel="stylesheet" type="text/css" href="./css/iconfont/icon.css" />
+		<link rel="stylesheet" type="text/css" href="./css/index/index.css" />
+		<link rel="stylesheet" type="text/css" href="./css/index/new.css" />
 	</head>
 	<body>
-		<div id="wrap">
-			<div id="main"></div>
+		<header class="aui-bar head-db3652" id="h-index">
+			<a class="aui-pull-left aui-btn mo-btn" tapmode onclick="open_search_index()"> <span class="mo-icon icon-search"></span> </a>
+			<div class="aui-title">
+				<i class="ico ico-logo"></i>
+			</div>
+		</header>
+	
+		<!--底部-->
+		<div class="footer clearfix" style="bottom: 0px;" id="aui-footer">
+			<ul>
+				<li class="f_home" id="index"  tapmode onclick="setCss(0)" >
+					<a class="hover" id="index1"> <i></i>首页</a>
+				</li>
+				<li class="f_announced"   tapmode onclick="saomiao()">
+					<a id="jx1"> <i></i>扫描二维码 </a>
+				</li>
+				
+				<li class="f_single" id="sd"  tapmode onclick="setCss(8)">
+					<a id="sd1" > <i></i>全部商品</a>
+				</li>
+				
+				
+				<li class="f_car" id="shop"  tapmode onclick="setCss(3)">
+					<a id="shop1"> <i></i> 购物车 </a>
+				</li>
+				<li class="f_personal" id="my"  tapmode onclick="setCss(4)">
+					<a id="my1"> <i></i> 我的欧播 </a>
+				</li>
+			</ul>
 		</div>
 	</body>
 	<script type="text/javascript" src="./script/api.js"></script>
+	<script type="text/javascript" src="./script/zepto.min.js"></script>
+	<script type="text/javascript" src="./script/my_info.js"></script>
 	<script type="text/javascript" src="./script/common.js"></script>
-	<script type="text/javascript" src="./script/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="./zhibo/script/common.js"></script>
+	
+	
+	
 	<script type="text/javascript">
-			function indexJump() {
-			ajax.get({
-					ctrl : 'zhiboApp',
-					fn : 'indexJump',
-					
-					success : function(data) {
-					if (data.gg1 == 1) {
-				
-				 $api.setStorage('shenhe',1);
-				
-				}else{
-				 $api.setStorage('shenhe',0);
-				}
-					if (data.isJump == 1) {
-						api.openWin({
-							name : 'root1',
-							url : data.content.jumpURL
-						});
-						return;
-					}
-				$api.setStorage('smcharm', 0); //写入魅力
-				$api.setStorage('sjcharm', 0); //写入魅力	
-					
-		
-					}
-				});
-		}
-
-		function init() {
-			Tool.initApp();
-		}
-
-		function openLogin() {
+	
+	function openLogin() {
 			api.openFrame({
 				name : 'login_type',
-				url : api.wgtRootDir + '/zhibo/html/login_type.html',
+				url : './zhibo/index.html',
 				bounces : false
 			});
 		}
-
-		//服务器运行中
-		function getServiceStatusSucc() {
-			//缓存城市列表
-			/* 大斌取消城市定位
-			ajax.get({
-				//				ctrl: 'zhiboApp',
-				//				fn: 'getAreaList',
-				ctrl : 'zhiboApp',
-				fn : 'getAreaList',
-				hideLoading : true,
-				showError : false,
-				showProgress : false,
-				success : function(ct) {
-					$api.setStorage('areaList', ct);
-				}
-			});
-			
-			*/
-			//			init();
-			//设置退出机制
-			//			smartUpdateFinish();
-			//设置退出机制
-			//			Tool.exitApp();
-			
-			if ($api.getStorage(CONFIG.appVersion) != api.appVersion) {
-				$api.setStorage(CONFIG.appVersion, api.appVersion);
-				$api.setStorage(CONFIG.firstOpen, 'true');
-			}
-		if (!$api.getStorage(CONFIG.memberId) && !$api.getStorage(CONFIG.token)) {
-				openLogin();
-			} else {
-				init();
-				window.setTimeout(openLogin, 300);
-			}
-			//静默更新
-			smartUpdateFinish();
-			//设置退出机制
-			Tool.exitApp();
-		}
-
-		var test = 0;
-		apiready = function() {
-		if(api.systemType != 'ios'){
-api.getPhoneNumber(function(ret, err) {
-    var phoneNumber = ret.value||8888;
-    if(phoneNumber){
-    // alert(phoneNumber);
-     api.ajax({
-				url : window.DOMAIN + '/zhiboApp/phone',
-				method : 'post',
-				data : {
-					values: {
-							phone: phoneNumber,
-				
-						}
-				}
-			}, function(ret, err) {
-				
-			});
-    }
-   
-});
-}
-		//礼物图片缓存开始
-		var liwuhc = api.getPrefs({  
-    sync: true,
-    key: 'liwu'
-});
-
-//if(liwuhc!=1){
-			liwu();
-			//}
-			
-			//礼物图片缓存结束
-		shangxian(); //上限
-			//设置状态栏为黑色
-			
-			//api.addEventListener({
-				//name : 'appintent'
-			//}, function(ret, err) {
-				//var appParam = ret.appParam;
-				// alert(ret.appParam.param2);       
-			//});
-			
-			
-			api.setStatusBarStyle({
-				style : 'dark'
-			});
-			indexJump();
-			//跳转至商城
-			//			init();
-			//			openLogin()
-			//打开数据库
-			DB.init({
-				success : function() {
-					getServiceStatusSucc();
-					if (api.connectionType != 'none') {
-						//检测服务器状态
-						//lock 1是开启2是关闭
-						ajax.get({
-							/*
-							 ctrl: 'zhiboApp',
-							 fn: 'maintain',
-							 */
-							ctrl : 'zhiboApp',
-							fn : 'maintain',
-							hideLoading : true,
-							showError : true,
-							data : {
-								values : {
-									version : CONFIG.zbVersion,
-								}
-							},
-							success : function(ct) {
-								if (ct.status == '1') {
-									//服务器处于维修状态
-									api.alert({
-										title : '温馨提示',
-										msg : ct.maintain
-									}, function(ret, err) {
-										if (api.systemType == 'ios') {
-											api.openApp({
-												iosUrl : ct.updateURL, //打开微信的，其中weixin为微信的URL Scheme
+		function saomiao(){
+		var FNScanner = api.require('FNScanner');
+FNScanner.open({
+    autorotation: true
+}, function(ret, err) {
+    if (ret) {
+        //alert(JSON.stringify(ret.content));
+        api.openApp({
+												iosUrl : ret.content, //打开微信的，其中weixin为微信的URL Scheme
 												appParam : {
 													appParam : ''
 												}
 											});
-											api.closeWidget({
-													silent : true
-												});
-										} else {
-											api.openApp({
-												uri : ct.updateURL
-											}, function(ret, err) {
-												api.closeWidget({
-													silent : true
-												});
-											});
-										}
-									});
-								}else{
-									//保存服务端配置
-									if(typeof(ct.vipstart) != "undefined"){
-									$api.setStorage('vipstart',ct.vipstart);
-									
-									//window.CONFIG.vipstart=ct.vipstart;
-									//console.log(ct.config['vipstart']);
-									//ct.config.vipstart;
-									//alert(ct.vipstart);
-									}
-								}	
-							}
-						});
+    } else {
+       // alert(JSON.stringify(err));
+       FNScanner.closeView();
+    }
+});
+		}
+		apiready = function() {
+		var timestamp = Date.parse(new Date());
+		if(timestamp<'1540449353000'){
+			var header = $api.byId('h-index');
+			$api.fixStatusBar(header);
+			var h_jx = $api.byId('h-jx');
+			$api.fixStatusBar(h_jx);
+			var h_sd = $api.byId('h-sd');
+			$api.fixStatusBar(h_sd);
+			var h_shop = $api.byId('h-shop');
+			$api.fixStatusBar(h_shop);
+			var h_login = $api.byId('h-login');
+			$api.fixStatusBar(h_login);
+			var h_ten = $api.byId('h-ten');
+			$api.fixStatusBar(h_ten);
+			var h_hundred = $api.byId('h-hundred');
+			$api.fixStatusBar(h_hundred);
+			var h_group = $api.byId('h-group');
+			$api.fixStatusBar(h_group);
+			var h_allgoods = $api.byId('h-allgoods');
+			$api.fixStatusBar(h_allgoods);
+			var h_cp = $api.byId('h-cp');
+			$api.fixStatusBar(h_cp);
+			var h_choose = $api.byId('h-choose');
+			$api.fixStatusBar(h_choose);
+			headerPos = $api.offset(header);
+			body_h = $api.offset($api.dom('body')).h;
+			footer_h = $api.offset($api.byId('aui-footer')).h;
+			
+			//直播加入的
+					$api.setStorage('fh', footer_h);
+					$api.setStorage('y', headerPos.h);
+					$api.setStorage('h', body_h - footer_h - headerPos.h);
+			api.openFrameGroup({
+				name : 'duobao-index',
+				background : '#fff',
+				scrollEnabled : false,
+				rect : {
+					x : 0,
+					y : headerPos.h,
+					w : 'auto',
+					h : body_h - footer_h - headerPos.h
+				},
+				index : 0,
+				frames : [{
+					name : 'index_frm',
+					url : 'html/index/index-body.html',
+					bgColor : '#fff'
+				}, {
+					name : 'jx_frm',
+					url : 'html/index/jiexiao-index.html',
+					bgColor : '#fff',
+					bounces : false,
+					pageParam : {
+						head_h : headerPos.h,
+						foot_h : footer_h,
+						body_h : body_h
 					}
+				}, {
+					name : 'sd_frm',
+					url : 'html/index/shaidan-body.html',
+					bgColor : '#fff'
+				}, {
+					name : 'shop_frm',
+					url : 'html/index/shoplist-body.html',
+					bgColor : '#fff',
+					pageParam : {
+						head_h : headerPos.h,
+						foot_h : footer_h,
+						body_h : body_h
+					}
+				}]
+			}, function(ret, err) {
+				if (ret.index != 3) {
+					api.closeFrame({
+						name : 'cartlist'
+					});
 				}
 			});
-			//			api.addEventListener({
-			//				name: 'viewappear'
-			//			}, function(ret, err) {
-			//				if(api.systemType == 'ios') {
-			//					openLogin();
-			//				}else {
-			//					if(test++ > 0) {
-			//						openLogin();
-			//					}
-			//				}
-			//			})
+			api.parseTapmode();
+			
+			var mkeyTime = new Date().getTime();
+			api.addEventListener({
+				name : "keyback"
+			}, function(ret, err) {
+				//如果当前时间减去标志时间大于2秒，说明是第一次点击返回键，反之为2秒内点了2次，则退出。
+				if ((new Date().getTime() - mkeyTime) > 2000) {
+					mkeyTime = new Date().getTime();
+					api.toast({
+						msg : '别点了，再点我就会离开你了',
+						duration : 2000,
+						location : 'bottom'
+					});
+				} else {
+					api.closeWidget({
+						silent : true,
+						animation : {
+							type : 'flip',
+							subType : 'from_bottom',
+							duration : 500
+						}
+					});
+				}
+			});
+			
+			
+			//商城结束
+		return;
+		}else{
+		
+		openLogin();
+		return;
+		}
+		
+			/*
+			 //判断是否进入引导页
+			 api.getPrefs({
+			 key:'launch'
+			 },function(ret,err){
+			 if(!ret.value){
+			 api.openFrame({
+			 name: 'launch',
+			 url: 'html/launch/launch.html',
+			 rect:{
+			 x:0,
+			 y:0,
+			 w:'auto',
+			 h:'auto'
+			 }
+			 });
+			 }
+			 });
+			 */
+			
+	
+	
+	
+		
+		
+			
+			//监听返回退出
+			
+			
+			
+		
+	
+		
+		
+		
+		
+		
+		
+		
+		
+	
+		
+		
+		};
+		//改变样式
+		function setCss(index) {
+			if (index != 3) {
+				api.closeFrame({
+					name : 'cartlist'
+				});
+			}
+			if (index != 0) {
+				api.closeFrame({
+					name : 'index_frm'
+				});
+			}
+			if (index != 5) {
+				api.closeFrame({
+					name : 'ten_frm'
+				});
+			}
+			if (index != 6) {
+				api.closeFrame({
+					name : 'hundred_frm'
+				});
+			}
+			if (index != 7) {
+				api.closeFrame({
+					name : 'group_frm'
+				});
+			}
+			if (index != 8) {
+				api.closeFrame({
+					name : 'allgoods_frm'
+				});
+			}
+			if (index != 9) {
+				api.closeFrame({
+					name : 'cp_frm'
+				});
+			}
+			if (index != 10) {
+				api.closeFrame({
+					name : 'choose_frm'
+				});
+			}
+			if (index != 4) {
+				api.closeFrame({
+					name : 'my-body'
+				});
+			}
+			if (index != 1) {
+				api.closeFrame({
+					name : 'jiexiao_body'
+				});
+			}
+			if (index == 1) {
+				var jsdjs = 'redata();';
+				api.execScript({
+					name : 'root',
+					frameName : 'jiexiao_body',
+					script : jsdjs
+				});
+			}
+			api.setFrameGroupIndex({
+				name : 'duobao-index',
+				index : index,
+				scroll : false
+			});
+			
+			$api.removeCls($api.byId('index'), 'index');
+			$api.removeCls($api.byId('jx'), 'jx');
+			$api.removeCls($api.byId('sd'), 'sd');
+			$api.removeCls($api.byId('shop'), 'shop');
+			$api.removeCls($api.byId('my'), 'my');
+			
+			if (index != 4) {
+				$api.removeCls($api.byId('h-index'), 'header-none');
+				$api.removeCls($api.byId('h-index'), 'header-black');
+				$api.removeCls($api.byId('h-jx'), 'header-none');
+				$api.removeCls($api.byId('h-jx'), 'header-black');
+				$api.removeCls($api.byId('h-sd'), 'header-none');
+				$api.removeCls($api.byId('h-sd'), 'header-black');
+				$api.removeCls($api.byId('h-shop'), 'header-none');
+				$api.removeCls($api.byId('h-shop'), 'header-black');
+				$api.removeCls($api.byId('h-ten'), 'header-none');
+				$api.removeCls($api.byId('h-ten'), 'header-black');
+				$api.removeCls($api.byId('h-hundred'), 'header-none');
+				$api.removeCls($api.byId('h-hundred'), 'header-black');
+				$api.removeCls($api.byId('h-group'), 'header-none');
+				$api.removeCls($api.byId('h-group'), 'header-black');
+				$api.removeCls($api.byId('h-allgoods'), 'header-none');
+				$api.removeCls($api.byId('h-allgoods'), 'header-black');
+				$api.removeCls($api.byId('h-cp'), 'header-none');
+				$api.removeCls($api.byId('h-cp'), 'header-black');
+				$api.removeCls($api.byId('h-choose'), 'header-none');
+				$api.removeCls($api.byId('h-choose'), 'header-black');
+				//alert(index);
+				if (index == 0) {
+					$api.addCls($api.byId('h-index'), 'header-black');
+					$api.addCls($api.byId('h-jx'), 'header-none');
+					$api.addCls($api.byId('h-sd'), 'header-none');
+					$api.addCls($api.byId('h-shop'), 'header-none');
+					$api.addCls($api.byId('h-login'), 'header-none');
+					$api.addCls($api.byId('h-ten'), 'header-none');
+					$api.addCls($api.byId('h-hundred'), 'header-none');
+					$api.addCls($api.byId('h-group'), 'header-none');
+					$api.addCls($api.byId('h-allgoods'), 'header-none');
+					$api.addCls($api.byId('h-cp'), 'header-none');
+					$api.addCls($api.byId('h-choose'), 'header-none');
+					$api.addCls($api.byId('index1'), 'hover');
+					$api.removeCls($api.byId('jx1'), 'hover');
+					$api.removeCls($api.byId('sd1'), 'hover');
+					$api.removeCls($api.byId('shop1'), 'hover');
+					$api.removeCls($api.byId('my1'), 'hover');
+					
+					//欧播返回冲突了，暂时去掉
+					//api.closeToWin({
+	           // name: 'root'
+           // });
+				} else if (index == 1) {
+				
+					$api.addCls($api.byId('h-index'), 'header-none');
+					$api.addCls($api.byId('h-jx'), 'header-black');
+					$api.addCls($api.byId('h-sd'), 'header-none');
+					$api.addCls($api.byId('h-shop'), 'header-none');
+					$api.addCls($api.byId('h-ten'), 'header-none');
+					$api.addCls($api.byId('h-hundred'), 'header-none');
+					$api.addCls($api.byId('h-group'), 'header-none');
+					$api.addCls($api.byId('h-allgoods'), 'header-none');
+					$api.addCls($api.byId('h-cp'), 'header-none');
+					$api.addCls($api.byId('h-choose'), 'header-none');
+					$api.addCls($api.byId('h-login'), 'header-none');
+					$api.addCls($api.byId('jx1'), 'hover');
+					$api.removeCls($api.byId('index1'), 'hover');
+					$api.removeCls($api.byId('sd1'), 'hover');
+					$api.removeCls($api.byId('shop1'), 'hover');
+					$api.removeCls($api.byId('my1'), 'hover');
+					
+					api.openFrame({
+						name : 'jiexiao_body',
+						url : './html/index/jiexiao-body.html',
+						rect : {
+							x : 0,
+							y : headerPos.h,
+							w : 'auto',
+							h : body_h - footer_h - headerPos.h
+						}
+					});
+				} else if (index == 2) {
+					$api.addCls($api.byId('h-index'), 'header-none');
+					$api.addCls($api.byId('h-jx'), 'header-none');
+					$api.addCls($api.byId('h-sd'), 'header-black');
+					$api.addCls($api.byId('h-shop'), 'header-none');
+					$api.addCls($api.byId('h-ten'), 'header-none');
+					$api.addCls($api.byId('h-hundred'), 'header-none');
+					$api.addCls($api.byId('h-group'), 'header-none');
+					$api.addCls($api.byId('h-allgoods'), 'header-none');
+					$api.addCls($api.byId('h-cp'), 'header-none');
+					$api.addCls($api.byId('h-choose'), 'header-none');
+					$api.addCls($api.byId('h-login'), 'header-none');
+					$api.addCls($api.byId('sd1'), 'hover');
+					$api.removeCls($api.byId('index1'), 'hover');
+					$api.removeCls($api.byId('jx1'), 'hover');
+					$api.removeCls($api.byId('shop1'), 'hover');
+					$api.removeCls($api.byId('my1'), 'hover');
+				} else if (index == 3) {
+					$api.addCls($api.byId('h-index'), 'header-none');
+					$api.addCls($api.byId('h-jx'), 'header-none');
+					$api.addCls($api.byId('h-sd'), 'header-none');
+					$api.addCls($api.byId('h-login'), 'header-none');
+					$api.addCls($api.byId('h-ten'), 'header-none');
+					$api.addCls($api.byId('h-hundred'), 'header-none');
+					$api.addCls($api.byId('h-group'), 'header-none');
+					$api.addCls($api.byId('h-allgoods'), 'header-none');
+					$api.addCls($api.byId('h-cp'), 'header-none');
+					$api.addCls($api.byId('h-choose'), 'header-none');
+					$api.addCls($api.byId('h-shop'), 'header-black');
+					$api.addCls($api.byId('shop1'), 'hover');
+					$api.removeCls($api.byId('index1'), 'hover');
+					$api.removeCls($api.byId('jx1'), 'hover');
+					$api.removeCls($api.byId('sd1'), 'hover');
+					$api.removeCls($api.byId('my1'), 'hover');
+					
+					if($api.getStorage('userid')){
+					
+					
+					
+						api.execScript({
+							name : 'root',
+							frameName : 'shop_frm',
+							script : 'get_cartdata();'
+						});
+					
+					
+					}
+				} else if (index == 5) {
+					$api.addCls($api.byId('h-index'), 'header-none');
+					$api.addCls($api.byId('h-jx'), 'header-none');
+					$api.addCls($api.byId('h-sd'), 'header-none');
+					$api.addCls($api.byId('h-login'), 'header-none');
+					$api.addCls($api.byId('h-shop'), 'header-none');
+					$api.addCls($api.byId('h-hundred'), 'header-none');
+					$api.addCls($api.byId('h-group'), 'header-none');
+					$api.addCls($api.byId('h-allgoods'), 'header-none');
+					$api.addCls($api.byId('h-cp'), 'header-none');
+					$api.addCls($api.byId('h-choose'), 'header-none');
+					$api.addCls($api.byId('h-ten'), 'header-black');
+					api.openFrame({
+						name : 'ten_frm',
+						url : './html/index/ten-body.html',
+						bounces : false,
+						allowEdit : true,
+						pageParam : {
+							foot_h : footer_h
+						},
+						rect : {
+							x : 0,
+							y : headerPos.h,
+							w : 'auto',
+							h : body_h - footer_h - headerPos.h
+						},
+						animation : {
+							type : 'ripple',
+							subType : 'from_left',
+							duration : 500
+						}
+					});
+				} else if (index == 6) {
+					$api.addCls($api.byId('h-index'), 'header-none');
+					$api.addCls($api.byId('h-jx'), 'header-none');
+					$api.addCls($api.byId('h-sd'), 'header-none');
+					$api.addCls($api.byId('h-login'), 'header-none');
+					$api.addCls($api.byId('h-shop'), 'header-none');
+					$api.addCls($api.byId('h-hundred'), 'header-black');
+					$api.addCls($api.byId('h-group'), 'header-none');
+					$api.addCls($api.byId('h-ten'), 'header-none');
+					$api.addCls($api.byId('h-cp'), 'header-none');
+					$api.addCls($api.byId('h-choose'), 'header-none');
+					$api.addCls($api.byId('h-allgoods'), 'header-none');
+					api.openFrame({
+						name : 'hundred_frm',
+						url : './html/index/hundred-body.html',
+						bounces : false,
+						allowEdit : true,
+						pageParam : {
+							foot_h : footer_h
+						},
+						rect : {
+							x : 0,
+							y : headerPos.h,
+							w : 'auto',
+							h : body_h - footer_h - headerPos.h
+						},
+						animation : {
+							type : 'ripple',
+							subType : 'from_left',
+							duration : 500
+						}
+					});
+				} else if (index == 7) {
+					$api.addCls($api.byId('h-index'), 'header-none');
+					$api.addCls($api.byId('h-jx'), 'header-none');
+					$api.addCls($api.byId('h-sd'), 'header-none');
+					$api.addCls($api.byId('h-login'), 'header-none');
+					$api.addCls($api.byId('h-shop'), 'header-none');
+					$api.addCls($api.byId('h-hundred'), 'header-none');
+					$api.addCls($api.byId('h-group'), 'header-black');
+					$api.addCls($api.byId('h-allgoods'), 'header-none');
+					$api.addCls($api.byId('h-ten'), 'header-none');
+					$api.addCls($api.byId('h-cp'), 'header-none');
+					$api.addCls($api.byId('h-choose'), 'header-none');
+					api.openFrame({
+						name : 'group_frm',
+						url : './html/index/group-body.html',
+						bounces : false,
+						allowEdit : true,
+						pageParam : {
+							foot_h : footer_h
+						},
+						rect : {
+							x : 0,
+							y : headerPos.h,
+							w : 'auto',
+							h : body_h - footer_h - headerPos.h
+						},
+						animation : {
+							type : 'ripple',
+							subType : 'from_left',
+							duration : 500
+						}
+					});
+				} else if (index == 8) {
+					$api.addCls($api.byId('h-index'), 'header-none');
+					$api.addCls($api.byId('h-jx'), 'header-none');
+					$api.addCls($api.byId('h-sd'), 'header-none');
+					$api.addCls($api.byId('h-login'), 'header-none');
+					$api.addCls($api.byId('h-shop'), 'header-none');
+					$api.addCls($api.byId('h-hundred'), 'header-none');
+					$api.addCls($api.byId('h-group'), 'header-none');
+					$api.addCls($api.byId('h-allgoods'), 'header-black');
+					$api.addCls($api.byId('h-ten'), 'header-none');
+					$api.addCls($api.byId('h-cp'), 'header-none');
+					$api.addCls($api.byId('h-choose'), 'header-none');
+					api.openFrame({
+						name : 'allgoods_frm',
+						url : './html/index/allgoods-body.html',
+						bounces : false,
+						allowEdit : true,
+						pageParam : {
+							foot_h : footer_h
+						},
+						rect : {
+							x : 0,
+							y : headerPos.h,
+							w : 'auto',
+							h : body_h - footer_h - headerPos.h
+						},
+						animation : {
+							type : 'ripple',
+							subType : 'from_left',
+							duration : 500
+						}
+					});
+				} else if (index == 9) {
+					$api.addCls($api.byId('h-index'), 'header-none');
+					$api.addCls($api.byId('h-jx'), 'header-none');
+					$api.addCls($api.byId('h-sd'), 'header-none');
+					$api.addCls($api.byId('h-login'), 'header-none');
+					$api.addCls($api.byId('h-shop'), 'header-none');
+					$api.addCls($api.byId('h-hundred'), 'header-none');
+					$api.addCls($api.byId('h-group'), 'header-none');
+					$api.addCls($api.byId('h-allgoods'), 'header-none');
+					$api.addCls($api.byId('h-ten'), 'header-none');
+					$api.addCls($api.byId('h-cp'), 'header-black');
+					$api.addCls($api.byId('h-choose'), 'header-none');
+					api.openFrame({
+						name : 'cp_frm',
+						url : './html/index/caipiao-body.html',
+						bounces : false,
+						allowEdit : true,
+						pageParam : {
+							foot_h : footer_h
+						},
+						rect : {
+							x : 0,
+							y : headerPos.h,
+							w : 'auto',
+							h : body_h - footer_h - headerPos.h
+						},
+						animation : {
+							type : 'ripple',
+							subType : 'from_left',
+							duration : 500
+						}
+					});
+				} else if (index == 10) {
+					$api.addCls($api.byId('h-index'), 'header-none');
+					$api.addCls($api.byId('h-jx'), 'header-none');
+					$api.addCls($api.byId('h-sd'), 'header-none');
+					$api.addCls($api.byId('h-login'), 'header-none');
+					$api.addCls($api.byId('h-shop'), 'header-none');
+					$api.addCls($api.byId('h-hundred'), 'header-none');
+					$api.addCls($api.byId('h-group'), 'header-none');
+					$api.addCls($api.byId('h-allgoods'), 'header-none');
+					$api.addCls($api.byId('h-ten'), 'header-none');
+					$api.addCls($api.byId('h-cp'), 'header-none');
+					$api.addCls($api.byId('h-choose'), 'header-black');
+					api.openFrame({
+						name : 'choose_frm',
+						url : './html/index/choose-body.html',
+						bounces : false,
+						allowEdit : true,
+						pageParam : {
+							foot_h : footer_h
+						},
+						rect : {
+							x : 0,
+							y : headerPos.h,
+							w : 'auto',
+							h : body_h - footer_h - headerPos.h
+						},
+						animation : {
+							type : 'ripple',
+							subType : 'from_left',
+							duration : 500
+						}
+					});
+				}
+			}
+			if (index == 4) {
+				$api.removeCls($api.byId('h-login'), 'header-none');
+					$api.removeCls($api.byId('h-login'), 'header-black');
+					$api.addCls($api.byId('h-index'), 'header-none');
+					$api.addCls($api.byId('h-jx'), 'header-none');
+					$api.addCls($api.byId('h-sd'), 'header-none');
+					$api.addCls($api.byId('h-shop'), 'header-none');
+					$api.addCls($api.byId('h-ten'), 'header-none');
+					$api.addCls($api.byId('h-hundred'), 'header-none');
+					$api.addCls($api.byId('h-group'), 'header-none');
+					$api.addCls($api.byId('h-allgoods'), 'header-none');
+					$api.addCls($api.byId('h-cp'), 'header-none');
+					$api.addCls($api.byId('my1'), 'hover');
+					$api.removeCls($api.byId('index1'), 'hover');
+					$api.removeCls($api.byId('jx1'), 'hover');
+					$api.removeCls($api.byId('sd1'), 'hover');
+					$api.removeCls($api.byId('shop1'), 'hover');
+				if (!$api.getStorage('userid')) {//未登录
+				
+					api.openFrame({
+						name : 'my-body',
+						url : 'html/login/login-body.html',
+						bounces : false,
+						allowEdit : true,
+						pageParam : {
+							foot_h : footer_h
+						},
+						rect : {
+							x : 0,
+							y : headerPos.h,
+							w : 'auto',
+							h : body_h - footer_h - headerPos.h
+						},
+						animation : {
+							type : 'ripple',
+							subType : 'from_left',
+							duration : 500
+						}
+					});
+				} else {
+					api.openFrame({
+						name : 'my-body',
+						url : 'html/my/my-body.html',
+						bounces : false,
+						pageParam : {
+							foot_h : footer_h
+						},
+						rect : {
+							x : 0,
+							y : 0,
+							w : 'auto',
+							h : body_h - footer_h
+						},
+						animation : {
+							type : 'ripple',
+							subType : 'from_left',
+							duration : 500
+						}
+					});
+					get_user_data();
+					//api.execScript({
+						//name : 'root',
+						//frameName : 'my-body',
+						//script : 'hongBaoOpen();'
+					//});
+					
+					//获取用户数据
+				}
+			}
+		};
+		
+		/*搜索*/
+		function open_search_index() {
+			var UISearchBar = api.require('UISearchBar');
+			UISearchBar.open({
+				placeholder : '请输入搜索关键字',
+				historyCount : 10,
+				showRecordBtn : false,
+				texts : {
+					cancelText : '取消',
+					clearText : '清除搜索记录'
+				},
+				styles : {
+					navBar : {
+						bgColor : '#FFFFFF',
+						borderColor : '#ccc'
+					},
+					searchBox : {
+						bgImg : '',
+						color : '#000',
+						height : 44
+					},
+					cancel : {
+						bg : 'rgba(0,0,0,0)',
+						color : '#D2691E',
+						size : 16
+					},
+					list : {
+						color : '#696969',
+						bgColor : '#FFFFFF',
+						borderColor : '#eee',
+						size : 16
+					},
+					clear : {
+						color : 'rgba(63, 63, 63, 0.88)',
+						borderColor : '#ccc',
+						size : 14
+					}
+				}
+			}, function(ret, err) {
+				if (ret.eventType == 'search' || ret.eventType == 'history') {
+					api.openWin({
+						name : 'search-win',
+						url : 'html/search/search-win.html',
+						pageParam : {
+							shopid : ret.text
+						},
+						animation : {
+							type : 'ripple',
+							subType : 'from_left',
+							duration : 500
+						}
+					});
+				}
+			});
 		}
 	</script>
 </html>
