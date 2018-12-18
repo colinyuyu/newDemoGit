@@ -1,0 +1,146 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>Document</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			html,
+			body,
+			#wrap,
+			#main{
+				background-color: transparent;
+			}
+
+			
+			/* 发送消息 */
+			.msg-barrage-off,
+			.msg-barrage-on {
+				background-image: url(../../image/message-barrage-off.png);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				width: 55px;
+				height: 30px;
+			}
+			.msg-barrage-on{
+				background-image: url(../../image/message-barrage-on.png);
+			}
+			/* 聊天 */
+			.talk {
+				border-top: 1px solid #F2F2F2;
+				width: 100%;
+				position: absolute;
+				bottom: 0;
+				background-color: #fff;
+				padding: 8px 10px;
+			}
+			.talk input {
+				width: 100%;
+				font-size: 12px;
+			}
+			.send {
+				padding: 8px;
+				color: #FE5F99;
+			}
+			#talk_box{
+				position: fixed;
+				left: 0;
+				right: 0;
+				bottom: 0px;
+			}
+		</style>
+	</head>
+	<body >
+		<div id="wrap">
+			<div id="main">
+
+			</div>
+			<div id="talk_box">
+				<!-- 聊天输入框 -->
+				<div class="flex-box flex-h-ce talk ">
+					<div class="msg-barrage-off" onclick="Anchor.switchBarrageBtn(this)" tapmode=""></div>
+					<div style="padding: 0 8px;color: #909090;">|</div>
+					<div class="flex-1">
+						<input id="talk" type="text" name="talk" autofocus="true" placeholder="和大家说点什么" />
+					</div>
+					<div class="send" onclick="Anchor.sendTextEvent()" tapmode=''>
+						发送
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript" src="../../script/anchor.js" ></script>
+	<script type="text/javascript">
+		var chatstate = 0;
+		var chatprice = 1;
+		function fouc(){
+			document.getElementById('talk').focus();
+		}
+		function closeFrame(){
+			api.closeFrame();
+			api.sendEvent({
+				name:'bottom'
+			})
+		}
+		//切换为 弹幕
+		function switchBtn(_this){
+			if(chatstate == 1){
+				return ;
+			}
+			if($api.dom('.msg-barrage-off')){
+				$api.removeCls(_this,'msg-barrage-off');
+				$api.addCls(_this,'msg-barrage-on');
+				$api.attr($api.dom('[name=talk]'),'placeholder','开启大喇叭，'+chatprice+'钻石/条');
+			}else{
+				$api.addCls(_this,'msg-barrage-off');
+				$api.removeCls(_this,'msg-barrage-on');
+				$api.attr($api.dom('[name=talk]'),'placeholder','和大家说点什么');
+			}
+
+			setTimeout(function(){
+				fouc();
+			},300)
+		}
+		//发送事件
+		function send(){
+			if(chatstate == 1){
+				Tool.toast('您已被管理员禁言，无法发言');
+				return ;
+			}
+			var text = $api.val($api.dom('[name = talk]')),
+				type = 0;
+			if($api.dom('.msg-barrage-on')){
+				type = 1;
+				if(parseInt($api.getStorage(CONFIG.memberInfo).diamonds)<chatprice){
+					Tool.toast('钻石余额不足，请充值~');
+					return ;
+				}
+			}
+			if(!text){
+				Tool.toast('请输入消息内容');
+				return ;
+			}
+			api.sendEvent({
+				name:'talk_send_message',
+				extra:{
+					text: text,
+					type: type
+				}
+			});
+			closeFrame();
+		}
+
+
+		apiready = function(){
+			Anchor.chatInputInit();
+		}
+	</script>
+</html>

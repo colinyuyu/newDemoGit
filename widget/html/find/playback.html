@@ -1,0 +1,126 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>Document</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript">
+		var result;
+		//打开回放 交互层
+		function openPlayBack(){
+			api.openFrame({
+				name: 'playbackFrame',
+				url: api.wgtRootDir + '/zhibo/html/find/live_playback_frame.html',
+				bgColor: 'transparent',
+				bounces: false,
+//				rect:{
+//					x: 0,
+//					y: api.winHeight - 90,
+//					w: 'auto',
+//					h: 'auto'
+//				},
+				pageParam:{
+					duration: result
+				}
+			});
+			api.bringFrameToFront({
+		    from: 'playbackFrame'
+			});
+		}
+		
+		
+		function formatSeconds(value) {
+	    var sec = parseInt(value);// 秒
+	    var minute = 0;// 分
+	    var hour = 0;// 小时
+	    if(sec > 60) {
+        minute = parseInt(sec/60);
+        sec = parseInt(sec%60);
+        if(minute > 60) {
+        hour  = parseInt(minute/60);
+        minute = parseInt(minute%60);
+        }
+	    }
+      result = ""+parseInt(sec);
+      if(minute > 0) {
+      result = ""+parseInt(minute)+"："+result;
+      }
+      if(hour > 0) {
+      result = ""+parseInt(hour)+"："+result;
+      }
+	    return result;
+		}
+		
+		
+		apiready = function(){
+			var param = api.pageParam;
+//			var videoPlayer = api.require('videoPlayer');
+//			videoPlayer.setRect({
+//		    rect: {
+//	        x: 0,
+//	        y: 0,
+//	        w: api.winWidth,
+//	        h: api.winHeight
+//		    },
+//		    fullscreen: true
+//			});
+//			videoPlayer.play({
+////		    path: 'http://gotye-live-21273.ufile.ucloud.com.cn/230568-20161124202221.mp4',
+//		    path: param.url,
+//		    rect:{
+//		    	x:0,
+//		    	y:0,
+//		    	w:api.winWidth,
+//		    	h:api.winHeight,
+//		    },
+//		    autorotation: false,
+//		    fixed: true
+//			}, function(ret, err) {
+//				formatSeconds(ret.duration);
+//				//打开 回放 交互层
+////				openPlayBack();
+//			});
+//			//监听点击暂停
+//			api.addEventListener({
+//				name:　'pause'
+//			},function(){
+//				videoPlayer.pause();
+//			});
+//			//监听点击播放
+//			api.addEventListener({
+//				name: 'play'
+//			},function(){
+//				videoPlayer.start();
+//			});
+//			
+//			videoPlayer.addEventListener({
+//		    name: 'play'
+//			}, function(ret, err) {
+//			  if(ret.eventType == 'playing'){
+//			  	api.sendEvent({
+//				  	name: 'duration',
+//				  	extra:{
+//				  		duration: ret.current
+//				  	}
+//				  });
+//			  }
+//			});
+			
+			
+		}
+	</script>
+</html>

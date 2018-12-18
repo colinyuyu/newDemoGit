@@ -1,0 +1,57 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>Document</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			html,body,#main {
+				font-size: 14px;
+				background-color: #fff;
+			}
+			#main{
+				word-break: break-all;
+				padding: 15px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript">
+		//获取提现常见问题
+		function recharge(){
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'aboutrecharge',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token)
+					}
+				},
+				hideLoading: false,
+				showError: true,
+				showProgress: false,
+				success: function(ct) {
+					$api.html($api.dom('#main'),ct);
+				}
+			});
+		}
+		apiready = function(){
+			if($api.getStorage('rules')){
+				$api.html($api.dom('#main'),$api.getStorage('rules')[4].content);
+			}else{
+				recharge();
+			}
+		}
+	</script>
+</html>

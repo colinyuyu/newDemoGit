@@ -1,0 +1,31 @@
+<div class="gift_item flex-box flex-h-ce" id="gift{{= it.memberid}}_{{= it.giftid}}">
+	<div class="flex-box flex-h-ce">
+		<div class="img-frm">
+			<div class="img" style="background-image: url({{= Tool.imageCompressByQiNiu(it.avatar,0,200,200)}});"></div>
+		</div>
+		<div class="pd10">
+			<div class="name">{{= it.nickname}}</div>
+			
+			<div class="content">送了主播({{= it.shouid}})
+		
+			{{= it.name}}
+			
+			{{? it.beishu>0}}中了
+			{{= it.beishu}}倍大奖
+		
+			
+			{{?}}
+			
+			</div>
+		</div>
+		<div class="gift_img flex-1">
+		<!-- 静态礼物-->
+			<div class="img " style="background-image: url({{= it.smallimg}});background-size: contain;background-repeat: no-repeat;"></div>
+		</div>
+	</div>
+	<div class="num flex-box flex-h-ce"><span class="ct-icon-close"></span><span class="gift_num">{{? it.beishu>0}}
+	{{= it.shuliang}}
+	{{??}}
+	1
+	{{?}}</span>个</div>
+</div>

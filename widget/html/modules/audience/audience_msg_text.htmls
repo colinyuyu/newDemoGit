@@ -1,0 +1,10 @@
+<div class="list">
+	<span onclick="Audience.getAnchor('{{= it.extra.memberid }}')" tapmode="">
+				<span class="level" style="display: inline-block;background-image: url(../../image/level/rank_{{= it.extra.level}}.png);"></span>
+				{{? it.extra.is_vip==1}}
+				<span class="level" style="display: inline-block;background-image: url(../../image/level/huangguan.png);"></span>
+				{{?}}
+	<span class="title">{{= it.extra.nickname}}：</span>
+	</span>
+	<span class="blue white">{{=it.text}}</span>
+</div>

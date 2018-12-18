@@ -1,0 +1,368 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>关注列表</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			body{
+				-webkit-transform : translateZ( 0);
+			}
+			.img-frm,
+			.img{
+				background-image: url(../../image/avatar.jpg);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				border-radius: 50%;
+			}
+			/*关注列表开始*/
+			.follow_list .img,
+			.follow_list .img-frm{
+				width: 40px;
+				height: 40px;
+			}
+			.follow_list .img {
+				position: relative;
+			}
+			.ct-icon-showing {
+				position: absolute;
+				font-size: 18px;
+				width: 18px;
+				height: 18px;
+				z-index: 5;
+				bottom: -3px;
+				right: 0;
+			}
+			.follow_list {
+				position: relative;
+				padding: 5px;
+				background-color: #f4f4f4;
+			}
+			.img_list {
+				/*padding-right: 8px;*/
+			}
+			.img_list:last-child{
+				padding: 0;
+			}
+			.ct-icon-arrow-right {
+				font-size: 28px;
+				width: 35px;
+				text-align: center;
+				line-height: 40px;
+				position: absolute;
+				right: 0;
+			}
+			/*关注列表结束*/
+			/*直播列表*/
+			.info {
+				background-color: #fff;
+				padding: 5px;
+			}
+			.info .img-frm,
+			.info .img {
+				width: 35px;
+				height: 35px;
+			}
+			.name {
+				font-size: 12px;
+			}
+			.ct-icon-location {
+				padding-top: 3px;
+				font-size: 14px;
+				color: #909090;
+			}
+			.ct-icon-location > span {
+				font-size: 12px;
+				padding-left: 5px;
+				color: inherit;
+			}
+			.num {
+				position: relative;
+				top: 2px;
+				font-size: 18px;
+				padding-right: 2px;
+				color: #FE5F99;
+			}
+			.text-right {
+				font-size: 11px;
+				padding-right: 5px;
+				color: #909090;
+			}
+			.cover {
+				height: 250px;
+				background-color: #ccc;
+				position: relative;
+			}
+			.live {
+				position: absolute;
+				right: 10px;
+				top: 10px;
+				font-size: 12px;
+				padding: 5px 10px;
+				border-radius: 20px;
+				color: #fff;
+				background-color: rgba(0,0,0,0.2);
+			}
+			.live1 {
+				position: absolute;
+				right: 10px;
+				top: 40px;
+				font-size: 12px;
+				padding: 5px 10px;
+				border-radius: 20px;
+				color: #fff;
+				background-color: rgba(0,0,0,0.2);
+			}
+			.null_img{
+				background-image: url(../../image/null_follow.png);
+				background-size: contain;
+				background-position: center;
+				background-repeat: no-repeat;
+				width: 100%;
+				height: 150px;
+				margin: 0 auto;
+			}
+			.null_live{
+				background-image: url(../../image/null_live2.png);
+				background-size: contain;
+				background-position: center;
+				background-repeat: no-repeat;
+				width: 100%;
+				height: 150px;
+				margin: 0 auto;
+			}
+			.null_flex{
+				background-color: #fff;
+				position: absolute;
+				width: 100%;
+				height: 90%;
+				justify-content: center;
+				align-items: center;
+				-webkit-align-items: center;
+				-webkit-box-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+				<div class="follow_list flex-box row hidden">
+					<div class="img_list col-2" onclick="openFrame('detail','find','profile')" tapmode="">
+						<div class="img-frm">
+							<div class="img">
+								<div class="ct-icon-showing">
+									<span class="path1"><span class="path2"></span></span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="img_list col-2">
+						<div class="img-frm">
+							<div class="img">
+								<div class="ct-icon-showing">
+									<span class="path1"><span class="path2"></span></span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="img_list col-2">
+						<div class="img-frm">
+							<div class="img"></div>
+						</div>
+					</div>
+					<div class="img_list col-2">
+						<div class="img-frm">
+							<div class="img"></div>
+						</div>
+					</div>
+					<div class="img_list col-2">
+						<div class="img-frm">
+							<div class="img"></div>
+						</div>
+					</div>
+					<div class="img_list col-2">
+						<div class="img-frm">
+							<div class="img"></div>
+						</div>
+					</div>
+					<div class="img_list col-2">
+						<div class="img-frm">
+							<div class="img"></div>
+						</div>
+					</div>
+					<div style="padding-left: 30px;">
+						<div class="ct-icon-arrow-right"onclick="openWin('follow','follow_list','关注','find','follow_list')" tapmode=""></div>
+					</div>
+					
+				</div>
+				<div class="live_list hidden">
+					<div class="list hidden" >
+						<div class="info flex-box">
+							<div class="img-frm">
+								<div class="img"></div>
+							</div>
+							<div class="flex-1" style="padding-left: 8px;">
+								<div class="name">你老劳动节</div>
+								<div class="flex-box">
+									<div class="ct-icon-location flex-box flex-h-ce">
+										<span>深圳市</span>
+									</div>
+									<div class="flex-1 text-right"><span class="num">8851</span>人在看</div>
+								</div>
+							</div>
+						</div>
+						<div class="cover" onclick="openLive()" tapmode="">
+							<div class="live">直播中</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/audience.js" ></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript" src="../../script/jquery.lazyload.min.js" ></script>
+	<script type="text/template" template="main">
+		{{? it.attention instanceof Array  && it.attention.length != 0 ||it.roomlist instanceof Array  &&  it.roomlist.length != 0 }}
+			{{? it.attention instanceof Array && it.attention.length != 0}}
+			<div class="follow_list flex-box row">
+				{{~ it.attention:value:index}}
+				<div class="img_list col-2" onclick="openProfile('{{=value.memberid }}')" tapmode="">
+					<div class="img-frm">
+						<div class="img" data-original="{{= Tool.imageCompressByQiNiu(value.avatar,0,200,200)}}">
+							<div class="{{= value.status == 2 ? 'ct-icon-showing' : ''}}">
+								<span class="path1"><span class="path2"></span></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				{{~}}
+				<div style="padding-left: 30px;">
+					<div class="ct-icon-arrow-right" onclick="openWin('follow','follow_list','关注','find','follow_list')" tapmode=""></div>
+				</div>
+			</div>
+			{{?}}
+			{{? it.roomlist instanceof Array && it.roomlist.length != 0}}
+			<div class="live_list">
+				{{~ it.roomlist:value:index}}
+				<div class="list" >
+					<div class="info flex-box"  onclick="openProfile('{{=value.memberid }}')" tapmode="">
+						<div class="img-frm">
+							<div class="img" data-original="{{= Tool.imageCompressByQiNiu(value.avatar,0,200,200)}}"></div>
+						</div>
+						<div class="flex-1" style="padding-left: 8px;">
+							<div class="name">{{= value.nickname }}</div>
+							<div class="flex-box">
+								<div class="ct-icon-location flex-box flex-h-ce">
+									<span>{{= value.cityname }}</span>
+								</div>
+								<div class="flex-1 text-right"><span class="num">{{= value.online }}</span>人在看</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="cover" style="background-image: url({{= Tool.imageCompressByQiNiu(value.avatar,0,400,400)}})" onclick="Audience.openLive('{{= value.id}}','{{= value.memberid }}','{{= it.password}}','{{= Tool.imageCompressByQiNiu(value.avatar,0,200,200)}}','{{= value.secretState}}','{{= value.iosreview}}','{{= value.videoURL}}')" tapmode>
+						<!--
+						<div class="live">直播中</div>
+						-->
+						{{? value.secretPassword !='0'||value.secretDiamond !='0' }}
+					<div class="live">私密收费:{{= value.secretDiamond }}钻石</div>
+					{{?}}
+					{{? value.timePrice !='0' }}
+					<div class="live1">时间收费:{{= value.timePrice }}钻石/分钟</div>
+					{{?}}
+					</div>
+				</div>
+				{{~}}
+			</div>
+			{{??}}
+			<div class="null_flex flex-box">
+				<div class="null_live "></div>
+			</div>
+			{{?}}
+		{{??}}
+		<div class="null flex-box">
+			<div class="flex-1">
+				<div class="null_img"></div>
+			</div>
+		</div>
+		{{?}}
+	</script>
+	<script type="text/javascript">
+		//获取关注页面列表
+		function attention(){
+			ajax.get({
+//				ctrl: 'zhiboApp',
+//				fn: 'attention',
+                ctrl: 'zhiboApp',
+				fn: 'anotherattention',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token)
+					}
+				},
+				hideLoading: false,
+				showError: false,
+				showProgress: false,
+				success: function(ct) {
+					T.html('#main','main',ct);
+					$('div.img').lazyload({
+			      effect : "fadeIn"
+			    });
+				}
+			});
+		}
+		
+		apiready = function(){
+			attention();
+			
+			//刷新列表
+			api.addEventListener({
+				name: 'viewappear'
+			},function(){
+				api.refreshHeaderLoading();
+			});
+			
+			Refresh.init({
+//				ctrl: 'zhiboApp',
+//				fn: 'attention',
+                ctrl: 'zhiboApp',
+				fn: 'anotherattention',
+				values: {
+					id: $api.getStorage(CONFIG.memberId),
+					token: $api.getStorage(CONFIG.token)
+				},
+				template: 'main',
+				success:function(){
+					$('div.img').lazyload({
+			      effect : "fadeIn"
+			    });
+				}
+			});
+			LoadMore.init({
+//				ctrl: 'zhiboApp',
+//				fn: 'attention',
+                ctrl: 'zhiboApp',
+				fn: 'anotherattention',
+				countSelector: '.live_list > div',
+				template: 'main',
+				wrapper: '.live_list',
+				values: {
+					id: $api.getStorage(CONFIG.memberId),
+					token: $api.getStorage(CONFIG.token)
+				},
+			},function(ct, page){
+				$('div.img').slice((page - 1) * 10).lazyload({
+		      effect : "fadeIn"
+		    });
+			});
+		}
+	</script>
+</html>

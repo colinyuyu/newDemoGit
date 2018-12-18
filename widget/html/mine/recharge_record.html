@@ -1,0 +1,145 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>Document</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			html,body,#main {
+				font-size: 14px;
+				background-color: #fff;
+			}
+			
+			.item{
+				padding: 10px;
+				margin-left: 10px;
+				min-height: 71px;
+				border-bottom: 1px solid #EBEBE9;
+			}
+			
+			.grey{
+				color: #909090;
+				padding: 4px 0;
+			}
+			.right div{
+				text-align: right;
+			}
+			.null_img{
+				background-image: url(../../image/null_record.png);
+				background-size: contain;
+				background-position: center;
+				background-repeat: no-repeat;
+				width: 100%;
+				height: 150px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+				<div class="item flex-box hidden">
+					<div class="left flex-1 flex-box-v flex-v-zhu">
+						<div class="grey text-overflow">150.00元</div>
+						<div class="grey">微信支付</div>
+					</div>
+					<div class="right flex-box-v flex-v-zhu">
+						<div class="grey">2016/10/4 8:15</div>
+						<div class="grey">成功充值</div>
+					</div>
+				</div>
+				<div class="item flex-box hidden">
+					<div class="left flex-1 flex-box-v flex-v-zhu">
+						<div class="grey text-overflow">150.00元</div>
+						<div class="grey">支付宝充值</div>
+					</div>
+					<div class="right flex-box-v flex-v-zhu">
+						<div class="grey">2016/10/4 8:15</div>
+						<div class="grey">成功充值</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/template" template="main">
+		{{? it instanceof Array && it.length != 0}}
+			{{~ it:value:index}}
+			<div class="item flex-box">
+				<div class="left flex-1 flex-box-v flex-v-zhu">
+					<div class="grey text-overflow">{{= value.account }}元</div>
+					<div class="grey">
+						{{= value.paymentname}}
+					</div>
+				</div>
+				<div class="right flex-box-v flex-v-zhu">
+					<div class="grey">{{= value.time }}</div>
+					<div class="grey">
+						{{? value.status == 0}}
+							未支付
+						{{?? value.status == 1}}
+							充值成功
+						{{?? value.status ==2}}
+							充值失败
+						{{?}}
+					</div>
+				</div>
+			</div>
+			{{~}}
+		{{??}}
+			<div class="flex-box null">
+				<div class="flex-1  flex-box flex-h-ce">
+					<div class="null_img"></div>
+				</div>
+			</div>
+		{{?}}
+	</script>
+	<script type="text/javascript">
+		//充值记录
+		function rechargeList(){
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'rechargelist',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token)
+					}
+				},
+				hideLoading: false,
+				showError: true,
+				showProgress: false,
+				success: function(ct) {
+					T.html('#main','main',ct);
+				}
+			});
+		}
+		apiready = function(){
+			rechargeList();
+			
+			Refresh.init({
+				ctrl: 'zhiboApp',
+				fn: 'rechargelist',
+				values: {
+					id: $api.getStorage(CONFIG.memberId),
+					token: $api.getStorage(CONFIG.token)
+				},
+				template: 'main'
+			});
+			LoadMore.init({
+				ctrl: 'zhiboApp',
+				fn: 'rechargelist',
+				countSelector: '#main > div',
+				template: 'main',
+				values: {
+					id: $api.getStorage(CONFIG.memberId),
+					token: $api.getStorage(CONFIG.token)
+				},
+			});
+		}
+	</script>
+</html>

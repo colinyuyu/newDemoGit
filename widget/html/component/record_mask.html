@@ -1,0 +1,113 @@
+<!doctype html>
+<html >
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<title>Document</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css" />
+		<style type="text/css">
+			html{
+				background-color: transparent;
+			}
+			img{
+				width: 100%;
+				height: 100%;
+			}
+			body{
+				background-color: rgba(0,0,0,0.0);
+			}
+			.record-status{
+				background-color: rgba(0,0,0,0.3);
+				border-radius: 6px;
+			}
+			.text{
+				
+				
+			}
+			.revoke,
+			.microphone{
+				background-position: center;
+				background-repeat: no-repeat;
+			}
+			.revoke{
+				background-size: 70px;
+				background-image: url(../../image/revoke.svg);
+			}
+			.microphone{
+				background-size: 50px;
+				background-image: url(../../image/microphone.svg);
+			}
+			.revoke + div::before,
+			.microphone + div::before{
+				display: block;
+				line-height: 2em;
+				padding: 0 10px;
+				margin: 0 10px 10px;
+				color: #fff;
+			}
+			.microphone + div::before{
+				content: '手指上滑，取消发送';
+			}
+			.revoke + div::before{
+				content: '松开手指，取消发送';
+				background-color: rgba(216, 52, 51, 0.9);
+				border-radius: 3px;
+			}
+		</style>
+	</head>
+
+	<body tapmode="">
+		<div id="wrap">
+			<div id="main" class="flex-box flex-h-zhu flex-h-ce">
+				<div class="record-status">
+					<div class="flex-box flex-h-zhu flex-h-ce microphone" style="height: 130px;"></div>
+					<div class="text text-center">
+						<!--松开手指，取消发送-->
+						<!--手指上滑 取消发送-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript">
+		
+		
+		function closeFrame(){
+			api.toast({
+				msg: '关闭Frame'
+			});
+			api.closeFrame({
+				name: 'demo2'
+			});
+		}
+		apiready = function(){
+			/*按下录音按钮后，从按钮移出*/
+			api.addEventListener({
+				name: 'record_move_out'
+			}, function(ret, err){
+				$api.addCls($api.removeCls($api.dom('.microphone'), 'microphone'), 'revoke');
+			});
+			
+			/*按下录音按钮后，从按钮移出并松开按钮
+			 * 取消语音发送
+			 */
+			api.addEventListener({
+				name: 'record_move_out_cancel'
+			}, function(ret, err){
+				api.closeFrame({
+					name: 'record_mask'
+				});
+			});
+			
+			/*move_out 事件后，重新移入按钮区域*/
+			api.addEventListener({
+				name: 'record_move_in'
+			}, function(ret, err){
+				$api.addCls($api.removeCls($api.dom('.revoke'), 'revoke'), 'microphone');
+			});
+		}
+	</script>
+
+</html>

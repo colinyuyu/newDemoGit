@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<widget id="A6090501455088" version="0.0.1"> 
+  <name>夜艳</name>  
+  <description/>  
+  <author email="45722441512@qq.com" href="http://www.apicloud.com">我的账号是咋</author>  
+  <content src="zhibo/index.html"/>  
+  <preference name="pageBounce" value="false"/>  
+  <preference name="appBackground" value="rgba(0,0,0,0)"/>  
+  <preference name="windowBackground" value="rgba(0,0,0,0)"/>  
+  <preference name="frameBackgroundColor" value="rgba(0,0,0,0)"/>  
+  <preference name="hScrollBarEnabled" value="true"/>  
+  <preference name="vScrollBarEnabled" value="true"/>  
+  <preference name="autoLaunch" value="true"/>  
+  <preference name="fullScreen" value="false"/>  
+  <preference name="autoUpdate" value="true"/>  
+  <preference name="smartUpdate" value="true"/>  
+  <preference name="debug" value="false"/>  
+  <preference name="iOS7StatusBarAppearance" value="true"/>  
+  <preference name="softInputMode" value="resize"/>  
+  <preference name="urlScheme" value="yyszbapp"/>  
+  <preference name="appCertificateVerify" value="false"/>  
+  <preference name="backgroundMode" value="audio"/>  
+  <permission name="readPhoneState"/>  
+  <permission name="camera"/>  
+  <permission name="record"/>  
+  <permission name="location"/>  
+  <permission name="fileSystem"/>  
+  <permission name="internet"/>  
+  <permission name="bootCompleted"/>  
+  <permission name="hardware"/>  
+  <permission name="sms"/>  
+  <permission name="call"/>  
+  <permission name="contact"/>  
+  <access origin="*"/>  
+  <feature name="rongCloud2"> 
+    <param name="appKey" value="pkfcgjstpop38"/> 
+  </feature>  
+  <feature name="wx"> 
+    <param name="urlScheme" value="wx8c454bd625438b61"/>  
+    <param name="apiKey" value="wx8c454bd625438b61"/>  
+    <param name="apiSecret" value="c3fb4bad7b7cf4eb3678bd90962b1f7e"/> 
+  </feature>  
+  <feature name="aMapLBS"> 
+    <param name="android_api_key" value="2f941c0c598ed0bb705ff7d91d19dc22"/>  
+    <param name="ios_api_key" value="3f1931f0aa8ae23bab27e572dfb93f30"/> 
+  </feature>  
+  <feature name="aMap"> 
+    <param name="android_api_key" value="2f941c0c598ed0bb705ff7d91d19dc22"/>  
+    <param name="ios_api_key" value="3f1931f0aa8ae23bab27e572dfb93f30"/> 
+  </feature>  
+  <feature name="qq"> 
+    <param name="urlScheme" value="tencent101378437"/>  
+    <param name="apiKey" value="101378437"/> 
+  </feature>  
+  <feature name="weibo"> 
+    <param name="urlScheme" value="wb652023714"/>  
+    <param name="apiKey" value="652023714"/>  
+    <param name="registUrl" value="https://api.weibo.com/oauth2/default.html"/> 
+  </feature>  
+  <feature name="ajpush"> 
+    <param name="app_key" value="3bc866a51be3e2939c1ee668"/>  
+    <param name="channel" value="10010"/> 
+  </feature>  
+  <feature name="push"/> 
+</widget>

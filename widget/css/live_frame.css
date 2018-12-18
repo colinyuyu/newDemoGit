@@ -1,0 +1,713 @@
+/* 图片 */
+
+.swipe-wrap .img-frm,
+.swipe-wrap .img {
+	background-image: url(../image/avatar.jpg);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	border-radius: 50%;
+	width: 36px;
+	height: 36px;
+}
+
+.swipe-wrap .gift_img>.img {
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	border-radius: 0;
+	width: 36px;
+	height: 36px;
+}
+
+
+/* 头部 直播  */
+
+.swipe-wrap .zhubo {
+	min-width: 110px;
+	border-radius: 25px;
+	background-color: rgba(0, 0, 0, 0.6);
+	padding: 3px;
+}
+
+.swipe-wrap .pd8 {
+	padding: 0 8px 0 10px;
+}
+
+.swipe-wrap .pd8> div {
+	font-size: 12px;
+	color: #fff;
+}
+
+.swipe-wrap .zhubo .follow {
+	padding: 0 8px;
+}
+
+.swipe-wrap .zhubo .follow> span {
+	text-align: center;
+	width: 52px;
+	font-size: 12px;
+	padding: 5px 8px;
+	background-color: #FFDE3F;
+	border-radius: 20px;
+}
+
+.swipe-wrap .fans_list {
+	overflow-x: auto;
+	padding-left: 10px;
+}
+
+.swipe-wrap .fans {
+	padding-right: 5px;
+	min-width: 40px;
+}
+
+.swipe-wrap .fans:last-child {
+	padding: 0;
+}
+
+.swipe-wrap .live_top .charm {
+	padding-top: 10px;
+}
+
+.swipe-wrap .live_top .charm> div {
+	/*font-size: 14px;*/
+	color: #fff;
+	padding: 8px 15px;
+	border-radius: 20px;
+	background-color: rgba(0, 0, 0, 0.6);
+	letter-spacing: 1px;
+}
+
+.swipe-wrap .ct-icon-arrow-right {
+	font-size: 18px;
+	color: #fff;
+	padding-left: 5px;
+}
+
+
+/* 底部按钮 */
+
+.swipe-wrap .chat,
+.swipe-wrap .msg,
+.swipe-wrap .gift,
+.swipe-wrap .share,
+.swipe-wrap .close {
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 45px;
+	height: 45px;
+}
+
+.swipe-wrap .chat {
+	background-image: url(../image/room-down-publicchat.png);
+}
+
+.swipe-wrap .msg {
+	background-image: url(../image/room-down-privatechat.png);
+}
+
+.swipe-wrap .gift {
+	background-image: url(../image/room-down-gift.png);
+}
+
+.swipe-wrap .share {
+	background-image: url(../image/room-down-share.png);
+}
+
+.swipe-wrap .close {
+	background-image: url(../image/room-down-close.png);
+}
+
+.swipe-wrap .bottom_btn {
+	position: absolute;
+	bottom: 10px;
+	width: 100%;
+}
+
+
+/*弹幕*/
+
+.swipe-wrap .barrage_list_box {
+	position: relative;
+	margin-bottom: 56px;
+}
+
+.swipe-wrap .live_gift {
+	position: absolute;
+	font-size: 12px;
+	max-width: 300px;
+	width: 300px;
+	bottom: 56px;
+	/*overflow: hidden;*/
+}
+.swipe-wrap .gift_item > div:first-child {
+	position: relative;
+	border-radius: 20px;
+	padding: 3px;
+	width: 220px;
+	background-color: rgba(0, 0, 0, 0.6);
+	z-index: 999;
+}
+
+.swipe-wrap .live_gift .gift_item {
+	position: relative;
+	left: -120px;
+	top: 0px;
+	opacity: 0;
+	margin-bottom: 10px;
+	transition: all 0.4s ease;
+	-webkit-transition: all 0.4s ease;
+}
+
+.swipe-wrap .live_gift .gift_item:last-child {
+	margin-bottom: 0;
+}
+
+.swipe-wrap .live_gift .pd10 {
+	padding-left: 10px;
+}
+
+.swipe-wrap .live_gift .name {
+	color: #fff;
+}
+
+.swipe-wrap .live_gift .content {
+	padding-top: 3px;
+	color: #FFDE3F;
+}
+
+.swipe-wrap .live_gift .gift_img {
+	position: absolute;
+	opacity: 0;
+	right: 150px;
+	transition: all 0.4s ease;
+	-webkit-transition: all 0.4s ease;
+}
+
+.swipe-wrap .live_gift .num {
+	color: #FFDE3F;
+	-webkit-text-stroke: #D1B937 1px;
+	font-size: 35px;  /*送礼物显示的数量字体*/
+	font-weight: bolder;
+	position: absolute;
+	right: -5px;
+	top: 4px;
+	width: 75px;
+}
+
+.swipe-wrap .live_gift .num .gift_num {
+	color: #FFDE3F;
+}
+
+/*底部消息*/
+
+.swipe-wrap .live_msg {
+	width: 250px;
+	position: relative;
+	bottom: 40px;
+	height: 120px;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+.swipe-wrap .live_msg> div> span {
+	display: inline;
+	word-break: break-all;
+}
+
+.swipe-wrap .live_msg .title {
+	color: #ffd942;
+}
+
+.swipe-wrap .live_msg> div {
+	color: #ffd942;
+	padding-bottom: 5px;
+}
+
+.swipe-wrap .live_msg> div:last-child {
+	padding: 0;
+}
+
+.swipe-wrap .ct-icon-close {
+	font-size: 14px;
+	font-weight: bold;
+	color: #FFDE3F;
+}
+
+.swipe-wrap .level {
+	width: 36px;
+	height: 16px;
+	min-width: 36px;
+	background-image: url(../image/level/rank_1.png);
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	top: 3px;
+	position: relative;
+}
+
+
+/* 系统消息 */
+
+.swipe-wrap .blue {
+	color: #ffd942;
+	line-height: 20px;
+}
+
+
+/* 道具消息 */
+
+.swipe-wrap .pink {
+	color: #37d0b1;
+	line-height: 20px;
+}
+
+
+/* 用户消息 */
+
+.swipe-wrap .white {
+	color: #fff;
+	line-height: 20px;
+}
+
+
+/* 轮播  */
+
+.swipe-wrap,
+.swipe {
+	height: 100%;
+}
+
+
+/*聊天输入框 start*/
+
+
+/* 发送消息 */
+
+.talk_bg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0);
+	opacity: 0;
+	z-index: -1;
+}
+
+#talk_box .msg-barrage-off,
+#talk_box .msg-barrage-on {
+	background-image: url(../image/message-barrage-off.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 55px;
+	height: 30px;
+}
+
+#talk_box .msg-barrage-on {
+	background-image: url(../image/message-barrage-on.png);
+}
+
+
+/* 聊天 */
+
+#talk_box .talk {
+	border-top: 1px solid #F2F2F2;
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	background-color: #fff;
+	padding: 8px 10px;
+}
+
+#talk_box .talk input {
+	width: 100%;
+	font-size: 12px;
+}
+
+#talk_box .send {
+	padding: 8px;
+	color: #FE5F99;
+}
+
+#talk_box {
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: -52px;
+	z-index: -1;
+	opacity: 0;
+	transition: all 0.2s ease;
+}
+
+
+/*聊天输入框 end*/
+
+
+/*用户资料卡 start*/
+
+.anchor {
+	position: fixed;
+	padding: 10px 15px 15px 15px;
+	width: 90%;
+	margin: 0 5%;
+	font-size: 14px;
+	background-color: #fff;
+	border-radius: 3px;
+}
+
+.anchor .report {
+	padding: 5px;
+	color: #FE5F99;
+}
+
+.anchor .ct-icon-close {
+	padding: 5px;
+	color: #909090;
+	font-size: 18px;
+}
+
+.anchor .img,
+.anchor .img-frm {
+	background-image: url(../image/avatar.jpg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 70px;
+	height: 70px;
+	border-radius: 50%;
+}
+
+.anchor .info,
+.anchor .profile {
+	padding-top: 20px;
+}
+
+.anchor .profile> div,
+.anchor .pd10> div {
+	color: #909090;
+}
+
+.anchor .level {
+	width: 36px;
+	height: 16px;
+	min-width: 36px;
+	background-image: url(../image/level/rank_1.png);
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.anchor .sex {
+	margin: 0 5px;
+	width: 16px;
+	height: 16px;
+	min-width: 16px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.anchor .female {
+	background-image: url(../image/sex-female.png);
+}
+
+.anchor .male {
+	background-image: url(../image/sex-male.png);
+}
+
+.anchor .pd10 {
+	padding-top: 12px;
+	color: #909090;
+}
+
+.anchor .ct-icon-location {
+	padding-left: 20px;
+}
+
+.anchor .diamond {
+	background-image: url(../image/diamond.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 16px;
+	height: 13px;
+}
+
+.anchor .follow {
+	padding: 15px 0;
+}
+
+.anchor .follow> div {
+	padding: 10px 0 10px 0;
+}
+
+.anchor .follow> div:last-child {
+	padding-top: 0;
+	padding-bottom: 5px;
+}
+
+.anchor .charm {
+	height: 21px;
+}
+
+.anchor .fans> div {
+	/*width: 120px;*/
+	color: #909090;
+}
+
+.anchor .fans> div:last-child,
+.anchor .charm> div:last-child {
+	/*padding-left: 20px;*/
+}
+
+.anchor .charm> div {
+	color: #FE5F99;
+}
+
+.anchor .bottom_btn {
+	padding: 15px 0 5px 0;
+	border-top: 1px solid #D9D9D9;
+}
+
+.anchor .bottom_btn> div {
+	color: #909090;
+}
+
+.anchor .fans_top_1 {
+	position: absolute;
+	left: -65px;
+	top: 10px;
+}
+
+.anchor .fans_top_1 .img,
+.anchor .fans_top_1 .img-frm {
+	width: 50px;
+	height: 50px;
+}
+
+
+/*用户资料卡 end*/
+
+
+/* 分享 start */
+
+#share {
+	border-radius: 10px 10px 0 0;
+	background-color: #fff;
+	position: fixed;
+	width: 100%;
+	bottom: -150px;
+	/*transition: bottom linear 0.2s;
+	-moz-transition: bottom linear 0.2s;
+	-webkit-transition: bottom linear 0.2s;
+	-o-transition: bottom linear 0.2s;*/
+}
+
+#share .border_bottom {
+	padding: 10px 0;
+	border-bottom: 1px solid #D9D9D9;
+}
+
+#share .icon {
+	font-size: 40px;
+	padding-bottom: 10px;
+}
+
+#share .friend {
+	background-image: url(../image/share-moments.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 40px;
+	height: 40px;
+	margin: 0 auto;
+}
+
+#share .ct-icon-wechat {
+	color: #54C855;
+}
+
+#share .ct-icon-weibo {
+	color: #FA6820;
+}
+
+#share .ct-icon-qq {
+	color: #0085D8;
+}
+
+#share .share_btn {
+	padding: 15px 0;
+}
+
+#share .share_btn> div {
+	color: #767C7E;
+}
+
+.share_bg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0);
+	opacity: 0;
+	z-index: -1;
+}
+
+/* 分享 end */
+
+/* 礼物  */
+
+.gift_box .swipe-wrap .img {
+	background-image: url(../image/load.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 60px;
+	height: 60px;
+}
+
+.gift_box .row> div {
+	padding: 6px 0 10px 0;
+}
+
+.gift_box .row .img {
+	background-color: transparent;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	width: 35px;
+	height: 35px;
+	border-radius: 0;
+	margin-top: 10px;
+}
+
+.gift_box .price {
+	padding: 5px 0;
+}
+
+.gift_box .price> span {
+	color: #FE5F99;
+}
+
+.gift_box .diamond {
+	background-image: url(../image/diamond.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 13px;
+	height: 10px;
+	margin-left: 5px;
+}
+
+.gift_box .xp {
+	color: #D9D9D9;
+	font-size: 10px;
+}
+
+.gift_box .xp> span {
+	color: #D9D9D9;
+}
+
+/*.gift_wrap > div:not(:first-child){
+				border-top: 1px solid #DCDCDC;
+			}
+			.gift_wrap > div.border_bottom {
+				border-bottom: 1px solid #EDEDED;
+			}*/
+
+.gift_box .recharge {
+	height: 46px;
+	font-size: 14px;
+	padding: 10px;
+	background-color: rgba(0, 0, 0, 0.35);
+	position: relative;
+}
+
+.gift_box .recharge> div> div,
+.gift_box .recharge> div> div> span {
+	color: #FE5F99;
+}
+
+.gift_box .recharge .ct-icon-arrow-right {
+	color: #FE5F99;
+	font-size: 14px;
+	padding-left: 3px;
+}
+
+.gift_box .list {
+	padding: 0 15px;
+	position: relative;
+}
+
+.gift_box .recharge .send {
+	color: #313131;
+	background-color: #FFDE3F;
+	padding: 5px 15px;
+	border-radius: 20px;
+}
+
+.gift_box .ct-icon-select-yes {
+	position: absolute;
+	top: 5px;
+	right: 9px;
+}
+
+.gift_box .ct-icon-select-yes .path2::before {
+	color: rgba(0, 0, 0, 0.6);
+}
+
+/* 连送 */
+.gift_box .recharge .liansong {
+	color: #000000;
+	background-color: #FFDE3F;
+	position: absolute;
+	right: -9px;
+	bottom: -6px;
+	border-radius: 50%;
+	width: 55px;
+	height: 55px;
+}
+
+.gift_box .recharge .liansong> div {
+	color: #000000;
+}
+
+.gift_box {
+	position: fixed;
+	bottom: -280px; /* 底部苹果点击不了，原来是bottom: '-250px',  */  
+	opacity: 0;
+	width: 100%;
+}
+
+.gift_box .swipe-wrap {
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+#pointer {
+	padding: 0;
+}
+
+.gift_box .odd {
+	background-color: rgba(0, 0, 0, 0.65);
+}
+
+.gift_box .even {
+	background-color: rgba(0, 0, 0, 0.6);
+}
+.gift_bg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0);
+	opacity: 0;
+	z-index: -1;
+}
+
+/* 礼物 end */

@@ -1,0 +1,313 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>关注人列表</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			.search_wrap{
+				padding-left: 5px;
+			}
+			.img-frm{
+				border: 1px solid #D9D9D9;
+			}
+			.img-frm,
+			.img {
+				background-image: url(../../image/avatar.jpg);
+				background-size: cover;
+				background-position: center;
+				background-repeat: no-repeat;
+				border-radius: 50%;
+				width: 36px;
+				height: 36px;
+			}
+			.info {
+				padding-left: 8px;
+				font-size: 12px;
+			}
+			.list {
+				padding: 15px 0;
+				border-bottom: 1px solid #E2E2E2;
+			}
+			.signature{
+				color: #909090;
+				padding-top: 5px;
+			}
+			.level {
+				width: 36px;
+				height: 16px;
+				min-width: 36px;
+				background-image: url(../../image/level/rank_1.png);
+				background-size: contain;
+				background-position: center;
+				background-repeat: no-repeat;
+			}
+			.sex {
+				margin: 0 5px;
+				width: 16px;
+				height: 16px;
+				min-width: 16px;
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+			}
+			.female{
+				background-image: url(../../image/sex-female.png);
+			}
+			.male{
+				background-image: url(../../image/sex-male.png);
+			}
+			.name {
+				font-size: 14px;
+				display:-webkit-box!important;
+				overflow:hidden; 
+				text-overflow:ellipsis; 
+				word-break:break-all; 
+				-webkit-box-orient:vertical; 
+				-webkit-line-clamp:1;
+			}
+			.icon_circle{
+				padding: 0 10px;
+				font-size: 23px;
+			}
+			.icon_circle > span {
+				display: inherit;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+				<div class="search_wrap hidden">
+					<div class="flex-box list" onclick="openFrame('detail','find','profile')" tapmode="">
+						<div class="img-frm">
+							<div class="img"></div>
+						</div>
+						<div class="flex-1 info ">
+							<div class="flex-box" >
+								<div class="name">晨晨晨晨晨啦啦啦啦啦啦啦啦啦</div>
+								<span class="sex female"></span>
+								<span class="level" ></span>
+							</div>
+							<div class="signature text-overflow">啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦~</div>
+						</div>
+						<div class="icon_circle flex-box flex-h-ce" onclick="switchBtn(event,this)" tapmode="">
+							<span class="ct-icon-select-yes icon">
+								<span class="path1"></span><span class="path2"></span>
+							</span>
+						</div>
+					</div>
+					<div class="flex-box list">
+						<div class="img-frm">
+							<div class="img"></div>
+						</div>
+						<div class="flex-1 info">
+							<div class="flex-box" >
+								<div class="name">晨晨晨晨晨啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦</div>
+								<span class="sex male"></span>
+								<span class="level" style="background-image: url(../../image/level/rank_101.png);"></span>
+							</div>
+							<div class="signature text-overflow">啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦~</div>
+						</div>
+						<div class=" icon_circle flex-box flex-h-ce" onclick="switchBtn(event,this)" tapmode="">
+							<span class="ct-icon-select-circle icon">
+								<span class="path1"></span><span class="path2"></span>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript" src="../../script/jquery.lazyload.min.js" ></script>
+	<script type="text/template" template="main">
+		{{? it instanceof Array && it.length != 0}}
+		<div class="search_wrap">
+			{{~ it :value:index}}
+			<div class="flex-box list" onclick="openProfile('{{=value.id}}')" tapmode="">
+				<div class="img-frm">
+					<div class="img" data-original="{{= Tool.imageCompressByQiNiu(value.avatar,0,200,200)}}"></div>
+				</div>
+				<div class="flex-1 info ">
+					<div class="flex-box" >
+						<div class="name">{{= value.nickname }}</div>
+						<span class="sex {{? value.sex == '1'}}male{{?? value.sex== '2'}}female{{?}}"></span>
+						<span class="level" style="background-image: url(../../image/level/rank_{{= value.level}}.png);"></span>
+					</div>
+					<div class="signature text-overflow">{{= value.signature || ''}}</div>
+				</div>
+				<div class="icon_circle flex-box flex-h-ce" coverid="{{= value.coverid}}" onclick="switchBtn(event,this,{{= value.id}})" tapmode="">
+					<span class="{{? value.status=='1'}}ct-icon-select-yes{{??}}ct-icon-select-circle{{?}} icon">
+						<span class="path1"></span><span class="path2"></span>
+					</span>
+				</div>
+			</div>
+			{{~}}
+		</div>
+		{{??}}
+			<div class="null flex-box">
+				<div class="flex-1">暂无相关内容~</div>
+			</div>
+		{{?}}
+	</script>
+	<script type="text/javascript">
+	var unblackid = [];
+		//切换勾选 与不勾选
+		function switchBtn(event,_this,bid){
+			event.stopPropagation();
+			if($api.dom(_this,'.ct-icon-select-yes')){
+				$api.removeCls($api.dom(_this,'.icon'),'ct-icon-select-yes');
+				$api.addCls($api.dom(_this,'.icon'),'ct-icon-select-circle');
+				var aid = $api.attr(_this,'coverid');
+				unbalck(aid);
+				//unblackid.push(aid);
+			}else{
+				$api.removeCls($api.dom(_this,'.icon'),'ct-icon-select-circle');
+				$api.addCls($api.dom(_this,'.icon'),'ct-icon-select-yes');
+				black(bid);
+			}
+		}
+		
+		//批量取消 拉黑
+		function unblackar(){
+			var bid = unblackid.join(",");
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'removelianmaiar',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						bid: bid
+					}
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: false,
+				success: function(ct) {
+					api.closeWin();
+				}
+			});
+		}
+		
+		
+		//取消拉黑
+		function unbalck(bid){
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'removelianmai',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						bid: bid
+					}
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: false,
+				success: function(ct) {
+					Tool.toast('取消连麦成功~');
+				}
+			});
+		}
+		
+		//拉黑
+		function black(bid){
+			
+					ajax.get({
+						ctrl: 'zhiboApp',
+						fn: 'lianmais',
+						data: {
+							values: {
+								id: $api.getStorage(CONFIG.memberId),
+								token: $api.getStorage(CONFIG.token),
+								memberid: bid
+							}
+						},
+						hideLoading: true,
+						showError: false,
+						showProgress: false,
+						success: function(ct) {
+							Tool.toast('已加入连麦~');
+						}
+					});
+		}
+		
+		
+		//黑名单
+		function balckList(){
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'lianmailist',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+					}
+				},
+				hideLoading: true,
+				showError: false,
+				showProgress: false,
+				success: function(ct) {
+					T.html('#main','main',ct);
+					$('div.img').lazyload({
+			      effect : "fadeIn"
+			    });
+				}
+			});
+		}
+		
+		apiready = function(){
+			balckList();
+			
+			
+			Refresh.init({
+				ctrl: 'zhiboApp',
+				fn: 'lianmailist',
+				values: {
+					id: $api.getStorage(CONFIG.memberId),
+					token: $api.getStorage(CONFIG.token)
+				},
+				template: 'main',
+				success:function(){
+					$('div.img').lazyload({
+			      effect : "fadeIn"
+			    });
+				}
+			});
+			LoadMore.init({
+				ctrl: 'zhiboApp',
+				fn: 'lianmailist',
+				countSelector: '.search_wrap > div',
+				template: 'main',
+				values: {
+					id: $api.getStorage(CONFIG.memberId),
+					token: $api.getStorage(CONFIG.token)
+				},
+			},function(ct, page){
+				$('div.img').slice((page - 1) * 10).lazyload({
+		      effect : "fadeIn"
+		    });
+			});
+			
+			//监听执行 批量取消黑名单
+			api.addEventListener({
+				name: 'unblack'
+			},function(ret){
+				if(unblackid.length != 0){
+					unblackar();
+				}else{
+					api.closeWin();
+				}
+			});
+			
+		}
+	</script>
+</html>

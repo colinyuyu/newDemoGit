@@ -1,0 +1,81 @@
+<div class="anchor">
+	<div class="flex-box flex-h-ce">
+	
+	<!--守护的页面-->
+	
+		{{? it.memberid != it.id && $api.getStorage(CONFIG.memberInfo).id != it.id}}
+		
+		<div class="flex-1"><span class="report" onclick="Audience.openReport(this,'{{= it.id}}','{{= it.roomid}}')" tapmode>{{= it.manager == 1 ? '管理' : '举报'}}</span></div>
+		{{??}}
+		<div class="flex-1"></div>
+		{{?}}
+		<div class="ct-icon-close" onclick="Audience.closeAnchor()" tapmode=""></div>
+	</div>
+	<div class="info flex-box-v flex-h-ce">
+		<div class="flex-box" style="position: relative;">
+			{{? is_define(it.charmavatar)}}
+			<div class="fans_top_1">
+				<div class="img-frm">
+					<div class="img" data-original="{{= Tool.imageCompressByQiNiu(it.charmavatar,0,200,200)}}"></div>
+				</div>
+			</div>
+			{{?}}
+			<div class="img-frm">
+				<div class="img" data-original="{{= Tool.imageCompressByQiNiu(it.avatar,0,200,200)}}"></div>
+			</div>
+		</div>
+		<div class="flex-box profile">
+			<div>{{= it.nickname }}</div>
+			<div class="sex {{? it.sex == '1'}} male{{?? it.sex == '2'}} female{{?}} "></div>
+			<div class="level" style="background-image: url(../../image/level/rank_{{=it.level}}.png);"></div>
+		</div>
+		<div class="pd10 flex-box flex-h-zhu">
+			<div>ID:{{= it.id }}</div>
+			<div class="ct-icon-location">{{= it.city || ''}}</div>
+		</div>
+		<div class="pd10">
+			{{= rmNull(it.signature) }}
+		</div>
+	</div>
+	<div class="follow text-center">
+		<div class="flex-box fans">
+			<div class="flex-1">关注：<span style="color: inherit;">{{= parseFloat(it.concernnum) }}</span></div>
+			<div>|</div>
+			<div class="flex-1 ">
+				粉丝：
+				<span class="fans_num" style="color: inherit;">
+					{{? parseFloat(it.fansnum)/10000 >=1}}
+						{{= parseFloat(it.fansnum/10000).toFixed(2)  }}万
+					{{?? parseFloat(it.fansnum)/1000 >= 1}}
+						{{= parseFloat(it.fansnum/1000).toFixed(2)  }}千
+					{{??}}
+						{{= parseFloat(it.fansnum || 0)}}
+					{{?}}
+				</span>
+			</div>
+		</div>
+		<div class="flex-box charm">
+			<div class="flex-1">送出：
+				<span class="send" style="color: inherit;">
+					{{? parseFloat(it.diamonds)/10000 >=1}}
+						{{= parseFloat(it.diamonds/10000).toFixed(2)  }}万
+					{{?? parseFloat(it.diamonds)/1000 >= 1}}
+						{{= parseFloat(it.diamonds/1000).toFixed(2)  }}千
+					{{??}}
+						{{= parseFloat(it.diamonds || 0)}}
+					{{?}}
+				</span>
+				<span class="diamond"></span>
+			</div>
+			<div style="color: #909090;">|</div>
+			<div class="flex-1">
+				魅力： {{? parseFloat(it.charm)/10000 >=1}} {{= parseFloat(it.charm/10000).toFixed(2) }}万 {{?? parseFloat(it.charm)/1000 >= 1}} {{= parseFloat(it.charm/1000).toFixed(2) }}千 {{??}} {{= parseFloat(it.charm || 0)}} {{?}}
+			</div>
+		</div>
+	</div>
+	<div class="bottom_btn flex-box text-center">
+		<div class="flex-1 follow_text" onclick="Audience.concern(this,'{{= it.id}}')" tapmode>{{= it.concernstatus == 0 ? '关注' :'已关注'}}</div>
+		<div class="flex-1" onclick="Audience.isBlack('{{= it.id}}','{{= it.nickname}}','{{= it.avatar}}','{{= it.username}}','{{= it.tidings}}','{{= it.concernstatus }}')" tapmode="">私信TA</div>
+		<div class="flex-1" onclick="Audience.openProfile('{{= it.id}}')" tapmode="">主页</div>
+	</div>
+</div>

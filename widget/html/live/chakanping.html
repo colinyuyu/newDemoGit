@@ -1,0 +1,70 @@
+<!doctype html>
+<html >
+	<head>
+	<link rel="stylesheet" type="text/css" href="../css/aui.css" />
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>Document</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+		<style type="text/css">
+		</style>
+	</head>
+	<body>
+		<div class="show-list">
+				<script type="text/template" template="shope">
+				
+		
+		
+			
+			
+				
+				<ul class="aui-list-view">
+				{{~ it.list :value:index}}
+	
+					<li class="aui-list-view-cell">
+						<span style="width:40px;height:40px;border-radius:20px;"><img style="width:40px;height:40px;border-radius:20px;" src="{{= value.img}}"></span>{{= value.pinglun}}
+					</li>
+					{{~}}
+				</script>
+				</ul>
+		
+	</body>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript">
+		
+			/*$chadspp[$key][img]=$val['avatar']?$this->qiNiuPrefixUrl . $val['avatar']:'../../img/pic16.jpg';
+			$chadspp[$key][nickname]=$this->huode_user_name($val['uid']);
+			$chadspp[$key][pinglun]=$val[pinglun]?$val[pinglun]:'无';*/
+		
+		apiready = function(){
+			
+
+
+	ajax.get({
+				ctrl : 'ZhiboApp',
+				fn : 'chadsppl',
+				data : {
+					values : {
+						id : $api.getStorage(CONFIG.memberId),
+						token : $api.getStorage(CONFIG.token),
+						dspid : api.pageParam.dspplid
+					}
+				},
+				hideLoading : true,
+				showError : true,
+				showProgress : false,
+				success : function(ct) {
+			
+					T.html('.show-list', 'shope', ct);
+				}
+			});
+			
+			
+		}
+	</script>
+</html>

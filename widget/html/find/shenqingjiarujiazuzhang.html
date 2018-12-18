@@ -1,0 +1,219 @@
+﻿<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>家族长申请</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/sweetalert.css"/>
+		<style type="text/css">
+			#main {
+				padding: 0 10px;
+				font-size: 14px;
+			}
+			.tel, .pwd, .code {
+				padding-top: 30px;
+				padding-bottom: 10px;
+				border-bottom: 1px solid #d9d9d9;
+			}
+			input {
+				padding-left: 10px;
+				width: 100%;
+			}
+			.tel input::-webkit-input-placeholder, .pwd input::-webkit-input-placeholder, .code input::-webkit-input-placeholder {
+				color: #909090;
+			}
+			.tel input:-moz-placeholder, .pwd input:-moz-placeholder, .code input:-moz-placeholder {
+				color: #909090;
+			}
+			.tel input::-moz-placeholder, .pwd input::-moz-placeholder, .code input::-moz-placeholder {
+				color: #909090;
+			}
+			.tel input:-ms-input-placeholder, .pwd input:-ms-input-placeholder, .code input:-ms-input-placeholder {
+				color: #909090;
+			}
+			.login_btn {
+				padding: 0 25px;
+				padding-top: 40px;
+			}
+			.login_btn > div {
+				border: 1px solid #FE5F99;
+				background-color: #f8dce6;
+				padding: 10px 0;
+				color: #FE5F99;
+				border-radius: 20px;
+			}
+			.forget {
+				color: #909090;
+				border-bottom: 1px solid #909090;
+			}
+			.get_code {
+				color: #909090;
+				font-size: 12px;
+				border-bottom: 1px solid #909090;
+			}
+			
+			.item-box{
+				margin-top: 10px;
+				background-color: #fff;
+				border-top: 0px solid #EBEBE9;
+				border-bottom: 1px solid #d9d9d9;
+			}
+			
+			.item{
+				padding-bottom: 10px;
+				margin-left: 10px;
+				min-height: 61px;
+			}
+			
+			.item-box .item:(:last-child){
+				border-bottom: 1px solid #EBEBE9;
+			}
+			
+			.item>div{
+				color: #909090;
+			}
+			
+			.text-right {
+				width: 35px;
+			}
+			
+			.ct-icon-arrow-right {
+				color: #909090;
+				font-size: 20px;
+				display: inline-block;
+				height: 100%;
+				z-index: 997;
+			}
+			
+			.img-frm,
+			.img {
+				background-image: url(../image/avatar.jpg);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				border-radius: 10%;
+				width: 70px;
+				height: 70px;
+			}
+			.text-over,
+			.name {
+				display:-webkit-box!important;
+				overflow:hidden;
+				text-overflow:ellipsis;
+				word-break:break-all;
+				-webkit-box-orient:vertical;
+				-webkit-line-clamp:2;
+			}
+			select{
+				border: none;
+				border-radius: 0;
+				background-color: rgba(0,0,0,0);
+				margin: auto 0;
+				outline: none;
+				-webkit-appearance: none;
+				direction: rtl;
+				color: #909090;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main" >
+				
+				<div class="pwd">
+					<input name="jizuid" type="input" placeholder="填写您要加入的家族ID" />
+				</div>
+				
+				<div class="login_btn">
+					<div class="text-center" onclick="commit()" tapmode="">
+						提交审核
+					</div>
+				</div> 
+				
+			</div>
+		</div>
+	</body>
+	<script type="text/template" template="avatar">
+		<div class="close hidden"></div>
+		<div class="img relative" style="background-image: url({{= Tool.imageCompressByQiNiu(it, 0, 800, 800) }});background-size: cover;background-position: center;">
+			<div class="upload-status flex-box " style="background-color: rgba(0,0,0,0.4);border-radius:50%;-webkit-border-radius:50%;font-size: 11px;">
+				<div class="flex-1 status" style="color: #fff;">
+					等待上传
+				</div>
+			</div>
+		</div>
+	</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript">
+	
+		//点击 注册
+		function commit() {
+			var dailihao = $api.trimAll($api.val($api.dom('[name=jizuid]')));
+			$api.dom('[name=jizuid]').blur();
+			if (dailihao == '') {
+				Tool.toast('家族ID不能为空~');
+				return;
+			}
+			
+			
+			ajax.get({
+				ctrl : 'ZhiboApp',
+				fn : 'jiarujiazhu',
+				data : {
+					values : {
+					id: $api.getStorage(CONFIG.memberId),
+					token: $api.getStorage(CONFIG.token),
+						jiazu : dailihao
+						//avatar : avatar
+					}
+				},
+				showError : true,
+				showProgress : true,
+				hideLoading : true,
+				success : function(ct) {
+				
+				if(ct.state == 1){
+				
+				api.toast({
+							msg: '加入家族成功~',
+							duration: 1500,
+							location: 'middle'
+						});
+						
+						return;
+			
+				}else if(ct.state == 2||ct.state == 3){
+				api.toast({
+							msg: '您已加入家族~',
+							duration: 1500,
+							location: 'middle'
+						});
+						
+				
+				return;
+				}else if(ct.state == 5){
+				
+				Tool.toast('不能输入自己的UID');
+				return;
+				}else if(ct.state == 4){
+				
+				Tool.toast('请输入正确家族长uid');
+				return;
+				}
+					
+				
+				}
+			})
+		}
+
+	apiready = function(){
+		
+		}
+
+	</script>
+</html>

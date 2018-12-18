@@ -1,0 +1,239 @@
+<!doctype html>
+<html >
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no">
+		<title>观看直播</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css" />
+		<style type="text/css">
+			html,
+			body,
+			#wrap,
+			#main {
+				background-color: transparent;
+			}
+			.img {
+				width: 100%;
+				/*height: inherit;*/
+				/*background-image: url(../../image/avatar.jpg);*/
+				background-size: cover;
+				background-repeat: no-repeat;
+				background-position: center;
+				
+			}
+			.filter_img {
+				-webkit-filter: blur(5px);
+				-moz-filter: blur(5px);
+				-ms-filter: blur(5px);
+				filter: blur(5px);
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="wrap">
+			<div id="main" class="flex-box">
+				<div class="img flex-1">
+					
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/gotyeLive.Core.js"></script>
+	<script type="text/javascript" src="../../script/gotyeLive.Chat.js"></script>
+	<script type="text/javascript" src="../../script/gotyeLive.Player.js"></script>
+	<script type="text/javascript" src="../../script/gotyeLive.Publisher.js"></script>
+	<script type="text/javascript">
+		var session = {};
+
+		function authRoomSession(callback, callback2) {
+			QJ.Core.authRoomSession({
+				roomId: session.roomId,
+				password: session.password,
+				nickname: session.nickname,
+				success: callback,
+				error: callback2
+			})
+		}
+
+		//打开交互层frame
+		function openLiveFrame(roomid, memberid, pwd) {
+			api.openFrame({
+				name: 'barrage',
+				url: api.wgtRootDir + '/zhibo/html/find/live_frame.html',
+				bgColor: 'transparent',
+				pageParam: {
+					roomid: roomid,
+					memberid: memberid,
+					pwd: pwd
+				},
+			});
+		}
+
+		//记录开始看直播
+		function startlook(param) {
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'startlook',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						roomid: param.roomid,
+						//                      ip: param.ip
+					}
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: true,
+				success: function(ct) {
+					//设置禁止休眠
+					api.setKeepScreenOn({
+						keepOn: true
+					});
+					//验证
+					authRoomSession(function(ret) {
+						QJ.Core.getLiveContext({
+							roomId: session.roomId,
+							password: session.password,
+							nickname: session.nickname,
+							success: function(ret) {
+								$api.setStorage('playCount', ret.playUserCount);
+								//console.log(JSON.stringify(ret))
+								if(ret.recordingStatus == 0) {
+									Tool.toast('直播已结束~');
+									api.sendEvent({
+										name: 'init_hot'
+									});
+									setTimeout(function() {
+										api.closeWin();
+									}, 500);
+								} else {
+								 alert('888'+api.frameName);
+									QJ.Player.init(session);
+									QJ.Player.play({
+										playView: 'live_camera',
+										quality: 'high'
+									});
+									QJ.Player.setDisplayMode({
+										mode: 'aspectFill'
+									});
+									openLiveFrame(param.roomid, param.memberid, param.pwd);
+									// openLiveGroup(param.roomid,param.memberid,param.pwd);
+//									api.bringFrameToFront({
+//										from: 'barrage',
+//										to: 'live_camera'
+//									});
+									//监听 直播可播放事件
+									QJ.Player.addEventListener({
+										name: 'connected',
+										connected:function(){
+											api.setFrameAttr({
+												name: 'live_camera',
+												hidden: false
+											});
+											setTimeout(function(){
+												api.closeFrame({
+													name: 'live_camera_1'
+												});
+											},500)
+										}
+									});
+									
+									//主播已经结束直播
+									QJ.Player.addEventListener({
+										name: 'liveStop',
+										liveStop: function(ret) {
+										
+											api.openFrame({
+												name: 'close_live',
+												url: api.wgtRootDir + '/zhibo/html/component/close_live.html',
+												bgColor: 'transparent',
+												rect: {
+													x: 0,
+													y: 0,
+													w: 'auto',
+													h: api.frameHeight
+												},
+												pageParam: {
+													mid: param.memberid
+												}
+											});
+										}
+									});
+								}
+							}
+						});
+					}, function(err) {
+						api.toast({
+							location: 'middle',
+							msg: err.code + ': ' + err.description,
+							duration: 500
+						});
+						setTimeout(function() {
+							api.closeWin();
+						}, 500);
+					})
+				}
+			});
+		}
+
+		apiready = function() {
+		
+			var param = api.pageParam;
+			$api.css($api.dom('.img'),'background-image:url('+param.avatar+')');
+			api.openFrame({
+				name: 'live_camera',
+				url: api.wgtRootDir + '/zhibo/html/find/camera.html',
+				bgColor: 'transparent',
+				bounces: false,
+				pageParam: {
+					avatar: param.avatar
+				}
+			});
+			api.setFrameAttr({
+				name: 'live_camera',
+				hidden: true
+			});
+			session.roomId = param.roomid;
+			session.password = param.pwd;
+			session.nickname = $api.getStorage(CONFIG.memberInfo).nickname;
+//			QJ.Core.registerApp();
+//			QJ.Core.setDebugLogEnabled({
+//				enabled: true
+//			});
+//			setTimeout(function(){
+				startlook(param);
+//			},0)
+
+			api.addEventListener({
+				name: 'closeLive'
+			}, function() {
+				//QJ.Core.destroyRoomSession(session);
+				QJ.Player.stop();
+				//设置休眠
+				api.setKeepScreenOn({
+					keepOn: false
+				});
+				api.closeFrame({
+					name: 'live_gift'
+				});
+				api.closeFrame({
+					name: 'share'
+				});
+				api.closeFrame({
+					name: 'talk'
+				});
+				setTimeout(function() {
+					api.closeWin();
+				}, 500)
+			});
+		}
+	</script>
+
+</html>

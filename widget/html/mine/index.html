@@ -1,0 +1,914 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no">
+		<title>直播简介/粉丝简介</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css" />
+		<style type="text/css">
+			html, body, #main {
+				-webkit-transform: translateZ(0);
+				font-size: 14px;
+				background-color: #FCFBF5;
+			}
+			.top {
+				text-shadow: 1px 1px 1px #9E918A;
+			}
+			.bg {
+				opacity: 0.7;
+				background-image: url(../../image/avatar.jpg);
+				background-position: top center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				width: 100%;
+				height: 250px;
+				-webkit-filter: blur(5px);
+				-moz-filter: blur(5px);
+				-ms-filter: blur(5px);
+				filter: blur(5px);
+			}
+			.ct-icon-my-edit {
+				padding: 5px;
+				font-size: 20px;
+				position: absolute;
+				top: 25px;
+				right: 15px;
+				color: #fff;
+				z-index: 999;
+			}
+			.profile {
+				position: absolute;
+				width: 100%;
+				top: 45px;
+			}
+			.img {
+				border: 1px solid #fff;
+			}
+			.img-frm, .img {
+				background-image: url(../../image/avatar.jpg);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				border-radius: 50%;
+				width: 70px;
+				height: 70px;
+			}
+			.profile .img, .profile .img-frm {
+				/*background-image: url(../../image/nv.jpg);*/
+				margin: 0 auto;
+			}
+			.name, .signature, .follow {
+				color: #fff;
+			}
+			.name {
+				display: -webkit-box !important;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				word-break: break-all;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 1;
+			}
+			.sex {
+				margin: 0 5px;
+				width: 16px;
+				height: 16px;
+				min-width: 16px;
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+			}
+			.female {
+				background-image: url(../../image/sex-female.png);
+			}
+			.male {
+				background-image: url(../../image/sex-male.png);
+			}
+			.level {
+				width: 36px;
+				height: 16px;
+				min-width: 36px;
+				background-image: url(../../image/level/rank_1.png);
+				background-size: contain;
+				background-position: center;
+				background-repeat: no-repeat;
+			}
+			.follow {
+				padding: 15px 0;
+			}
+			.follow > span {
+				padding-left: 5px;
+				color: #fff;
+			}
+			.signature {
+				padding: 0 10px;
+				font-size: 12px;
+				display: -webkit-box !important;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				word-break: break-all;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 1;
+			}
+			/*个人简介结束*/
+			/*个人信息开始*/
+			.info {
+				position: relative;
+				border-top: 1px solid #fff;
+				z-index: 998;
+			}
+			.switch_btn {
+				background-color: #fff;
+			}
+			.switch_btn > div {
+				padding: 20px 0;
+				color: #909090;
+				border-bottom: 1px solid #EBEBE9;
+			}
+			.content-color {
+				color: #FE5F99;
+			}
+			.info .img-frm, .info .img {
+				width: 40px;
+				height: 40px;
+			}
+			.list {
+				margin-top: 8px;
+			}
+			.list > div:first-child {
+				border-top: 1px solid #EBEBE9;
+				height: 62px;
+			}
+			.list .top-border {
+				border-top: 1px solid #EBEBE9;
+			}
+			.list > div {
+				padding: 10px;
+				height: 61px;
+				background-color: #fff;
+				border-bottom: 1px solid #EBEBE9;
+			}
+			.list .list-color {
+				color: #909090;
+			}
+			.text-right {
+				width: 35px;
+			}
+			.ct-icon-arrow-right {
+				color: #909090;
+				font-size: 20px;
+				display: inline-block;
+				height: 100%;
+				z-index: 997;
+			}
+			.charm_list .img {
+				border: 2px solid #fff;
+				border-radius: 50%;
+			}
+			.zuotupian{
+			width:2.2em;float:left;
+			}
+			.tupiandaxiao{
+			width:1.7em;height:1.7em;
+			
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main" >
+				<div class="top">
+					<div class="ct-icon-my-edit" onclick="openWin('win','edit_info','编辑资料','mine','edit_info','','',250)" tapmode></div>
+					<div class="bg"></div>
+					<div class="text-center profile">
+						<div class="img-frm">
+							<div class="img"></div>
+						</div>
+						<div class="flex-box flex-h-zhu" style="padding: 20px 10px 0 10px;">
+							<div class="name"></div>
+							<span class="sex "></span>
+							<span class="level"></span>
+						</div>
+						<div class="follow">
+							ID: <span>1</span>
+						</div>
+						<div class="signature"></div>
+					</div>
+				</div>
+				<div class="info">
+					<div class="switch_btn flex-box text-center">
+						<!--<div class="flex-1 " onclick="openWin('my_live','my_live_list','我的直播','mine','my_live_list','','',250)" tapmode>
+							直播 <span class="content-color live">0</span>
+						</div>
+						<div style="color: #D9D9D9;">
+							|
+						</div>-->
+						<div class="flex-1 " onclick="openWin('follow','follow_list','关注','find','follow_list','','',250)" tapmode>
+							关注 <span class="content-color concer">0</span>
+						</div>
+						<div style="color: #D9D9D9;">
+							|
+						</div>
+						<div style='font-weight:bold;color: #FE5F99' class="flex-1 guanzhu" onclick="fenxiang(this)" tapmode="">
+							分享赚钱 
+						</div>
+						
+						<div style="color: #D9D9D9;" class="guanzhu1">
+							|
+						</div>
+						<div class="flex-1 " onclick="openWin('fans','fans_list','粉丝','mine','fans_list','','',250)" tapmode>
+							粉丝 <span class="content-color fans">0</span>
+						</div>
+						<div style="color: #D9D9D9;">
+							|
+						</div>
+					</div>
+					<div class="list">
+					
+					<div  class="flex-box flex-h-ce"  onclick="paihangbang()" tapmode>
+							<div class="flex-1 list-color">
+								<div class="zuotupian"><img src="../../image/mine/paihangbang.png" class="tupiandaxiao"></div><div style="line-height: 1.8em">排行榜</div>
+							</div>
+							
+							<div class="text-right">
+								<div class="ct-icon-arrow-right "></div>
+							</div>
+						</div>
+						<div class="charm flex-box flex-h-ce"  onclick="openWin('win','charm','魅力贡献榜','find','charm','','',250)" tapmode>
+							<div class="flex-1 list-color">
+								
+								<div class="zuotupian"><img src="../../image/mine/gongxian.png" style="width:1.75em;height:1.75em;"></div><div style="line-height: 1.8em">魅力贡献榜</div>
+							</div>
+							<div class="flex-box charm_list">
+								<!--<div class="img-frm" style="z-index: 3;background: #fff;margin-right: -12px;">
+								<div class="img" style=""></div>
+								</div>
+								<div class="img-frm" style="z-index: 2;background: #fff;margin-right: -12px;">
+								<div class="img" style=""></div>
+								</div>
+								<div class="img-frm" style="z-index: 1;background: #fff;margin-right: -12px;">
+								<div class="img" style=""></div>
+								</div>-->
+							</div>
+							<!-- <div class="text-right">
+								<div class="ct-icon-arrow-right "></div>
+							</div>
+													</div>
+												<div class="charm flex-box flex-h-ce"  onclick="openWin('win','charm','总榜','find','charm2','','',250)" tapmode>
+							<div class="flex-1 list-color">
+								总榜
+							</div> -->
+							<div class="flex-box charm_list">
+							</div>
+							<div class="text-right">
+								<div class="ct-icon-arrow-right "></div>
+							</div>
+						</div>
+						<div id="charmsId" class="flex-box flex-h-ce"  onclick="openWin('income','income','收益','mine','income','','',250)" tapmode>
+							<div class="flex-1 list-color">
+								
+								<div class="zuotupian"><img src="../../image/mine/shouyi.png" style="width:1.89em;height:1.89em;"></div><div style="line-height: 1.8em">收益</div>
+							</div>
+							<div class="content-color" >
+								<span class="content-color charm_num">0</span>/<span class="content-color charm_num1">0</span>魅力
+							</div>
+							<div class="text-right">
+								<div class="ct-icon-arrow-right "></div>
+							</div>
+						</div>
+						<!-- 苹果上架去掉-->
+						<div  id="diamondsId" class="flex-box flex-h-ce" style="margin-bottom: 8px;"  onclick="openWin('recharge','recharge','充值','mine','recharge','','',250)" tapmode>
+							<div class="flex-1 list-color">
+								
+								<div class="zuotupian"><img src="../../image/mine/chongzhi.png" class="tupiandaxiao"></div><div style="line-height: 1.8em">充值</div>
+							</div>
+							<div class="content-color diamond" >
+								<span style="color: inherit;">0</span>钻石
+							</div>
+							<div class="text-right">
+								<div class="ct-icon-arrow-right "></div>
+							</div>
+						</div>
+						<div  id="vipId" class="flex-box flex-h-ce" style="margin-bottom: 8px;"  onclick="openWin('vip_recharge','vip_recharge','VIP会员','mine','vip_recharge','','',250)" tapmode>
+							<div class="flex-1 list-color">
+								
+								<div class="zuotupian"><img src="../../image/mine/vip.png" class="tupiandaxiao"></div><div style="line-height: 1.8em">VIP会员</div>
+							</div>
+							<div class="content-color" >
+								到期时间：<span style="color: inherit;" class="overvip">未开通</span>
+							</div>
+							<div class="text-right">
+								<div class="ct-icon-arrow-right "></div>
+							</div>
+						</div>
+						<div class="top-border flex-box flex-h-ce"  onclick="openWin('win','my_level','我的等级','mine','my_level','','',250)" tapmode>
+							<div class="flex-1 list-color">
+								
+								<div class="zuotupian"><img src="../../image/mine/dengji.png" style="width:1.88em;height:1.88em;"></div><div style="line-height: 1.8em">等级</div>
+							</div>
+							<div class="list-color my_level" >
+								1级
+							</div>
+							<div class="text-right">
+								<div class="ct-icon-arrow-right "></div>
+							</div>
+						</div>
+				<!--	<div  class="flex-box flex-h-ce" onclick="openWin('win', 'shipingrrenz', '短视频上传', 'live', 'shipingrrenz', true)" tapmode>
+							<div  class="flex-1 list-color">
+								
+								<div class="zuotupian"><img src="../../image/mine/duanshipin.png" class="tupiandaxiao"></div><div style="line-height: 1.7em">短视频上传</div>
+							</div>
+							<div class="text-right">
+								<div class="ct-icon-arrow-right "></div>
+							</div>
+						</div>-->
+					<!--<div class="flex-box flex-h-ce" onclick=" openWin('win', 'shipingliebiao', '短视频上传', 'live', 'shipingliebiao', true)" tapmode>
+							<div  class="flex-1 list-color">
+								
+								<div class="zuotupian"><img src="../../image/mine/liebiao.png" class="tupiandaxiao"></div><div style="line-height: 1.7em">短视频列表</div>
+							</div>
+							<div class="text-right">
+								<div class="ct-icon-arrow-right "></div>
+							</div>
+						</div>-->
+						<div class="flex-box flex-h-ce" onclick="zhiboReview()" tapmode>
+							<div class="flex-1 list-color">
+								
+								<div class="zuotupian"><img src="../../image/mine/kaibo.png" style="width:1.7em;height:1.7em;"></div><div style="line-height: 1.8em">开播申请</div>
+							</div>
+							<div class="text-right">
+								<div class="ct-icon-arrow-right "></div>
+							</div>
+						</div>
+						<div class="flex-box flex-h-ce" style="margin-bottom: 8px;" onclick="violation()" tapmode>
+							<div class="flex-1 list-color">
+								
+								<div class="zuotupian"><img src="../../image/mine/jubao.png" style="width:1.6em;height:1.6em;"></div><div style="line-height: 1.8em">违规举报</div>
+							</div>
+							<div class="text-right">
+								<div class="ct-icon-arrow-right "></div>
+							</div>
+						</div>
+					
+						<div class="flex-box flex-h-ce"  onclick="openWin('win','yaoqing_list','我邀请的好友','mine','yaoqing_list')" tapmode>
+							<div class="flex-1 list-color">
+								
+								<div class="zuotupian"><img src="../../image/mine/haoyou.png" class="tupiandaxiao"></div><div style="line-height: 1.8em">我邀请的好友</div>
+							</div>
+							<div class="text-right">
+								<div class="ct-icon-arrow-right "></div>
+							</div>
+						</div>
+						<div class="flex-box flex-h-ce"  onclick="openWin('win','money_log','我的佣金明细','mine','money_log')" tapmode>
+							<div class="flex-1 list-color">
+								
+								<div class="zuotupian"><img src="../../image/mine/yongjin.png" class="tupiandaxiao"></div><div style="line-height: 1.8em">我的佣金明细</div>
+							</div>
+							<div class="text-right">
+								<div class="ct-icon-arrow-right "></div>
+							</div>
+						</div>
+						<div class="flex-box flex-h-ce"  onclick="jiazuzhangzhuangtai()" tapmode>
+							<div class="flex-1 list-color">
+								
+								<div class="zuotupian"><img src="../../image/mine/jiazu.png" class="tupiandaxiao"></div><div style="line-height: 1.8em">申请成为家族长</div>
+							</div>
+							<div class="text-right">
+								<div class="ct-icon-arrow-right "></div>
+							</div>
+						</div>
+						<div class="flex-box flex-h-ce"  onclick="shenqingjiazu()" tapmode>
+							<div class="flex-1 list-color">
+								
+								<div class="zuotupian"><img src="../../image/mine/jiarujiazu.png" class="tupiandaxiao"></div><div style="line-height: 1.8em">申请加入家族</div>
+							</div>
+							<div class="text-right">
+								<div class="ct-icon-arrow-right "></div>
+							</div>
+						</div>
+						
+						<div class="flex-box flex-h-ce"  onclick="openWin('win','jiazu','我的家族成员','mine','jiazu')" tapmode>
+							<div class="flex-1 list-color">
+								
+								<div class="zuotupian"><img src="../../image/mine/chengyuan.png" class="tupiandaxiao"></div><div style="line-height: 1.8em">我的家族成员</div>
+							</div>
+							<div class="text-right">
+								<div class="ct-icon-arrow-right "></div>
+							</div>
+						</div>
+						<div class="flex-box flex-h-ce"  onclick="openWin('win','money_logjz','家族消费明细','mine','money_logjz')" tapmode>
+							<div class="flex-1 list-color">
+								
+								<div class="zuotupian"><img src="../../image/mine/jzmingxi.png" class="tupiandaxiao"></div><div style="line-height: 1.8em">家族消费明细</div>
+							</div>
+							<div class="text-right">
+								<div class="ct-icon-arrow-right "></div>
+							</div>
+						</div>
+						
+						<div class="flex-box flex-h-ce"  onclick="openWin('win','jiazutixian','家族全部提现记录','mine','jiazutixian')" tapmode>
+							<div class="flex-1 list-color">
+								
+								<div class="zuotupian"><img src="../../image/mine/tixian.png" class="tupiandaxiao"></div><div style="line-height: 1.8em">家族提现记录</div>
+							</div>
+							<div class="text-right">
+								<div class="ct-icon-arrow-right "></div>
+							</div>
+						</div>
+						<div class="flex-box flex-h-ce" style="margin-bottom: 8px;" onclick="openWin('win','settings','设置','mine','settings','','',250)" tapmode>
+							<div class="flex-1 list-color">
+								
+								<div class="zuotupian"><img src="../../image/mine/shezhi.png" style="width:1.9em;height:1.9em;"></div><div style="line-height: 1.8em">设置</div>
+							</div>
+							<div class="text-right">
+								<div class="ct-icon-arrow-right "></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/template" template="charm_list">
+		{{~ it :value:index}}
+		<div class="img-frm" style="z-index: {{= -(index-3)}};background: #fff;margin-right: -12px;">
+		<div class="img" style="background-image: url({{= Tool.imageCompressByQiNiu(value.avatar,0,200,200)}});"></div>
+		</div>
+		{{~}}
+	</script>
+	<script type="text/javascript">
+		var memberinfo = '';
+		//开播审核
+		function zhiboReview() {
+			ajax.get({
+				ctrl : 'zhiboApp',
+				fn : 'livestate',
+				hideLoading : true,
+				showError : true,
+				showProgress : true,
+				data : {
+					values : {
+						id : $api.getStorage(CONFIG.memberId),
+						token : $api.getStorage(CONFIG.token)
+					}
+				},
+				success : function(ct) {
+					if (ct.state == 1) {
+						Tool.toast('您申请的直播权限已通过！');
+						return;
+					}
+					if (ct.state == 3) {
+						Tool.toast('您申请的直播权限正在审核中！');
+						return;
+					}
+					if (ct.state == 2) {
+						api.openWin({
+							name : 'anchor_review_win',
+							url : api.wgtRootDir + '/zhibo/html/window/win.html',
+							pageParam : {
+								headerTitle : '开播申请',
+								frameName : 'anchor_review',
+								frameUrl : api.wgtRootDir + '/zhibo/html/anchor_review.html'
+							}
+						});
+					}
+				}
+			});
+		}
+
+		//违规举报
+		function violation() {
+			api.openWin({
+				name : 'violation_win',
+				url : api.wgtRootDir + '/zhibo/html/window/win_violation.html',
+				pageParam : {
+					headerTitle : "违规举报",
+					frameName : 'violation',
+					frameUrl : api.wgtRootDir + '/zhibo/html/find/report_index.html'
+				}
+			});
+		}
+
+		function memberInfo() {
+			ajax.get({
+				//				ctrl: 'zhiboApp',
+				//				fn: 'memberinfo',
+				ctrl : 'zhiboApp',
+				fn : 'memberinfo',
+				data : {
+					values : {
+						id : $api.getStorage(CONFIG.memberId),
+						token : $api.getStorage(CONFIG.token)
+					}
+				},
+				hideLoading : true,
+				showError : true,
+				showProgress : true,
+				success : function(ct) {
+		
+				
+			
+//$api.setStorage('teding', ct.teding||0);
+					$api.setStorage(CONFIG.memberInfo, ct);
+					//$api.setStorage(CONFIG.diamonds, ct.diamonds); //大斌去掉这里
+					//头像
+					$api.dom('.bg').style.backgroundImage = 'url("' + Tool.imageCompressByQiNiu(ct.avatar, 0, 200, 200) + '")';
+					$api.dom('.img').style.backgroundImage = 'url("' + Tool.imageCompressByQiNiu(ct.avatar, 0, 200, 200) + '")';
+					//等级图片
+					$api.dom('.level').style.backgroundImage = 'url("../../image/level/rank_' + ct.level + '.png")';
+					//名字
+					$api.html($api.dom('.name'), ct.nickname);
+					//id号
+					$api.html($api.dom('.follow > span'), ct.id);
+					//性别 1男 2女
+					if (ct.sex == '1') {
+						$api.addCls($api.dom('.sex'), 'male');
+					} else if (ct.sex == '2') {
+						$api.addCls($api.dom('.sex'), 'female');
+					}
+					//签名
+					$api.html($api.dom('.signature'), ct.signature || '');
+					//直播数
+					$api.html($api.dom('.live'), ct.video);
+					//关注数
+					$api.html($api.dom('.switch_btn .concer'), ct.concernnum);
+					//粉丝数
+					$api.html($api.dom('.switch_btn .fans'), ct.fansnum);
+					//贡献榜
+					T.html('.charm_list', 'charm_list', ct.charmlist);
+					//魅力值
+					$api.html($api.dom('.charm_num'), parseInt(ct.charm));
+					//可提现魅力值
+					$api.html($api.dom('.charm_num1'), parseInt(ct.charm1));
+					//钻石
+					$api.html($api.dom('.diamond > span'), parseInt(ct.diamonds));
+					//等级
+					$api.html($api.dom('.my_level'), ct.level + '级');
+					//vip过期时间
+					$api.html($api.dom('.overvip'), ct.over_time);
+					//					T.html('#main','main',ct);
+				}
+			});
+		}
+function paihangbang(){
+		api.openWin({
+					name: 'charm2',
+					url: api.wgtRootDir + '/zhibo/html/find/charm2.html',
+					bgColor : '#F0F0F0',
+					bounces : false,
+					reload : true,
+					
+					
+				});
+				}
+				function fenxiang(_this) {
+				
+			if ($api.hasCls(_this, 'fenxiangguanbi')) {
+			$api.removeCls(_this, 'fenxiangguanbi');
+			$api.text($api.dom('.fenxiang'),'分享');
+					api.closeFrame({
+					name:'share'
+                    });
+				} else {
+					
+				
+			api.openFrame({
+				name: 'share',
+				url: api.wgtRootDir + '/zhibo/html/component/shareapp.html',
+				bgColor: 'transparent',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.frameHeight
+				},
+				pageParam:{
+					shareurl: $api.getStorage(CONFIG.memberInfo).pcurl,
+					roomname: $api.getStorage(CONFIG.memberInfo).nickname
+				}
+			});
+			$api.text($api.dom('.fenxiang'),'关闭分享');
+			$api.addCls($api.dom('.fenxiang'), 'fenxiangguanbi');
+			}
+}
+
+function shenqingjiazu() {
+		
+		
+			ajax.get({
+				ctrl : 'ZhiboApp',
+				fn : 'jiarujiazhu',
+				data : {
+					values : {
+					id: $api.getStorage(CONFIG.memberId),
+					token: $api.getStorage(CONFIG.token),
+						
+						//avatar : avatar
+					}
+				},
+				showError : true,
+				showProgress : true,
+				hideLoading : true,
+				success : function(ct) {
+				
+				
+				if(ct.state == 3){
+				
+				Tool.toast('您已加入家族');
+				return;
+				}else if(ct.state == 5){
+				
+				Tool.toast('不能输入自己的ID');
+				return;
+				}else{
+				openWin('win','shenqingjiarujiazuzhang','申请加入家族','find','shenqingjiarujiazuzhang','','',250);
+				}
+					
+				
+				}
+			})
+		}
+		function jiazuzhangzhuangtai() {
+			ajax.get({
+				ctrl : 'zhiboApp',
+				fn : 'jiazuzhangzhuangtai',
+				hideLoading : true,
+				showError : true,
+				showProgress : true,
+				data : {
+					values : {
+					
+						id : $api.getStorage(CONFIG.memberId),
+						token : $api.getStorage(CONFIG.token)
+					}
+				},
+				success : function(ct) {
+				
+						if (ct.state == 1) {
+							Tool.toast('您申请的家族长已通过！');
+							return;
+						}
+						if (ct.state == 3) {
+							Tool.toast('您申请的家族长正在审核中！');
+							return;
+						}
+						if (ct.state == 2) {
+							api.openWin({
+								name : 'jiazuzhang',
+								url : api.wgtRootDir + '/zhibo/html/window/win.html',
+								pageParam : {
+									headerTitle : '申请加入家族长',
+									frameName : 'jiazuzhang',
+									frameUrl : api.wgtRootDir + '/zhibo/html/find/jiazuzhang.html'
+								}
+							});
+							return;
+						}
+					
+				}
+			});
+		}
+		apiready = function() {
+		
+			
+			openCircle();
+			memberInfo();
+			//alert($api.getStorage('vipstart'));
+			if($api.getStorage('vipstart') == 0){
+				//alert($api.dom('#vipId'));
+				$api.addCls($api.dom('#vipId'), 'hidden');
+			}
+		
+			//刷新 页面 数据
+			api.addEventListener({
+				name : 'viewappear'
+			}, function() {
+				ajax.get({
+					//					ctrl: 'zhiboApp',
+					//					fn: 'memberinfo',
+					ctrl : 'zhiboApp',
+					fn : 'memberinfo',
+					data : {
+						values : {
+							id : $api.getStorage(CONFIG.memberId),
+							token : $api.getStorage(CONFIG.token)
+						}
+					},
+					hideLoading : true,
+					showError : true,
+					showProgress : false,
+					success : function(ct) {
+					if(ct.is_vip==1){
+					$api.html($api.dom('.overvip'), ct.over_time); //显示VIP
+					}
+					//$api.setStorage('teding', ct.teding||0);
+						memberinfo = $api.getStorage(CONFIG.memberInfo);
+						//关注值
+						if (ct.concernnum != memberinfo.concernnum) {
+							memberinfo.concernnum = ct.concernnum;
+							$api.html($api.dom('.switch_btn .concer'), ct.concernnum);
+							$api.setStorage(CONFIG.memberInfo, memberinfo);
+						}
+						//粉丝值
+						if (ct.fansnum != memberinfo.fansnum) {
+							memberinfo.fansnum = ct.fansnum;
+							$api.html($api.dom('.switch_btn .fans'), ct.fansnum);
+							$api.setStorage(CONFIG.memberInfo, memberinfo);
+						}
+						//魅力值
+						//						if(ct.charm != memberinfo.charm){
+						//							memberinfo.charm = ct.charm;
+						$api.html($api.dom('.charm_num'), parseInt(ct.charm));
+						$api.html($api.dom('.charm_num1'), parseInt(ct.charm1));
+						//							$api.setStorage(CONFIG.memberInfo,memberinfo);
+						//						}
+						//钻石值
+						var tempDiamonds = $api.val('.diamond > span');
+						if (ct.diamonds != tempDiamonds) {
+							memberinfo.diamonds = ct.diamonds;
+							$api.html($api.dom('.diamond > span'), parseInt(ct.diamonds));
+							$api.setStorage(CONFIG.memberInfo, memberinfo);
+						}
+						//等级
+						if (ct.level != memberinfo.level) {
+							memberinfo.level = ct.level;
+							$api.html($api.dom('.my_level'), ct.level + '级');
+							$api.dom('.level').style.backgroundImage = 'url("../../image/level/rank_' + ct.level + '.png")';
+							$api.setStorage(CONFIG.memberInfo, memberinfo);
+						}
+						//直播数
+						if (ct.video != memberinfo.video) {
+							memberinfo.video = ct.video;
+							$api.html($api.dom('.live'), ct.video);
+							$api.setStorage(CONFIG.memberInfo, memberinfo);
+						}
+						//						//性别 1男 2女
+						//						if(ct.sex == '1'){
+						//							$api.addCls($api.dom('.sex'),'male');
+						//						}else if(ct.sex == '2'){
+						//							$api.addCls($api.dom('.sex'),'female');
+						//						}
+						//魅力贡献榜
+						if (JSON.stringify(ct.charmlist) != JSON.stringify(memberinfo.charmlist)) {
+							T.html('.charm_list', 'charm_list', ct.charmlist);
+						}
+						//等级图片
+						if (ct.level != memberinfo.level) {
+							$api.dom('.level').style.backgroundImage = 'url("../../image/level/rank_' + ct.level + '.png")';
+						}
+					}
+				});
+			});
+			//后台拒绝提现 刷更改 魅力值
+			api.addEventListener({
+				name : 'charm'
+			}, function() {
+				ajax.get({
+					//					ctrl: 'zhiboApp',
+					//					fn: 'memberinfo',
+					ctrl : 'zhiboApp',
+					fn : 'memberinfo',
+					data : {
+						values : {
+							id : $api.getStorage(CONFIG.memberId),
+							token : $api.getStorage(CONFIG.token)
+						}
+					},
+					hideLoading : true,
+					showError : true,
+					showProgress : false,
+					success : function(ct) {
+						$api.setStorage(CONFIG.memberInfo, ct);
+						$api.html($api.dom('.charm_num'), parseInt(ct.charm));
+						$api.html($api.dom('.charm_num1'), parseInt(ct.charm1));
+					}
+				});
+			});
+			//监听更新用户昵称
+			api.addEventListener({
+				name : 'refresh_nickname'
+			}, function(ret, err) {
+				if (ret && ret.value) {
+					var nickname = ret.value.nickname;
+					$api.html($api.dom('.name'), nickname);
+					memberinfo = $api.getStorage(CONFIG.memberInfo);
+					memberinfo.nickname = nickname;
+					$api.setStorage(CONFIG.memberInfo, memberinfo);
+				}
+			});
+			//监听更新用户性别
+			api.addEventListener({
+				name : 'refresh_sex'
+			}, function(ret) {
+				if (ret && ret.value) {
+					memberinfo = $api.getStorage(CONFIG.memberInfo);
+					memberinfo.sex = ret.value.sex;
+					$api.setStorage(CONFIG.memberInfo, memberinfo);
+					//性别 1男 2女
+					if (ret.value.sex == '1') {
+						$api.removeCls($api.dom('.sex'), 'female');
+						$api.addCls($api.dom('.sex'), 'male');
+					} else if (ret.value.sex == '2') {
+						$api.removeCls($api.dom('.sex'), 'male');
+						$api.addCls($api.dom('.sex'), 'female');
+					}
+				}
+			});
+			//监听充值成功
+			api.addEventListener({
+				name : 'diamonds'
+			}, function(ret) {
+				if (ret && ret.value) {
+					var diamonds = ret.value.diamonds;
+					memberinfo = $api.getStorage(CONFIG.memberInfo);
+					memberinfo.diamonds = parseInt(diamonds);
+					$api.html($api.dom('.diamond > span'), parseInt(diamonds));
+					$api.setStorage(CONFIG.memberInfo, memberinfo);
+				}
+			});
+			//监听签名
+			api.addEventListener({
+				name : 'signature'
+			}, function(ret) {
+				if (ret && ret.value) {
+					var signature = ret.value.signature;
+					$api.html($api.dom('.signature'), signature);
+					memberinfo = $api.getStorage(CONFIG.memberInfo);
+					memberinfo.signature = signature;
+					$api.setStorage(CONFIG.memberInfo, memberinfo);
+				}
+			});
+			//监听修改头像
+			api.addEventListener({
+				name : 'refresh_avatar'
+			}, function(ret, err) {
+				if (ret && ret.value) {
+					var avatar = ret.value.avatar;
+					$api.dom('.bg').style.backgroundImage = 'url("' + Tool.imageCompressByQiNiu(avatar, 0, 200, 200) + '")';
+					$api.dom('.img').style.backgroundImage = 'url("' + Tool.imageCompressByQiNiu(avatar, 0, 200, 200) + '")';
+					$api.dom('.img').style.backgroundSize = 'cover';
+					$api.dom('.img').style.backgroundPosition = 'center';
+				}
+			});
+			//监听  在观看直播端  关注直播
+			api.addEventListener({
+				name : 'follow'
+			}, function() {
+				ajax.get({
+					//					ctrl: 'zhiboApp',
+					//					fn: 'memberinfo',
+					ctrl : 'zhiboApp',
+					fn : 'memberinfo',
+					data : {
+						values : {
+							id : $api.getStorage(CONFIG.memberId),
+							token : $api.getStorage(CONFIG.token)
+						}
+					},
+					hideLoading : true,
+					showError : true,
+					showProgress : false,
+					success : function(ct) {
+						memberinfo = $api.getStorage(CONFIG.memberInfo);
+						//关注值
+						if (ct.concernnum != memberinfo.concernnum) {
+							memberinfo.concernnum = ct.concernnum;
+							$api.html($api.dom('.switch_btn .concer'), ct.concernnum);
+							$api.setStorage(CONFIG.memberInfo, memberinfo);
+						}
+						//粉丝值
+						if (ct.fansnum != memberinfo.fansnum) {
+							memberinfo.fansnum = ct.fansnum;
+							$api.html($api.dom('.switch_btn .fans'), ct.fansnum);
+							$api.setStorage(CONFIG.memberInfo, memberinfo);
+						}
+						//魅力值
+						if (ct.charm != memberinfo.charm) {
+							memberinfo.charm = ct.charm;
+							$api.html($api.dom('.charm_num'), parseInt(ct.charm));
+							$api.html($api.dom('.charm_num1'), parseInt(ct.charm1));
+							$api.setStorage(CONFIG.memberInfo, memberinfo);
+						}
+						//钻石值
+						if (ct.diamonds != memberinfo.diamonds) {
+							memberinfo.diamonds = ct.diamonds;
+							$api.html($api.dom('.diamond > span'), parseInt(diamonds));
+							$api.setStorage(CONFIG.memberInfo, memberinfo);
+						}
+					}
+				});
+			});
+			//监听 主播 保存 直播
+			api.addEventListener({
+				name : 'saveLive'
+			}, function() {
+				memberinfo = $api.getStorage(CONFIG.memberInfo);
+				var video = parseInt(memberinfo.video) + 1;
+				$api.html($api.dom('.live'), parseInt(video));
+			});
+		}
+	</script>
+</html>

@@ -1,0 +1,337 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>Document</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			html,body,#main {
+				font-size: 14px;
+				background-color: #FCFBF5;
+			}
+			#main {
+				padding-bottom: 20px;
+			}
+			.item-box{
+				margin-top: 8px;
+				background-color: #fff;
+				border-top: 1px solid #EBEBE9;
+				border-bottom: 1px solid #EBEBE9;
+			}
+			
+			.item{
+				padding: 10px;
+				margin-left: 10px;
+				min-height: 61px;
+			}
+			
+			.item-box .item:not(:last-child){
+				border-bottom: 1px solid #EBEBE9;
+			}
+			
+			.item>div{
+				color: #909090;
+			}
+			
+			.text-right {
+				width: 35px;
+			}
+			
+			.ct-icon-arrow-right {
+				color: #909090;
+				font-size: 20px;
+				display: inline-block;
+				height: 100%;
+				z-index: 997;
+			}
+			
+			.on_border,
+			.off_border{
+				width: 40px;
+				height: 20px;
+				background-color: rgb(76,210,100);
+				border-radius: 24px;
+			}
+			.on_child,
+			.off_child{
+				float: right;
+				width: 20px;
+				height: 20px;
+				background-color: #fff;
+				border-radius: 20px;
+			}
+			.off_border{
+				background-color: #919297;
+			}
+			.off_child{
+				float: left;
+			}
+			
+			.btn{
+				margin: 16px 0;
+				width: 65%;
+				border-radius: 50px;
+				padding: 12px 0;
+				border: 1px solid #FE5F99;
+				background-color: #fff;
+				color: #FE5F99;
+			}
+			.bind {
+				font-size: 12px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+				<div class="item-box">
+					<div class="item flex-box flex-h-ce" onclick="openWin('win','change_pwd','修改密码','mine','change_pwd')" tapmode>
+						<div class="flex-1">修改密码</div>
+						<div class="text-right">
+							<div class="ct-icon-arrow-right "></div>
+						</div>
+					</div>
+				</div>
+				<div class="item-box" >
+					<div class="item flex-box flex-h-ce" onclick="openWin('win','black_list','黑名单','mine','black_list')" tapmode>
+						<div class="flex-1">黑名单</div>
+						<div class="text-right">
+							<div class="ct-icon-arrow-right "></div>
+						</div>
+					</div>
+					<div class="item flex-box flex-h-ce" onclick="openWin('win','live_tips_list','开播提醒','mine','live_tips_list')" tapmode>
+						<div class="flex-1">开播提醒</div>
+						<div class="text-right">
+							<div class="ct-icon-arrow-right "></div>
+						</div>
+					</div>
+					<div class="item flex-box flex-h-ce">
+						<div class="flex-1">未关注人私信</div>
+						<div class="remind" onclick="msgHandle(this)" tapmode>
+							
+						</div>
+					</div>
+				</div>
+				<div class="item-box" >
+					<div class="item flex-box flex-h-ce" onclick="clear_Cache()" tapmode="">
+						<div class="flex-1">清除缓存</div>
+						<div class="cache">
+							0M
+						</div>
+					</div>
+				</div>
+				<div class="item-box">
+					<div class="item flex-box flex-h-ce" onclick="openWin('win','helper','帮助中心','mine','helper')" tapmode>
+						<div class="flex-1">帮助中心</div>
+						<div class="text-right">
+							<div class="ct-icon-arrow-right "></div>
+						</div>
+					</div>
+					<div class="item flex-box flex-h-ce" onclick="openWin('win','feedback','意见反馈','mine','feedback')" tapmode>
+						<div class="flex-1">意见反馈</div>
+						<div class="text-right">
+							<div class="ct-icon-arrow-right "></div>
+						</div>
+					</div>
+					<div class="item flex-box flex-h-ce" onclick="openWin('win','about_us','关于我们','mine','about_us')" tapmode>
+						<div class="flex-1">关于我们</div>
+						<div class="text-right">
+							<div class="ct-icon-arrow-right "></div>
+						</div>
+					</div>
+				</div>
+				<div class="bind_box item-box hidden">
+					<div class="item flex-box flex-h-ce" onclick="" tapmode>
+						<div class="flex-1">绑定手机号</div>
+						<div class="bind"></div>
+						<div class="text-right">
+							<div class="ct-icon-arrow-right "></div>
+						</div>
+					</div>
+				</div>
+				<div class="flex-box flex-h-zhu">
+					<div class="btn" onclick="logout()"tapmode>退出登录</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/fs.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/template" template="remind">
+		{{? it && it == 0}}
+			<div class="border on_border">
+				<div class="child on_child"></div>
+			</div>
+		{{?? it && it == 1}}
+			<div class="border off_border">
+				<div class="child off_child"></div>
+			</div>
+		{{?}}
+	</script>
+	<script type="text/javascript">
+		function msgHandle(_this){
+		var border = $api.dom(_this, '.border'),
+					child = $api.dom(_this, '.child');
+			if($api.hasCls(border, 'on_border')) {
+				$api.removeCls(border, 'on_border');
+				$api.removeCls(child, 'on_child');
+				$api.addCls(border, 'off_border');
+				$api.addCls(child, 'off_child');
+				tidings(1);//不提醒
+			}else {
+				$api.removeCls(border, 'off_border');
+				$api.removeCls(child, 'off_child');
+				$api.addCls(border, 'on_border');
+				$api.addCls(child, 'on_child');
+				tidings('0');//正常
+			}
+		}
+		//未关注人私信
+		function tidings(tidings){
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'tidings',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						tidings: tidings
+					}
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: false,
+				success: function(ct) {
+					if(tidings == 0){
+						api.toast({
+							msg: '开启未关注人私信成功~',
+							duration: 500,
+							location: 'middle'
+						});
+					}else{
+						api.toast({
+							msg: '关闭未关注人私信成功~',
+							duration: 500,
+							location: 'middle'
+						});
+					}
+					var memberInfo = $api.getStorage(CONFIG.memberInfo);
+					memberInfo.tidings = tidings;
+					$api.setStorage(CONFIG.memberInfo, memberInfo);
+				}
+			});
+		}
+		
+		//清理缓存
+		function clear_Cache(){
+			api.confirm({
+				title: '提示信息',
+				msg: '你确定要清除缓存吗？',
+				buttons: ['确定','取消']
+			}, function(ret, err){
+				if(ret.buttonIndex == 1){
+					var fs = api.require('fs');
+					api.showProgress({
+						title: '处理中...'
+					});					
+					//关闭本地数据库
+					DB.closeDatabase({
+						name: CONFIG.DB.NAME,
+						success:function(){
+							//删除数据库文件夹
+							fs.rmdir({
+								path: 'fs://db'
+							}, function(ret, err){
+								if(ret.status){
+									//重新初始化数据库
+									DB.init({
+										success:function(){
+											api.clearCache({
+												timeThreshold: 0
+											}, function(ret, err){
+												api.getCacheSize({
+													sync: false
+												}, function(ret, err){
+													api.hideProgress();
+													var size = ret.size / Math.pow(1024, 2);
+													$api.text($api.dom('.cache'), (size ? size.toFixed(2) : size.toFixed(2)) + 'MB');
+													api.toast({
+														msg: '缓存清理完毕'
+													});
+												});											
+											});
+										}
+									});
+									//清除apicloud产生的缓存
+								}else{
+									api.hideProgress();
+									api.toast({
+										msg: '缓存清理失败'
+									});
+								}
+							});
+						}
+					});
+				}
+			});
+		}
+		
+		//退出登录
+		function logout(){
+			api.confirm({
+				title: '提示消息',
+				msg: '确定退出登录吗？',
+				buttons: ['确定','取消']
+			},function(ret){
+				if(ret.buttonIndex == 1){
+					updateRegistrationId(0, function() {
+						relogin();
+					}, true);
+				}
+			})
+		}
+		
+		//获取消息推送
+		function init(){
+			var memberInfo = $api.getStorage(CONFIG.memberInfo);
+			if(memberInfo.weixin || memberInfo.qq || memberInfo.weibo ){
+				$api.removeCls($api.dom('.bind_box'),'hidden');
+				if(memberInfo.username == ''){
+					$api.text($api.dom('.bind'),'未绑定');
+					$api.attr($api.dom('.bind_box .item'),'onclick','openBind()');
+				}else{
+					$api.text($api.dom('.bind'),'已绑定');
+				}
+			}
+			if(memberInfo && memberInfo.tidings){
+				T.html('.remind', 'remind', memberInfo.tidings);
+			}
+			api.getCacheSize(function(ret){
+				var size = ret.size;
+				$api.html($api.dom('.cache'), Math.round((size/1024)/1024).toFixed(2) +'MB');
+			});
+		}
+		
+		apiready = function(){
+			init();
+			api.addEventListener({
+				name: 'bind'
+			},function(){
+				var memberInfo = $api.getStorage(CONFIG.memberInfo);
+				if(memberInfo.weixin || memberInfo.qq || memberInfo.weibo ){
+					$api.removeCls($api.dom('.bind_box'),'hidden');
+					if(memberInfo.username == ''){
+						$api.text($api.dom('.bind'),'未绑定');
+						$api.attr($api.dom('.bind_box .item'),'onclick','openBind()');
+					}else{
+						$api.text($api.dom('.bind'),'已绑定');
+					}
+				}
+			})
+		}
+	</script>
+</html>

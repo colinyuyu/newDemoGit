@@ -1,0 +1,183 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>Document</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			html, body, #wrap, #main {
+				background-color: rgba(255,255,255,0);
+				
+			}
+			.circle {
+				z-index: 2;
+				background-color: rgba(255,255,255,0);
+			}
+			.circle .img {
+				background-image: url(../../image/bar-live1.png);
+				width: 45px;
+				height: 45px;
+				border-radius: 50%;
+				z-index: 3;
+				position: relative;
+				margin: 0 auto;
+				top: 10px;
+				background-color: rgba(255,255,255,0);
+			}
+			/*
+			 .circle,
+			 .circle_line,
+			 .rect {
+			 border-radius: 50%;
+			 width: 60px;
+			 height: 60px;
+			 background-color: rgba(0,0,0,0);
+			 position: absolute;
+			 margin-top: 1px;
+			 }
+			 .circle_line {
+			 width: 60px;
+			 height: 60px;
+			 border:0px solid rgba(0,0,0,0);
+			 margin-top: -1px;
+			 top: 1px;
+			 }
+			 .rect {
+			 height: 48px;
+			 width: 60px;
+			 top: 6.48px;
+			 border-radius: 18px 18px 0 0;
+			 z-index: 1;
+			 }
+			 */
+		</style>
+	</head>
+	<body>
+		<div class="circle" onclick="openLive()" tapmode>
+			<div class="img"></div>
+		</div>
+		<!--
+		<div class="rect"></div>
+		<div class="circle_line"></div> -->
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript">
+		function openLive() {
+		$api.setStorage('secretState', 0);
+		$api.setStorage('secretPassword', 0);
+		$api.setStorage('secretDiamond', 0);
+			ajax.get({
+				ctrl : 'zhiboApp',
+				fn : 'livestate',
+				hideLoading : true,
+				showError : true,
+				showProgress : true,
+				data : {
+					values : {
+						id : $api.getStorage(CONFIG.memberId),
+						token : $api.getStorage(CONFIG.token)
+					}
+				},
+				success : function(ct) {
+					if (ct.state == 1) {
+						ajax.get({
+							ctrl : 'zhiboApp',
+							fn : 'roomstate',
+							hideLoading : true,
+							showError : true,
+							showProgress : true,
+							data : {
+								values : {
+									id : $api.getStorage(CONFIG.memberId),
+									token : $api.getStorage(CONFIG.token)
+								}
+							},
+							success : function(ct) {
+								if (ct.state == '100') { //是否创建私密房间 0为给用户选择
+									api.confirm({
+										title : '创建房间',
+										msg : '是否创建私密房间',
+										buttons : ['是', '否']
+									}, function(ret, err) {
+										var index = ret.buttonIndex;
+										if (index == '1') {
+											api.prompt({
+												title : '请输入6位房间密码',
+												buttons : ['确定', '取消']
+											}, function(ret, err) {
+												var index = ret.buttonIndex;
+												var secretPassword = ret.text;
+											if (index == 1) {
+											
+											api.prompt({
+												title : '进入房间所需钻石数',
+												text : 0,
+												buttons : ['确定', '取消']
+											}, function(ret, err) {
+												var index = ret.buttonIndex;
+												var secretDiamond = ret.text;
+												if (index == 1) {
+												
+												if (secretPassword.length == 6 && /^\d+$/.test(parseInt(secretDiamond))) {
+												
+												$api.setStorage('secretPassword', secretPassword);
+												$api.setStorage('secretDiamond', secretDiamond);
+												$api.setStorage('secretState', 1);
+												startlive();
+												
+												}	
+												
+												//var reg = new RegExp("^\d+$");
+												if(!/^\d+$/.test(parseInt(secretDiamond)) || secretPassword.length != 6){  
+											        api.alert({
+															title : '钻石数或密码位数不正确!'
+														}, function(ret, err) {
+															 return;
+														});
+											    } 
+												
+												} else {
+													return;
+												}
+											});
+												
+												} else {
+													return;
+												}
+											});
+										} else {
+											startlive();
+										}
+									});
+								} else {
+									startlive();
+								}
+							}
+						});
+					} else {
+						Tool.toast('请先申请播放权限');
+					}
+				}
+			});
+		}
+
+		apiready = function() {
+		}
+		function startlive() {
+			api.openWin({
+				name : 'LiveIndex',
+				url : api.wgtRootDir + '/zhibo/html/window/live_win.html',
+				slidBackEnabled : false,
+				pageParam : {
+					frameName : 'live_index',
+					frameUrl : api.wgtRootDir + '/zhibo/html/live/index.html',
+					bounces : false
+				}
+			});
+		}
+	</script>
+</html>

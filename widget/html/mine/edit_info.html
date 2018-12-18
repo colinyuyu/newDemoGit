@@ -1,0 +1,524 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>编辑资料</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			html,body,#main {
+				font-size: 14px;
+				background-color: #FCFBF5;
+			}
+			
+			.item-box{
+				margin-top: 8px;
+				background-color: #fff;
+				border-top: 1px solid #EBEBE9;
+				border-bottom: 1px solid #EBEBE9;
+			}
+			
+			.item{
+				padding: 10px;
+				margin-left: 10px;
+				min-height: 61px;
+			}
+			
+			.item-box .item:not(:last-child){
+				border-bottom: 1px solid #EBEBE9;
+			}
+			
+			.item>div{
+				color: #909090;
+			}
+			
+			.text-right {
+				width: 35px;
+			}
+			
+			.ct-icon-arrow-right {
+				color: #909090;
+				font-size: 20px;
+				display: inline-block;
+				height: 100%;
+				z-index: 997;
+			}
+			
+			.img-frm,
+			.img {
+				background-image: url(../../image/avatar.jpg);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				border-radius: 50%;
+				width: 70px;
+				height: 70px;
+			}
+			.text-over,
+			.name {
+				display:-webkit-box!important;
+				overflow:hidden;
+				text-overflow:ellipsis;
+				word-break:break-all;
+				-webkit-box-orient:vertical;
+				-webkit-line-clamp:2;
+			}
+			select{
+				border: none;
+				border-radius: 0;
+				background-color: rgba(0,0,0,0);
+				margin: auto 0;
+				outline: none;
+				-webkit-appearance: none;
+				direction: rtl;
+				color: #909090;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+				<div class="item-box">
+					<div class="item avatar flex-box flex-h-ce" imgUrl="" data-status="" data-key="" data-callbackEvent="uploadAvatar" onclick="uploadAvatar()" tapmode>
+						<div class="flex-1">头像</div>
+						<div class="img-frm">
+							<div class="img relative" data-original="">
+								<div class="upload-status flex-box hidden" style="background-color: rgba(0,0,0,0.4);border-radius:50%;-webkit-border-radius:50%;font-size: 11px;">
+									<div class="flex-1" style="color: #fff;">
+										等待上传
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="item-box">
+					<div class="item flex-box flex-h-ce" onclick="nickname(this)" tapmode="">
+						<div class="flex-1" style="min-width: 40px;">昵称</div>
+						<div class="name text-overflow"></div>
+						<div class="text-right">
+							<div class="ct-icon-arrow-right "></div>
+						</div>
+					</div>
+					<div class="item flex-box flex-h-ce" onchange="selectSex()" tapmode="">
+						<div class="flex-1">性别</div>
+						<select class="flex-1 text-right text" name="sex" style="font-size: 14px;">
+							
+						</select>
+						<div class="text-right">
+							<div class="ct-icon-arrow-right "></div>
+						</div>
+					</div>
+					<div class="item flex-box flex-h-ce" onclick="openWin('win','signature','个性签名','mine','signature')" tapmode>
+						<div class="flex-1" style="min-width: 40px;">签名</div>
+						<div class="signature text-overflow"></div>
+						<div class="text-right">
+							<div class="ct-icon-arrow-right "></div>
+						</div>
+					</div>
+				</div>
+				<div class="item-box">
+					<div class="item flex-box flex-h-ce" onclick="changeAge(this)"tapmode="">
+						<div class="flex-1">年龄</div>
+						<div class="age"></div>
+						<div class="text-right">
+							<div class="ct-icon-arrow-right "></div>
+						</div>
+					</div>
+					<div class="item flex-box flex-h-ce" onclick="openWin('win','city','城市','component','city')" tapmode>
+						<div class="flex-1">所在城市</div>
+						<div class="city" >
+						</div>
+						<div class="text-right">
+							<div class="ct-icon-arrow-right "></div>
+						</div>
+					</div>
+				</div>
+				<div class="item-box ">
+					<div class="item certification flex-box flex-h-ce" onclick="" >
+						<div class="flex-1">实名认证</div>
+						<div class="cer"></div>
+						<div class="text-right">
+							<div class="ct-icon-arrow-right "></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/template" template="avatar">
+		<div class="close hidden"></div>
+		<div class="img relative" style="background-image: url({{= Tool.imageCompressByQiNiu(it, 0, 800, 800) }});background-size: cover;background-position: center;">
+			<div class="upload-status flex-box " style="background-color: rgba(0,0,0,0.4);border-radius:50%;-webkit-border-radius:50%;font-size: 11px;">
+				<div class="flex-1 status" style="color: #fff;">
+					等待上传
+				</div>
+			</div>
+		</div>
+	</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/upload.js" ></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript" src="../../script/jquery.lazyload.min.js" ></script>
+	<script type="text/javascript" src="../../script/jquery.ellipsis.js" ></script>
+	<script type="text/template" template="city">
+		{{? $api.getStorage(CONFIG.memberInfo).city}}
+			{{= getCity()}}
+		{{??}}
+			请选择所在城市
+		{{?}}
+	</script>
+	<script type="text/template" template="sex">
+		{{? it == '0'}}
+		<option value="0">保密</option>
+		<option value="1">男</option>
+		<option value="2">女</option>
+		{{?? it == '1'}}
+		<option value="1">男</option>
+		<option value="2">女</option>
+		{{?? it == '2'}}
+		<option value="2">女</option>
+		<option value="1">男</option>
+		{{?}}
+	</script>
+	<script type="text/javascript">
+		var memberinfo = '';
+		
+		//实名认证
+		function certification(){
+			api.openWin({
+				name: 'certification',
+				url: api.wgtRootDir + '/zhibo/html/window/win.html',
+				pageParam:{
+					headerTitle: '实名认证',
+					frameName: 'certification',
+					frameUrl: api.wgtRootDir + '/zhibo/html/mine/certification.html'
+				}
+			})
+		}
+		
+		var avatar = '';
+		//上传头像
+		function uploadAvatar(){
+			Tool.actionSheet({
+				buttons:['拍照上传','上传手机中的照片'],
+				success:function(buttonIndex){
+					if(buttonIndex < 3){
+						Tool.getOnePic({
+							encodingType: 'jpg',
+							sourceType: buttonIndex === 1 ? 'camera' : 'library',
+							allowEdit: true,
+							success:function(ret){
+								avatar = ret.data;
+								if('ios' == api.systemType){
+									T.html('.img-frm', 'avatar', ret.data);
+									Upload.init({
+										file: {
+											url: ret.data,
+											callbackEvent: 'uploadAvatar'
+										}
+									});
+								}else{
+									/*若为android系统，则使用screenClip模块进行截图*/
+									if(ret.data){
+										api.openWin({
+											name: 'imageClip',
+											url: api.wgtRootDir + '/zhibo/html/window/image_clip.html',
+											pageParam: {
+												imgSrc: ret.data,
+												callbackEvent: 'getAvatarClipImage'
+											}
+										});	
+									}
+								}
+							}
+						});
+					}
+				}
+			})
+		}
+		//修改昵称
+		function nickname(_this){
+			var name = $api.dom(_this,'.name'),
+					_text = $api.text(name);
+			api.prompt({
+		    title: '请输入昵称', 
+		    buttons: ['取消','确定'],
+		    text: _text
+	   	},function(ret){
+	   		if(ret.buttonIndex == 2){
+	   			if(!is_define(ret.text)){
+	   				Tool.toast('昵称不能为空~');
+	   			}else{
+	   				$api.text(name,ret.text);
+	   				if(_text == ret.text){
+	   					return;
+	   				}
+	   				ajax.get({
+							ctrl: 'zhiboApp',
+							fn: 'setnickname',
+							data: {
+								values: {
+									id: $api.getStorage(CONFIG.memberId),
+									token: $api.getStorage(CONFIG.token),
+									nickname: ret.text
+								}
+							},
+							showError: true,
+							hideLoading: true,
+							showProgress: true,
+							success: function(ct){
+								Tool.toast('修改昵称成功~');
+								api.sendEvent({
+									name: 'refresh_nickname',
+									extra: {
+										nickname: ret.text
+									}
+								});
+							}
+						});
+	   			}
+	   		}
+	   	});
+		}
+		
+		//选择性别
+		function selectSex(){
+			var sexVal = $api.val($api.dom('[name=sex]'));
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'sex',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						sex: sexVal
+					}
+				},
+				showError: true,
+				hideLoading: true,
+				showProgress: true,
+				success: function(ct){
+					Tool.toast('修改性别成功~');
+					api.sendEvent({
+						name: 'refresh_sex',
+						extra:{
+							sex: sexVal
+						}
+					});
+				}
+			});
+		}
+		
+		//年龄
+		function changeAge(_this){
+			var age = $api.dom(_this,'.age'),
+					_text = $api.text(age);
+			if(_text == '保密'){
+				_text = 0;
+			}
+			api.prompt({
+		    title: '请输入年龄', 
+		    buttons: ['确定','取消'],
+		    type: 'number',
+		    text: _text
+	   	},function(ret){
+	   		if(ret.buttonIndex == 1){
+	   			if(!is_define(ret.text)){
+	   				Tool.toast('年龄不能为空~');
+	   			}else{
+	   				if(ret.text == '0'){
+	   					$api.text(age,'保密');
+	   				}else{
+	   					$api.text(age,ret.text);
+	   				}
+	   				if(_text == ret.text){
+	   					return;
+	   				}
+	   				ajax.get({
+							ctrl: 'zhiboApp',
+							fn: 'age',
+							data: {
+								values: {
+									id: $api.getStorage(CONFIG.memberId),
+									token: $api.getStorage(CONFIG.token),
+									age: ret.text
+								}
+							},
+							showError: true,
+							hideLoading: true,
+							showProgress: true,
+							success: function(ct){
+								Tool.toast('修改年龄成功~');
+								memberinfo = $api.getStorage(CONFIG.memberInfo);
+								memberinfo.age = ret.text;
+								$api.setStorage(CONFIG.memberInfo,memberinfo);
+							}
+						});
+	   			}
+	   		}
+	   	});
+		}
+		
+		//获取城市
+		function getCity() {
+			var area = $api.getStorage(CONFIG.memberInfo).area;
+			var str = '';
+			if(area && area instanceof Array && area.length != 0) {
+				if(!area[1] && area[0]){
+					str = area[0].name;
+					return str;
+				}
+				if(!area[1]) return '';
+				if(!area[1].name) return '';
+				str = area[1].name;
+			}
+			return str;
+		}
+		
+		apiready = function(){
+			memberInfo(function(ct){
+				//头像
+				$api.attr($api.dom('.img'),'data-original',Tool.imageCompressByQiNiu(ct.avatar, 0, 200, 200));
+				//名字
+				$api.html($api.dom('.name'),ct.nickname);
+				//性别
+				T.html('select[name=sex]','sex',ct.sex);
+				//签名
+				$api.html($api.dom('.signature'),ct.signature || '');
+				//年龄
+				if(ct.age == '0'){
+					$api.html($api.dom('.age'),'保密');
+				}else{
+					$api.html($api.dom('.age'),ct.age);
+				}
+				//城市
+				T.html('.city','city',ct.area);
+				//实名认证
+				if(ct.realname){
+					$api.text($api.dom('.cer'),'已认证');
+				}else{
+					$api.attr($api.dom('.certification'),"onclick","certification()");
+					$api.text($api.dom('.cer'),'未认证');
+					api.parseTapmode();
+				}
+//				T.html('#main','main',ct);
+				ellipsisOne();
+				$('div.img').lazyload({
+		      effect : "fadeIn"
+		    });
+			});
+			
+			//监听签名
+			api.addEventListener({
+				name: 'signature'
+			},function(ret){
+				if(ret && ret.value){
+					var signature = ret.value.signature;
+					memberinfo = $api.getStorage(CONFIG.memberInfo);
+					memberinfo.signature = signature;
+					$api.html($api.dom('.signature'), signature);
+					ellipsisOne();
+					$api.setStorage(CONFIG.memberInfo, memberinfo);
+				}
+			});
+			
+			//监听是否实名认证
+			api.addEventListener({
+				name: 'certification'
+			},function(ret){
+				$api.text($api.dom('.cer'),'已认证');
+				$api.attr($api.dom('.certification'),'onclick','');
+			});
+			
+			//监听城市切换
+			api.addEventListener({
+				name: 'city'
+			},function(ret){
+				if(ret && ret.value){
+					var	value = ret.value,
+							pid = value.pid,
+							cid = value.cid,
+							pname = value.pname,
+							cname = value.cname;
+					var memberinfo = $api.getStorage(CONFIG.memberInfo);
+					memberinfo.city = pid + ','+ cid;
+					var area = [{
+						id: pid,
+						name: pname
+					},{
+						id: cid,
+						name: cname
+					}];
+					memberinfo.area = [];
+					memberinfo.area = area;
+					if(cname){
+						$api.html($api.dom('.city'), cname);
+					}else{
+						$api.html($api.dom('.city'), pname);
+					}
+					$api.setStorage(CONFIG.memberInfo,memberinfo);
+					
+//					var memberinfo = $api.getStorage(CONFIG.memberInfo);
+//					memberinfo.city = ret.value.cityname;
+//					$api.html($api.dom('.city'),ret.value.cityname);
+//					$api.setStorage(CONFIG.memberInfo,memberinfo);
+				}
+			})
+			
+			//上传头像
+			api.addEventListener({
+				name: 'uploadAvatar'
+			}, function(ret, err) {
+				var key = $api.attr($api.dom('.avatar'), 'data-key');
+				if(key) {
+					ajax.get({
+						ctrl: 'zhiboApp',
+						fn: 'avatar',
+						data: {
+							values: {
+								id: $api.getStorage(CONFIG.memberId),
+								token: $api.getStorage(CONFIG.token),
+								avatar: key
+							}
+						},
+						hideLoading: true,
+						showError: true,
+						showProgress: true,
+						success: function() {
+							Tool.toast('修改头像成功~');
+							//刷新我的头像
+							api.showProgress();
+							api.sendEvent({
+								name: 'refresh_avatar',
+								extra: {
+									avatar: avatar
+								}
+							});
+							api.hideProgress();
+						}
+					});
+				}else {
+					Tool.toast('修改头像失败，请重新上传~');
+				}
+			});
+			
+			//监听头像截图
+			api.addEventListener({
+				name: 'getAvatarClipImage'
+			},function(ret,err){
+				T.html('.img-frm', 'avatar', ret.value.url);
+				avatar = ret.value.url;
+				Upload.init({
+					file: {
+						url: ret.value.url,
+						callbackEvent: 'uploadAvatar'
+					}
+				});
+			});
+		}
+	</script>
+</html>

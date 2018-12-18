@@ -1,0 +1,117 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>实名认证</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			#main {
+				padding: 0 10px;
+				font-size: 14px;
+			}
+			.tel,
+			.pwd,
+			.code{
+				padding-top: 30px;
+				padding-bottom: 10px;
+				border-bottom: 1px solid #d9d9d9;
+			}
+			input {
+				padding-left: 10px;
+				width: 100%;
+			}
+			.login_btn {
+				padding: 0 25px;
+				padding-top: 40px;
+			}
+			.login_btn > div {
+				border: 1px solid #FE5F99;
+				background-color: #FFFFFF;
+				padding: 10px 0;
+				color: #FE5F99;
+				border-radius: 20px;
+			}
+			.forget {
+				color: #909090;
+			}
+			.get_code {
+				color: #909090;
+				font-size: 12px;
+				border-bottom: 1px solid #909090;
+			}
+		</style>
+	</head>
+	<body >
+		<div id="wrap">
+			<div id="main" >
+				<div class="tel">
+					<input name="realname" type="text" placeholder="请输入真实姓名" />
+				</div>
+				<div class="pwd">
+					<input name="idcard" type="text" placeholder="请输入身份证号" />
+				</div>
+				<div class="login_btn">
+					<div class="text-center" onclick="confirm(event)" tapmode="">确定</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript">
+		//取消
+		function cancel(event){
+			event.stopPropagation();
+			api.closeFrame();
+		}
+		//确定
+		function confirm(event){
+			event.stopPropagation();
+			var name = $api.trimAll($api.val($api.dom('[name=realname]'))),
+					cardno = $api.trimAll($api.val($api.dom('[name=idcard]')));
+			if(!name){
+				Tool.toast('请输入您的真实姓名~');
+				return;
+			}
+			if(!cardno){
+				Tool.toast('请输入您的身份证号码~');
+				return;
+			}
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'certification',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						realname: name,
+						idnumber: cardno
+					}
+				},
+				showProgress: true,
+				hideLoading: true,
+				showError: true,
+				success: function(){
+					Tool.toast('实名认证成功~');
+					api.showProgress();
+					memberInfo(function() {
+						api.hideProgress();
+						api.sendEvent({
+							name: 'certification'
+						});
+						setTimeout(function(){
+							api.closeWin();
+						},500);
+					});
+				}
+			});
+		}
+
+	
+		apiready = function(){
+		}
+	</script>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/ct.css" />
+		<style type="text/css">
+			.pic {
+				width: 100%;
+				height: 100%;
+			}
+			.main{
+				background-image: url(launch/bg_seamless.png);
+			}
+			#pointer a {
+				background-color: transparent;
+				width: 6px;
+				height: 6px;
+				border-radius: 6px;
+				margin-right: 2px;
+				border: 1px solid rgb(25,166,207);
+			}
+			
+			._btn {
+				width: 40%;
+				margin-left: 30%;
+				margin-right: 30%;
+				border-radius: 5px;
+				height: 40px;
+				font-size: 15px;
+				padding: 0px;
+				position: absolute;
+				bottom: 10%;
+				color: rgb(25,166,207);
+			}
+			#pointer a.active {
+				background-color: rgb(25,166,207);
+			}
+			#pointer{
+				bottom: 5%;
+			}
+			.website{
+				position: absolute;
+				bottom: 3%;
+				width: 100%;
+				height: 10px;
+				text-align: center;
+				background-color: transparent;
+			}
+			.web{
+				background-image: url(launch/text_milianjie.png);
+				background-size: 110px 10px;
+				background-repeat: no-repeat;
+				background-position: center;
+				width: 110px;
+				height: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="wrap">
+			<div class="header">
+			</div>
+			<div class="main">
+				<div id="slider" class="swipe">
+					<div class="swipe-wrap">
+						<div>
+							<div class="pic" style="background: url(launch/launch1.png) center; background-size:cover  ; background-repeat: no-repeat;  "></div>
+						</div>
+						<div>
+							<div class="pic" style="background: url(launch/launch2.png) center; background-size:cover ; background-repeat: no-repeat;  "></div>
+						</div>
+						<div>
+							<div class="pic" style="background: url(launch/launch3.png) center; background-size:cover ; background-repeat: no-repeat;  "></div>
+						</div>
+						<div>
+							<div class="pic" style="background: url(launch/launch4.png) center; background-size:cover ; background-repeat: no-repeat;  "></div>
+						</div>
+						<div>
+							<div class="pic" style="background: url(launch/launch5.png) center; background-size:cover ; background-repeat: no-repeat;  ">
+								<div class="_btn" style="z-index: 0;background-image: url(launch/button.png);background-position: center; background-size:contain ; background-repeat: no-repeat; " tapmode='' onclick="openApp()" ></div>
+							</div>
+						</div>
+					</div>
+					<div id="pointer">
+						<a id="p0" class="point active"></a>
+						<a id="p1" class="point"></a>
+						<a id="p2" class="point"></a>
+						<a id="p3" class="point"></a>
+						<a id="p4" class="point"></a>
+					</div>
+				</div>
+				<div class="website flex-box flex-center-center" style="z-index: 1;" >
+					<div class="web"></div>
+				</div>
+			</div>
+			<div class="footer"></div>
+		</div>
+	</body>
+	<script src="script/api.js" type="text/javascript" charset="utf-8"></script>
+	<script src="script/swipe.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		function openApp() {
+			$api.setStorage('firstOpen', false);
+			api.execScript({
+				name: 'root', 
+				script: 'openLogin();'
+			});
+		}
+		apiready = function() {
+			openApp()
+//			var pic = $api.domAll('.pic');
+//			for (var i = 0; i < pic.length; i++) {
+//				$api.css(pic[i], 'width:' + api.frameWidth + 'px;height:' + api.frameHeight + 'px;');
+//			}
+//			$api.css($api.dom('._btn'), 'width:' + parseInt(api.frameWidth*0.4) + 'px;height:' + parseInt(api.frameWidth*0.4*0.3) + 'px;background-size:'+parseInt(api.frameWidth*0.4) + 'px '+parseInt(api.frameWidth*0.4*0.3)+'px;');
+//			window.mySwipe = new Swipe(document.getElementById('slider'), {
+//				startSlide: 0,
+//				speed: 300,
+//				auto: 0,
+//				continuous: false,
+//				disableScroll: true,
+//				stopPropagation: true,
+//				callback: function(index, elem) {
+//					try {
+//						var pointer = $api.byId('pointer');
+//						var p = $api.domAll(pointer, '.point');
+//						if (index == p.length) {
+//							for (var i = 0; i < p.length; i++) {
+//								$api.removeCls(p[i], 'active');
+//							}
+//							$api.addCls($api.byId('p0'), 'active');
+//						} else if (index - p.length == 1) {
+//							for (var i = 0; i < p.length; i++) {
+//								$api.removeCls(p[i], 'active');
+//							}
+//							$api.addCls($api.byId('p1'), 'active');
+//						} else {
+//							for (var i = 0; i < p.length; i++) {
+//								$api.removeCls(p[i], 'active');
+//							}
+//							$api.addCls($api.byId('p' + index), 'active');
+//						}
+//					} catch (e) {}
+//				},
+//				transitionEnd: function(index, elem) {}
+//			});
+		}
+	</script>
+
+</html>

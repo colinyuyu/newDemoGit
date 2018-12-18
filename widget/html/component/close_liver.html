@@ -1,0 +1,92 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>直播结束</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			#main {
+				background-color: #23233B;
+				padding: 0 10px;
+			}
+			#main > div {
+				color: #fff;
+			}
+			.end {
+				font-size: 26px;
+				font-weight: bold;
+			}
+			#main .follow {
+				padding-top: 25px;
+				color: #D9D9D9;
+			}
+			.bottom_btn {
+				padding-top: 50px;
+				width: 100%;
+			}
+			.bottom_btn > div {
+				padding: 10px 0;
+				color: #23233B;
+				border-radius: 25px;
+			}
+			.bottom_btn .follow_btn {
+				background-color: #FE5F99;
+			}
+			.logout {
+				background-color: #fff;
+				margin-top: 15px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main" class="flex-box-v flex-h-ce flex-h-zhu">
+				<div class="end">
+					是否保存该直播
+				</div>
+				<div class="follow">回放该直播，不让粉丝错过你的任何直播</div>
+				<div class="bottom_btn">
+					<div class="follow_btn text-center" onclick="Anchor.saveVedio()" tapmode>保存</div>
+					<div class="logout text-center" onclick="api.closeWin()" tapmode>退出</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/anchor.js" ></script>
+	<script type="text/javascript">
+		var values = {};
+		values.id = $api.getStorage(CONFIG.memberId);
+		values.token = $api.getStorage(CONFIG.token);
+		function save(){
+			ajax.get({
+//				ctrl: 'zhiboApp',
+				ctrl: 'zhiboApp',
+				fn: 'keeplive',
+				data: {
+					values: values
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: true,
+				success: function(ct) {
+					Tool.toast('保存成功~');
+					api.sendEvent({
+						name: 'saveLive'
+					});
+					setTimeout('api.closeWin()', 500);
+				}
+			});
+		}
+		apiready = function(){
+			var param = api.pageParam;
+			if(param){
+				values.roomid = param.roomId;
+			}
+		}
+	</script>
+</html>

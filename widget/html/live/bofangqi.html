@@ -1,0 +1,173 @@
+﻿<!doctype html>
+<html>
+	<head design-width="750">
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<title>Demo</title>
+		<link rel="stylesheet" href="../../xiaowucss/style.css" />
+		<!--页面样式-->
+		<link rel="stylesheet" href="../../xiaowucss/common.css" />
+		<!--常用样式-->
+		<link rel="stylesheet" href="../../xiaowucss/animate.min.css" />
+		<!--CSS3动画库-->
+		<script src="../../xiaowucss/auto-size.js"></script><!--设置字体大小-->
+	</head>
+	<style>
+		.heiuye {
+			display: none;
+		}
+		.daixao {
+			width: 100%;
+			height: 100%
+		}
+	</style>
+	<body>
+		
+	</body>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript" src="../../script/jquery.lazyload.min.js" ></script>
+	<script>
+			function videoPlay(downUrl){
+			var moviePlayer = api.require('moviePlayer');
+	moviePlayer.open({
+          rect:{
+          x: 0,
+          y: 0,
+          w:api.frameWidth,
+          h:api.frameHeight
+          },
+          styles:{
+          head:{
+          bg: 'rgba(161,161,161,0.5)',
+          height: 0,
+          y:0,
+          title:{
+          size:0,
+          color:'#fff',
+          width:0,
+          leftMargin:0
+          },
+          backSize: 30,
+          backImg:'widget://image/back.png',
+          customButtons:[{
+          w:30,
+          h:30,
+          rightMagin:10,
+          img:'widget://image/image/collect.png',
+          imgSelected:'fs://image/collectSelected.png',
+          }]},
+          foot:{  
+          bg: 'rgba(0,0,0,0.5)',
+          height: 144,
+          palyBtn:{
+          size: 0,
+          playImg:'widget://image/play.png',
+          pauseImg:'widget://image/pause.png',
+          marginLeft:5
+          },
+          currentTimeLabel:{
+          textSize:0,
+          textColor:"#FFF",
+          textWidth: 0,
+          marginLeft:0
+          },
+          seekBar:{
+          sliderImg:'widget://image/circle.png',
+          sliderW : 1,
+          sliderH : 1,
+          progressColor: '#696969',
+          progressSelected: '#76EE00',
+          marginLeft:1,
+          marginRight:1
+          },
+          totalTimeLabel:{
+          textSize:14,
+          textColor:"#FFF",
+          textWidth: 43,
+          marginRight:5
+          },
+          fullscreenBtn:{
+          size:0,
+          verticalImg:'widget://image/vertical.png',
+          horizontalImg:'widget://image/horizontal.png',
+          }
+          } },
+           path:downUrl,
+           autoPlay: true,
+           fixedOn: 'bofangqi',
+           isShowStatusBar: false,
+           autorotation: false
+            },function(ret, err){
+                if(ret){
+                    // alert(JSON.stringify(ret));
+                // } else {
+                    // alert(JSON.stringify(err));
+                }
+
+});
+		}
+		apiready = function() {
+		videoPlay(api.pageParam.videourl);
+		//alert('SS'+JSON.stringify(api.pageParam.uid));
+		var moviePlayer = api.require('moviePlayer');
+moviePlayer.addEventListener(function(ret){
+    if(ret && ret.eventType == 'complete'){
+    
+       moviePlayer.replay({
+    path : api.pageParam.videourl
+});
+    }
+});
+
+		//alert(api.pageParam.videourl);
+			
+			
+			//alert(JSON.stringify(api.pageParam.mainPos))
+			api.openFrame({
+				name : 'toubu',
+				url : api.wgtRootDir + '/zhibo/html/live/toubu.html',
+				useWKWebView : true,
+				bounces : false,
+				rect : {
+					x : 0,
+					y : 0,
+					w : api.winWidth,
+					h : api.pageParam.mainPos
+				},
+				pageParam : {
+					name : api.pageParam.name,
+					img : api.pageParam.touxiangshiping,
+					id : api.pageParam.id,
+					uid : api.pageParam.uid,
+					dspid : api.pageParam.id
+				}
+			});
+			api.openFrame({
+				name : 'dibu',
+				url : api.wgtRootDir + '/zhibo/html/live/dibu.html',
+				useWKWebView : true,
+				bounces : false,
+				rect : {
+					x : 0,
+					y : 100,
+					w : api.winWidth,
+					h : api.pageParam.headerPos
+				},
+				pageParam : {
+					name : api.pageParam.name,
+					img : api.pageParam.img,
+					dspid : api.pageParam.id,
+					uid: api.pageParam.uid,
+				}
+			});
+			
+			
+				
+		}
+	</script>
+</html>

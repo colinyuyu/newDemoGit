@@ -1,0 +1,22 @@
+<?xml version="1.0" standalone="no"?>
+<svg width="70" height="80" version="1.1" xmlns="http://www.w3.org/2000/svg">
+	<desc>微信_语音_撤销</desc>
+	<path d="
+		M66 77
+		L66 31
+		C66 -3
+		14 -3
+		14 31
+		L14 56
+		H4
+		L18.5 71
+		L33 56
+		H23
+		V31
+		C23 8
+		57 8
+		57 31
+		V77
+		H66
+		" fill="#fff" stroke="#fff"></path>
+</svg>

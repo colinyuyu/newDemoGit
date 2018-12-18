@@ -1,0 +1,328 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>最新</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			#main {
+				padding: 0 5px;
+				font-size: 14px;
+			}
+			
+			.ct-icon-showing {
+				font-size: 20px;
+				padding-right: 8px;
+			}
+			.img-frm,
+			.img {
+				background-image: url(../../image/avatar.jpg);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				width: 100%;
+				height: 130px;
+				margin: 0 auto;
+			}
+			.level {
+				background-image: url(../../image/level/rank_100.png);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				width: 36px;
+				height: 16px;
+			}
+			.list {
+				background-color: #fff;
+				padding-right: 3px;
+			}
+			.list:last-child{
+				padding: 0;
+			}
+			.cover {
+  				
+				background-image: url(../../image/live.png);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				position: relative;
+			}
+		
+			.live1 {
+				position: absolute;
+				right: 10px;
+				top: 27px;
+				font-size: 8px;
+				padding: 5px 5px;
+				border-radius: 20px;
+				color: #fff;
+				background-color: rgba(0,0,0,0.2);
+			}
+			.live2 {
+				position: absolute;
+				left: 3px;
+				bottom: 3.5em;
+				font-size: 12px;
+				
+				border-radius: 20px;
+				color: #fff;
+				background-color: rgba(0,0,0,0.2);
+			}
+			.live {
+				position: absolute;
+				right: 10px;
+				top: 5px;
+				font-size: 8px;
+				padding: 5px 5px;
+				border-radius: 20px;
+				color: #fff;
+				background-color: rgba(0,0,0,0.2);
+			}
+			.info {
+				padding: 10px 0;
+				background-color: #fff;
+			}
+			p {
+				padding-left: 8px;
+				letter-spacing:inherit;
+				line-height: normal;
+				min-height: 18px;
+			}
+			.null_img{
+				background-image: url(../../image/null_near.png);
+				background-size: contain;
+				background-position: center;
+				background-repeat: no-repeat;
+				width: 100%;
+				height: 150px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+				<div class="null ">
+					<div class="small_font">加载中...</div>
+				</div>
+				<div class="live hidden">
+					<div style="color: #333;" class="flex-box flex-h-ce">
+						<span class="ct-icon-showing">
+							<span class="path1"><span class="path2"></span></span>
+						</span>正在直播
+					</div>
+				</div>
+				<div class="live_list row hidden">
+					<div class="list col-4">
+						<div class="img-frm">
+							<div class="img"></div>
+						</div>
+						<div class="info flex-box ">
+							<div class="level"></div>
+							<p class="flex-box flex-h-ce">2.5km</p>
+						</div>
+					</div>
+					<div class="list col-4">
+						<div class="img-frm">
+							<div class="img"></div>
+						</div>
+						<div class="info flex-box">
+							<div class="level"></div>
+							<p>2.5km</p>
+						</div>
+					</div>
+					<div class="list col-4">
+						<div class="img-frm">
+							<div class="img"></div>
+						</div>
+						<div class="info flex-box">
+							<div class="level"></div>
+							<p>2.5km</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/audience.js" ></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript" src="../../script/jquery.lazyload.min.js" ></script>
+	<script type="text/template" template="main">
+		{{? it.list instanceof Array && it.list.length != 0}}
+		<!--
+		<div class="live">
+			<div style="color: #333;" class="flex-box flex-h-ce">
+				<span class="ct-icon-showing">
+					<span class="path1"><span class="path2"></span></span>
+				</span>正在直播
+			</div>
+		</div>
+		-->
+		{{?}}
+		{{? it.list instanceof Array && it.list.length != 0}}
+			<div class="live_list row ">
+				{{~ it.list:value:index}}
+				<div class="list col-4" onclick="Audience.openLive('{{= value.roomid}}','{{= value.memberid }}','{{= it.password}}','{{= Tool.imageCompressByQiNiu(value.avatar,0,200,200)}}','{{= value.secretState}}','{{= value.iosreview}}','{{= value.videoURL}}')" tapmode>
+					<div class="img-frm">
+						<div class="img" style="" data-original="{{= Tool.imageCompressByQiNiu(value.avatar,0,200,200)}}"></div>
+						<em class="name live2">{{= value.nickname }}</em>
+					</div>
+					<div class="info flex-box">
+					
+						<div class="level cover" style="background-image: url(../../image/level/rank_{{=value.level}}.png);"></div>
+						{{? value.secretPassword !='0'||value.secretDiamond !='0' }}
+					<div class="live">私密收费:{{= value.secretDiamond}}钻石</div>
+					{{?}}
+					{{? value.timePrice !='0' }}
+					<div class="live1">时间收费:{{= value.timePrice}}钻石/分钟</div>
+					{{?}}
+						<p class="flex-box flex-h-ce">
+							{{? parseFloat(value.distance)/1000 >= 1  }}
+								{{= parseFloat(value.distance)/1000}}km
+							{{??}}
+								{{= parseFloat(value.distance)}}m
+							{{?}}
+						</p>
+					</div>
+					
+				</div>
+				{{~}}
+			</div>
+		{{??}}
+			<div class="null flex-box">
+				<div class="flex-1">
+					<div class="null_img"></div>
+				</div>
+			</div>
+		{{?}}
+	</script>
+	
+	<script type="text/javascript">
+		var args = {
+//			ctrl: 'zhiboApp',
+//			fn: 'nearList',
+			ctrl: 'zhiboApp',
+			fn: 'nearList',
+			values: {
+				id: $api.getStorage(CONFIG.memberId),
+				token: $api.getStorage(CONFIG.token)
+			},
+			template: 'main',
+			countSelector: '.live_list > div',
+			wrapper: '.live_list',
+			success:function(){
+				$('div.img').lazyload({
+		      effect : "fadeIn"
+		    });
+			}
+		}
+		//获取附近的人
+		function nearList(x,y){
+			ajax.get({
+//				ctrl: 'zhiboApp',
+//				fn: 'nearList',
+			ctrl: 'zhiboApp',
+			fn: 'nearList',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						x: x,
+						y: y
+					}
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: true,
+				success: function(ct) {
+					T.html('#main','main',ct);
+					$('div.img').lazyload({
+			      effect : "fadeIn"
+			    });
+				}
+			});
+		}
+		apiready = function(){
+			//获取位置信息
+			var x,y;
+			var aMapLBS = api.require('aMapLBS');
+aMapLBS.configManager({
+    accuracy: 'hundredMeters',
+    filter: 1
+}, function(ret, err) {
+//alert(JSON.stringify(ret));
+    if (ret.status) {
+        aMapLBS.singleLocation({
+    timeout: 10
+}, function(ret, err) {
+//alert('aaa'+JSON.stringify(ret));
+    if (ret.status) {
+    $api.setStorage('lon',ret.lon||0);
+     $api.setStorage('lat',ret.lat||0);
+     x = ret.lon,
+      		y = ret.lat;
+      		//alert(x);
+	        nearList(x,y);
+	         api.addEventListener({
+				name : 'closeLive'
+			}, function() {
+				api.refreshHeaderLoading();
+				window.scrollTo(0, $api.dom('body').scrollHeight);
+			})
+			Refresh.init(args);
+	        args.values.x = x;
+	        args.values.y = y;
+
+    }
+});
+    }
+});
+			Refresh.init(args);
+			LoadMore.init({
+//				ctrl: 'zhiboApp',
+//				fn: 'nearList',
+			ctrl: 'zhiboApp',
+			fn: 'nearList',
+				values: {
+					id: $api.getStorage(CONFIG.memberId),
+					token: $api.getStorage(CONFIG.token),
+					x: args.values.x,
+					y: args.values.y
+				},
+				template: 'main',
+				countSelector: '.live_list > div',
+				wrapper: '.live_list',
+			},function(ct, page){
+				$('div.img').slice((page - 1) * 10).lazyload({
+		      effect : "fadeIn"
+		    });
+			});
+			
+			//监听主播关闭 直播
+			api.addEventListener({
+				name: 'live_list_init'
+			},function(ret){
+				var roomidDomAll = $api.domAll('[roomid]'),
+						roomidDom = $api.dom('[roomid="' + ret.value.roomid + '"]');
+				if(roomidDomAll.length > 1){
+				api.refreshHeaderLoading();
+					$api.remove(roomidDom);
+				}else{
+					$api.remove(roomidDom);
+					api.refreshHeaderLoading();
+				}
+			});
+			
+			api.addEventListener({
+				name: 'init_hot'
+			},function(){
+				api.refreshHeaderLoading();
+			});
+		}
+	</script>
+</html>

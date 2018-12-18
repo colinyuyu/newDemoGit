@@ -1,0 +1,212 @@
+﻿<!doctype html>
+<html>
+<head design-width="750">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<title>Demo</title>
+		<link rel="stylesheet" href="../../xiaowucss/style.css" />
+		<!--页面样式-->
+		<link rel="stylesheet" href="../../xiaowucss/common.css" />
+		<!--常用样式-->
+		<link rel="stylesheet" href="../../xiaowucss/animate.min.css" />
+		<!--CSS3动画库-->
+		<script src="../../xiaowucss/auto-size.js"></script><!--设置字体大小-->
+	</head>
+	<body>
+		<div class="mobile-wrap center">
+			<div class="show-list">
+				
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js" ></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/template" template="shope">
+					<ul>{{~ it.list :value:index}}
+					<!--<li>
+					<h4><img src="../../imgnew/im6.jpg" alt="" /></h4>
+					<div class="slide-vip">
+					<h5><span>{{=value.id}}</span></h5>
+					<p>
+					<span>
+					<i></i>
+					</span>
+					<em>建议戴耳机进入</em>
+					</p>
+					</div>
+					</li>!-->
+					<li onclick='boduanship("{{= value.videourl}}","{{=value.img}}","{{= value.id}}","{{= value.name}}","{{= value.uid}}")' tapmode>
+					<h4><img src="{{= Tool.imageCompressByQiNiu(value.dspimg,0,600,600)}}" alt="" /></h4>
+					<div class="slide-inf">
+					<span>
+					<img src="{{= Tool.imageCompressByQiNiu(value.img,0,600,600)}}" alt="" />
+					</span>
+					<em></em>
+					<strong>
+					<img src="../../css/ic6.jpg" alt="" />
+					<i>{{= value.zhangshu}}</i>
+					</strong>
+					</div>
+					</li>
+					{{~}}
+				</script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript" src="../../script/jquery.lazyload.min.js" ></script>
+	<script>
+		function boduanship(videourl,img,id,name,uid) {
+			
+
+		
+			
+			api.openWin({
+                                name : 'duanshiping',
+                                url :  api.wgtRootDir + '/zhibo/html/live/duanshiping.html',
+                                pageParam:{
+                             		videourl : videourl,
+                             		img : img,
+                             		id : id,
+                             		name :name,
+                             		uid:uid
+                                     
+                                }
+                        });
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		/*	var videoPlayer = api.require('videoPlayer');
+			videoPlayer.play({
+				texts : {
+					head : {
+						title : '主播审核视频播放'
+					}
+				},
+				styles : {
+					head : {
+						bg : 'rgba(0.5,0.5,0.5,0.7)',
+						height : 44,
+						titleSize : 16,
+						titleColor : '#fff',
+						backSize : 20,
+						backImg : 'widget://image/back.png',
+						setSize : 20,
+						setImg : 'widget://image/set.png'
+					},
+				},
+				path : videourl,
+				autoPlay : true
+			}, function(ret, err) {
+				
+			});*/
+		}
+function dsp(type,guanzhudsp,page){
+
+	ajax.get({
+				//				ctrl: 'zhiboApp',
+				ctrl : 'ZhiboApp',
+				fn : 'duanshichakan',
+				data : {
+					values : {
+						id : $api.getStorage(CONFIG.memberId),
+						token : $api.getStorage(CONFIG.token),
+						type : type,
+						guanzhudsp :guanzhudsp,
+						page:page,
+					}
+				},
+				showError : true,
+				hideLoading : true,
+				showProgress : true,
+				success : function(ct) {
+				//alert(ct.list);
+				if(ct.list<=0){
+			Tool.toast('没有更多了哦~');
+			return;
+			}else{
+			
+			T.html('.show-list', 'shope', ct);
+			}
+					
+					//downslide(".banne",".banne .cirl","","","");
+				}
+			});
+
+}
+		apiready = function() {
+		api.openFrame({
+				name : 'toubu',
+				url : api.wgtRootDir + '/zhibo/html/live/dspyouxianjiao.html',
+				useWKWebView : true,
+				bounces : false,
+				rect : {
+					x : api.winWidth/2-20,
+					y : api.winHeight-100,
+					w : 150,
+					h : 50
+				},
+				bgColor : 'rgba(0,0,0,0)',
+				pageParam : {
+					
+				}
+			});
+		
+		//判断是关注里来的还是直接的
+		if(api.pageParam.ctfdffsdd){
+		var guanzhudsp = api.pageParam.ctfdffsdd;
+		var type= "gz";
+		}else{
+		
+		var guanzhudsp = 0;
+		var type= "yonghu";
+		}
+		
+		
+		
+		dsp(type,guanzhudsp,0);
+		
+		
+		var page=0;
+			
+			
+			   api.addEventListener({
+                                name : 'scrolltobottom',
+                                extra : {
+                                        threshold : 10 //设置距离底部多少距离时触发，默认值为0，数字类型
+                                }
+                        }, function(ret, err) {
+                        //$api.html($api.dom('#main'),'3333333333333');
+                               page++;
+                              //alert(page);
+                               dsp(type,guanzhudsp,page);
+                              
+                              
+                        });
+                        //下拉刷新
+                        api.setRefreshHeaderInfo({
+                                loadingImg : 'wgt://img/loading_more.gif',
+                                bgColor : '#FFF',
+                                textColor : '#333',
+                                textDown : '下拉刷新...',
+                                textUp : '松开刷新...'
+                        }, function(ret, err) {
+                        page=0;
+                           dsp(type,guanzhudsp,0);
+                         
+                            api.refreshHeaderLoadDone();
+                            //上拉刷新暂时没做
+                            
+                        });
+		}
+	</script>
+</html>

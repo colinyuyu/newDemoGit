@@ -1,0 +1,361 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>关注人列表</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			.search_wrap{
+				padding-left: 5px;
+			}
+			.img-frm{
+				border: 1px solid #D9D9D9;
+			}
+			.img-frm,
+			.img {
+				background-image: url(../../image/avatar.jpg);
+				background-size: cover;
+				background-position: center;
+				background-repeat: no-repeat;
+				border-radius: 50%;
+				width: 36px;
+				height: 36px;
+			}
+			.info {
+				padding-left: 8px;
+				font-size: 12px;
+			}
+			.list {
+				padding: 15px 0;
+				border-bottom: 1px solid #E2E2E2;
+			}
+			.signature{
+				color: #909090;
+				padding-top: 5px;
+			}
+			.level {
+				width: 36px;
+				height: 16px;
+				min-width: 36px;
+				background-image: url(../../image/level/rank_1.png);
+				background-size: contain;
+				background-position: center;
+				background-repeat: no-repeat;
+			}
+			.sex {
+				margin: 0 5px;
+				width: 16px;
+				height: 16px;
+				min-width: 16px;
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+			}
+			.female{
+				background-image: url(../../image/sex-female.png);
+			}
+			.male{
+				background-image: url(../../image/sex-male.png);
+			}
+			.name {
+				font-size: 14px;
+				display:-webkit-box!important;
+				overflow:hidden; 
+				text-overflow:ellipsis; 
+				word-break:break-all; 
+				-webkit-box-orient:vertical; 
+				-webkit-line-clamp:1;
+			}
+			.icon_circle{
+				padding: 0 10px;
+				font-size: 23px;
+			}
+			.icon_circle > span {
+				display: inherit;
+			}
+			.null_img{
+				background-image: url(../../image/null_fans.png);
+				background-size: contain;
+				background-position: center;
+				background-repeat: no-repeat;
+				width: 100%;
+				height: 150px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+				<div class="search_wrap hidden">
+					<div class="flex-box list" onclick="openFrame('detail','find','profile')" tapmode="">
+						<div class="img-frm">
+							<div class="img"></div>
+						</div>
+						<div class="flex-1 info ">
+							<div class="flex-box" >
+								<div class="name">晨晨晨晨晨啦啦啦啦啦啦啦啦啦</div>
+								<span class="sex female"></span>
+								<span class="level" ></span>
+							</div>
+							<div class="signature text-overflow">啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦~</div>
+						</div>
+						<div class="icon_circle flex-box flex-h-ce" onclick="switchBtn(event,this)" tapmode="">
+							<span class="ct-icon-select-yes icon">
+								<span class="path1"></span><span class="path2"></span>
+							</span>
+						</div>
+					</div>
+					<div class="flex-box list">
+						<div class="img-frm">
+							<div class="img"></div>
+						</div>
+						<div class="flex-1 info">
+							<div class="flex-box" >
+								<div class="name">晨晨晨晨晨啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦</div>
+								<span class="sex male"></span>
+								<span class="level" style="background-image: url(../../image/level/rank_101.png);"></span>
+							</div>
+							<div class="signature text-overflow">啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦~</div>
+						</div>
+						<div class=" icon_circle flex-box flex-h-ce" onclick="switchBtn(event,this)" tapmode="">
+							<span class="ct-icon-select-circle icon">
+								<span class="path1"></span><span class="path2"></span>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript" src="../../script/jquery.lazyload.min.js" ></script>
+	<script type="text/template" template="main">
+		{{? it instanceof Array && it.length != 0}}
+		<div class="search_wrap">
+			{{~ it :value:index}}
+			<div  cover="{{= value.cover == 0 ? 'false' : 'true'}}"  mid="{{= value.id}}" class="flex-box list" onclick="openProfile('{{=value.id}}')" tapmode="">
+				<div class="img-frm">
+					<div class="img" data-original="{{= Tool.imageCompressByQiNiu(value.avatar,0,200,200)}}"></div>
+				</div>
+				<div class="flex-1 info ">
+					<div class="flex-box" >
+						<div class="name">{{= value.nickname }}</div>
+						<span class="sex {{? value.sex == '1'}}male{{?? value.sex== '2'}}female{{?}}"></span>
+						<span class="level" style="background-image: url(../../image/level/rank_{{= value.level}}.png);"></span>
+					</div>
+					<div class="signature text-overflow">{{= value.signature || ''}}</div>
+				</div>
+				<div class="icon_circle flex-box flex-h-ce" onclick="switchBtn(event,this,'{{= value.id}}')" tapmode="">
+					<span class=" {{= value.cover == 0 ? 'ct-icon-select-circle' : 'ct-icon-select-yes'}} icon">
+						<span class="path1"></span><span class="path2"></span>
+					</span>
+				</div>
+			</div>
+			{{~}}
+		</div>
+		{{??}}
+			<div class="null flex-box">
+				<div class="flex-1">
+					<div class="null_img"></div>
+				</div>
+			</div>
+		{{?}}
+	</script>
+	<script type="text/javascript">
+		var unfollowid = [],
+				followid = [];
+		//切换勾选 与不勾选
+		function switchBtn(event,_this,mid){
+			event.stopPropagation();
+			if($api.dom(_this,'.ct-icon-select-yes')){
+				$api.removeCls($api.dom(_this,'.icon'),'ct-icon-select-yes');
+				$api.addCls($api.dom(_this,'.icon'),'ct-icon-select-circle');
+			}else{
+				$api.removeCls($api.dom(_this,'.icon'),'ct-icon-select-circle');
+				$api.addCls($api.dom(_this,'.icon'),'ct-icon-select-yes');
+			}
+		}
+		
+		//粉丝
+		function fansList(){
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'fans',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token)
+					}
+				},
+				hideLoading: false,
+				showError: true,
+				showProgress: false,
+				success: function(ct) {
+					T.html('#main','main',ct);
+					$('div.img').lazyload({
+			      effect : "fadeIn"
+			    });
+				}
+			});
+		}
+		
+		//批量 取消关注
+		function unfollowar(){
+			var aid = unfollowid.join(",");
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'unfollowar',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						aid: aid
+					}
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: {
+					title: '更新中...'
+				},
+				success: function(ct) {
+					if(followid.length == 0){
+						api.sendEvent({
+							name: 'closeFans'
+						});
+					}
+					unfollowid = [];
+				}
+			});
+		}
+		
+		//批量 关注
+		function followar(callback){
+			var aid = followid.join(",");
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'concernar',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						memberid: aid
+					}
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: {
+					title: '更新中...'
+				},
+				success: function(ct) {
+					if(unfollowid.length == 0){
+						api.sendEvent({
+							name: 'closeFans'
+						});
+					}
+					followid = [];
+					if(typeof callback == 'function'){
+						callback(true);
+					}
+				}
+			});
+		}
+		
+		//判断 是否打勾 是否取消 打勾
+		function isSelcet(){
+			var listDomAll = $api.domAll('.list'),
+					cover,
+					mid,
+					activeDom;
+			if(listDomAll && listDomAll.length != 0){
+				for(var i=0,len=listDomAll.length;i<len,g=listDomAll[i];i++){
+					cover = $api.attr(g,'cover');
+					mid = $api.attr(g,'mid');
+					activeDom = $api.dom(g,'.ct-icon-select-yes');
+					//cover为 true  已关注 false 为未关注 
+					if(cover == 'true' && !activeDom){
+						//选择为 取消关注
+						unfollowid.push(mid);
+					}else if(cover == 'false'){
+						if(cover == 'false' && activeDom){
+							//选择为 关注
+							followid.push(mid);
+						}
+					}
+				}
+				if(followid.length > 0 && unfollowid.length > 0){
+					followar(function(){
+						unfollowar();
+					});
+				}else{
+					if(unfollowid.length != 0){
+						unfollowar();
+					}
+					if(followid.length != 0){
+						followar();
+					}
+				}
+				if(unfollowid.length == 0 && followid.length == 0 || followid.length  == 0 && unfollowid.length == 0){
+					api.sendEvent({
+						name: 'closeFans'
+					})
+				}
+			}else{
+				api.sendEvent({
+					name: 'closeFans'
+				})
+			}
+		}
+		
+		apiready = function(){
+			fansList();
+			
+			//刷新列表
+			api.addEventListener({
+				name: 'viewappear'
+			},function(){
+				api.refreshHeaderLoading();
+			});
+			
+			Refresh.init({
+				ctrl: 'zhiboApp',
+				fn: 'fans',
+				values: {
+					id: $api.getStorage(CONFIG.memberId),
+					token: $api.getStorage(CONFIG.token)
+				},
+				template: 'main',
+				success:function(){
+					$('div.img').lazyload({
+			      effect : "fadeIn"
+			    });
+				}
+			});
+			LoadMore.init({
+				ctrl: 'zhiboApp',
+				fn: 'fans',
+				countSelector: '.search_wrap > div',
+				template: 'main',
+				values: {
+					id: $api.getStorage(CONFIG.memberId),
+					token: $api.getStorage(CONFIG.token)
+				},
+			},function(ct, page){
+				$('div.img').slice((page - 1) * 10).lazyload({
+		      effect : "fadeIn"
+		    });
+			});
+			
+			api.addEventListener({
+				name: 'unfans'
+			},function(){
+				isSelcet();
+			});
+		}
+	</script>
+</html>

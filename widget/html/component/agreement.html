@@ -1,0 +1,54 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>Document</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			#main {
+				padding: 2px 7px 10px 13px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript">
+		//获取注册协议
+		function agreement(){
+			ajax.get({
+//				ctrl: 'zhiboApp',
+                ctrl: 'zhiboApp',
+				fn: 'rules',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token)
+					}
+				},
+				hideLoading: false,
+				showError: true,
+				showProgress: false,
+				success: function(ct) {
+					$api.setStorage('rules',ct);
+					$api.html($api.dom('#main'),ct[3].content);
+				}
+			});
+		}
+		apiready = function(){
+			if($api.getStorage('rules')){
+				$api.html($api.dom('#main'),$api.getStorage('rules')[3].content);
+			}else{
+				agreement();
+			}
+		}
+	</script>
+</html>

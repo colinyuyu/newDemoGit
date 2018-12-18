@@ -1,0 +1,203 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>直播结束</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			#main {
+				background-color: #23233B;
+				padding: 0 10px;
+			}
+			#main > div {
+				color: #fff;
+			}
+			.end {
+				font-size: 28px;
+			}
+			#main .follow {
+				padding-top: 25px;
+				color: #D9D9D9;
+			}
+			.bottom_btn {
+				padding-top: 50px;
+				width: 100%;
+			}
+			.bottom_btn > div {
+				padding: 10px 0;
+				color: #23233B;
+				border-radius: 25px;
+			}
+			.bottom_btn .follow_btn {
+				background-color: #FE5F99;
+			}
+			.logout {
+				background-color: #fff;
+				margin-top: 15px;
+			}
+			p {
+				padding-top: 5px;
+				font-size: 14px;
+				color: #909090;
+			}
+			#main .num {
+				font-size: 25px;
+				padding-top: 30px;
+				color: #FFDE3F;
+			}
+			.see {
+				color: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main" class="flex-box-v flex-h-ce flex-h-zhu">
+				
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/rongCloud2.js"></script>
+	<script type="text/template" template="main">
+		<div class="end">
+			直播结束
+		</div>
+		<!--
+		<p class="time ">时间较短的视频不予保存</p>
+		<div class="num ">{{= it.number}}</div>
+		<p class="see ">看过</p>
+		-->
+		<div class="follow">
+			{{? it.attention == 2}}
+			关注该主播，不错过TA的任何直播
+			{{??}}
+			已关注，该主播
+			{{?}}
+		</div>
+		<div class="bottom_btn">
+			<div class="follow_btn text-center" onclick="isfollow(this)" tapmode>{{= it.attention == 1 ? '已关注' : '关注主播'}}</div>
+			<div class="logout text-center" onclick="quit()">返回首页</div>
+		</div>
+	</script>
+	<script type="text/javascript">
+		//是否关注
+		function isfollow(_this){
+			if($api.text(_this) == '关注主播'){
+				follow();
+			}else{
+				unfollow();
+			}
+		}
+		//关注
+		function follow(){
+			ajax.get({
+//				ctrl: 'zhiboApp',
+				ctrl: 'zhiboApp',
+				fn: 'concern',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						memberid: api.pageParam.mid
+					}
+				},
+				showProgress: true,
+				hideLoading: true,
+				showError: true,
+				success: function(ct){
+					$api.text($api.dom('.follow_btn'),'已关注');
+					$api.text($api.dom('.follow'),'已关注，该主播');
+					api.sendEvent({
+						name: 'follow'
+					});
+				}
+			});
+		}
+		//取消关注
+		function unfollow(){
+			ajax.get({
+//				ctrl: 'zhiboApp',
+				ctrl: 'zhiboApp',
+				fn: 'unfollow',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						aid: api.pageParam.mid
+					}
+				},
+				showProgress: true,
+				hideLoading: true,
+				showError: true,
+				success: function(ct){
+					$api.text($api.dom('.follow_btn'),'关注主播');
+					$api.text($api.dom('.follow'),'关注该主播，不错过TA的任何直播');
+					api.sendEvent({
+						name: 'follow'
+					});
+				}
+			});
+		}
+		//退出
+		function quit(){
+				
+			api.sendEvent({
+				name: 'closeLive'
+			});
+			
+			
+			setTimeout(function(){
+				api.closeFrameGroup({
+					name: 'liveGroup'
+				});
+				api.closeFrame();
+			},500);
+		}
+		//获取 用户对主播是否关注
+		function attention(){
+			ajax.get({
+//				ctrl: 'zhiboApp',
+				ctrl: 'zhiboApp',
+				fn: 'atten',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						memberid: api.pageParam.mid,
+						roomid: api.pageParam.roomid
+					}
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: false,
+				success: function(ct) {
+					T.html('#main','main',ct);
+				}
+			});
+		}
+		apiready = function(){
+		
+		RongCloud2.quitChatRoom({chatRoomId: api.pageParam.mid}); //关闭后退出聊天室
+		api.sendEvent({  //直播结束后用户端触发融云
+    					name: 'zhubo'
+						});
+		/*
+		var rong = api.require('rongCloud2');
+rong.disconnect({
+    isReceivePush: true
+}, function(ret, err) {
+
+    if ('success' == ret.status) {
+       alert('用户端断开融云了');;
+    }
+}); // 断开，且不再接收 Push
+*/
+			attention();
+		}
+	</script>
+</html>

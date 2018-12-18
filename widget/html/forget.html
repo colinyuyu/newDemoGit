@@ -1,0 +1,169 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>找回密码</title>
+		<link rel="stylesheet" type="text/css" href="../css/ct.css"/>
+		<style type="text/css">
+			#main {
+				padding: 0 10px;
+				font-size: 14px;
+			}
+			.tel,
+			.pwd,
+			.code{
+				padding-top: 30px;
+				padding-bottom: 10px;
+				border-bottom: 1px solid #d9d9d9;
+			}
+			input {
+				padding-left: 10px;
+				width: 100%;
+			}
+			.tel input::-webkit-input-placeholder,
+			.pwd input::-webkit-input-placeholder,
+			.code input::-webkit-input-placeholder{ 
+				color: #909090; 
+			} 
+			.tel input:-moz-placeholder,
+			.pwd input:-moz-placeholder,
+			.code input:-moz-placeholder{ 
+				color: #909090;
+			} 
+			.tel input::-moz-placeholder,
+			.pwd input::-moz-placeholder,
+			.code input::-moz-placeholder { 
+				color: #909090; 
+			} 
+			.tel input:-ms-input-placeholder,
+			.pwd input:-ms-input-placeholder,
+			.code input:-ms-input-placeholder{ 
+				color: #909090;
+			} 
+			.login_btn {
+				padding: 0 25px;
+				padding-top: 40px;
+			}
+			.login_btn > div {
+				border: 1px solid #FE5F99;
+				background-color: #f8dce6;
+				padding: 10px 0;
+				color: #FE5F99;
+				border-radius: 20px;
+			}
+			.forget {
+				padding-top: 30px;
+				color: #909090;
+			}
+			.get_code {
+				color: #909090;
+				font-size: 12px;
+				border-bottom: 1px solid #909090;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main" >
+				<div class="tel">
+					<input name="tel" type="tel" placeholder="请输入手机号" />
+				</div>
+				<div class="code flex-box">
+					<input name="code" class="flex-1" type="tel" placeholder="请输入验证码" />
+					<button class="get_code" onclick="get_code()" tapmode>获取验证码</button>
+				</div>
+				<div class="pwd">
+					<input name="pwd" type="password" placeholder="请输入6至16位密码" />
+				</div>
+				<div class="login_btn">
+					<div class="text-center" onclick="confirm()"tapmode="">确定</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../script/common.js" ></script>
+	<script type="text/javascript" src="../script/crypto-js.js" ></script>
+	<script type="text/javascript">
+		//点击获取验证码
+		function get_code(){
+			var tel = $api.trimAll($api.val($api.dom('[name=tel]')));
+			if(!validatePhone(tel)){
+				return;
+			}
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'sendmsg',
+				data: {
+					values: {
+						username: tel,
+						type: 2
+					}
+				},
+				showError: true,
+				showProgress: true,
+				hideLoading: true,
+				success: function(ct){
+					setTime();
+					Tool.toast('验证码发送成功，请注意查收~');
+				}
+			})
+		}
+		//倒计时
+		function setTime(){
+			var count = 60,
+					code = $api.dom('.get_code');
+			code.disabled = true;
+			var InterValObj = setInterval(function() {
+				if(count > 0) {
+					$api.text(code, (count--) + 's后再发送');
+				}else {
+					clearInterval(InterValObj);
+					code.disabled = false;
+					$api.text(code,'获取验证码');
+				}
+			},1000);
+		}
+		//点击确定
+		function confirm(){
+			var tel = $api.trimAll($api.val($api.dom('[name=tel]'))),
+					code = $api.trimAll($api.val($api.dom('[name=code]'))),
+					pwd = $api.trimAll($api.val($api.dom('[name=pwd]')));
+			if(!validatePhone(tel)){
+				return;
+			}
+			if(!code){
+				Tool.toast('验证码不能为空~');
+				return;
+			}
+			if(!validatePassword(pwd)){
+				return;
+			}
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'findPwd',
+				data: {
+					values: {
+						username: tel,
+						password: CryptoJS.MD5(pwd).toString(CryptoJS.enc.Hex),
+						code: code
+					}
+				},
+				showError: true,
+				showProgress: true,
+				hideLoading: true,
+				success: function(ct){
+					Tool.toast('设置新密码成功,快去登录吧~');
+					setTimeout(function(){
+						api.closeWin();
+					},800);
+				}
+			})
+		}
+		apiready = function(){
+		}
+	</script>
+</html>

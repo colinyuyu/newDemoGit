@@ -1,0 +1,98 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<title>Document</title>
+		<link rel="stylesheet" type="text/css" href="css/ct.css"/>
+		<style type="text/css">
+			#main > button:not(:first-child){
+				margin-top: 10px;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main" class="flex-box-v flex-v-ce flex-v-zhu">
+				<button class="btn btn-info btn-lg" onclick="createTable()" tapmode="">
+					创建数据表
+				</button>
+				<button class="btn btn-info btn-lg" onclick="insertIntoTable()" tapmode="">
+					插入消息记录
+				</button>		
+				<button class="btn btn-info btn-lg" onclick="selectTable()" tapmode="">
+					获取消息记录
+				</button>
+				<button class="btn btn-info btn-lg" onclick="clearTable()" tapmode="">
+					清空表数据
+				</button>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="script/common.js" ></script>
+	<script type="text/javascript">
+		var accessToken,
+	 			table = 'mesg_history';
+		function createTable(){
+			DB.createTable({
+				table: table,
+				field: ['memberId', 'roomId', 'type', 'content', 'createdtime'],
+				success: function(){
+					api.toast({
+						location: 'top',
+						msg: '创建表成功'
+					});
+				}
+			})
+		}
+		
+		function insertIntoTable(){
+			DB.insert({
+				table: table,
+				data: {
+					memberId: 1,
+					roomId: '226818',
+					type: 3,
+					content: '您好！',
+					createdtime: Date()
+				},
+				success: function(){
+					api.toast({
+						location: 'top',
+						msg: '数据插入成功'
+					});
+				}
+			})
+		}
+		
+		function selectTable(){
+			DB.selectSql({
+				sql: 'select * from ' + table + ';',
+				success: function(data){
+					api.toast({
+						location: 'top',
+						msg: '获取数据成功'
+					});
+					console.log(JSON.stringify(data, null, 2));
+				}
+			})
+		}
+		
+		function clearTable(){
+			DB.executeSql({
+				sql: 'delete from ' + table + ';',
+				success: function(){
+					api.toast({
+						location: 'top',
+						msg: '清空数据表成功'
+					});
+				}
+			})
+		}
+		
+		apiready = function(){
+			
+		}
+	</script>
+</html>

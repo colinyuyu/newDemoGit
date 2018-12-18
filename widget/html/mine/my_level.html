@@ -1,0 +1,154 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>Document</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			.level-img{
+				position: relative;
+				margin: 100px auto 20px auto;
+				width: 284px;
+				height: 160px;
+				background: url(../../image/mylevel.png) no-repeat center;
+				background-size: contain;
+			}
+			.level{
+				position: absolute;
+				bottom: 39px;
+				width: 284px;
+				text-align: center;
+				color: #FFFFFF;
+			}
+			.progress-my{
+				margin: 0px auto 30px auto;
+				padding: 2px 3px;
+				width: 284px;
+				height: 14px;
+				border: 1px solid #FE5F99;
+				border-radius: 14px;
+			}
+			.progress-bg-my{
+				width: 276px;
+				height: 8px;
+				border-radius: 8px;
+				background-color: #ECEEED;
+			}
+			.progress-bar-my{
+				width: 0%;
+				height: 8px;
+				border-radius: 8px;
+				background-color: #FE5F99;
+			}
+			.exp,.tips{
+				margin: 0px auto 30px auto;
+				width: 284px;
+			}
+			.exp .min,.exp .max{
+				width: 60px;
+				color: #5E6365;
+			}
+			
+			.exp .max{
+				text-align: right;
+			}
+			
+			.exp .center{
+				text-align: center;
+				color: #FE5F99;
+			}
+			
+			.tips div{
+				padding: 5px 0;
+				text-align: center;
+				font-size: 12px;
+				color: #A1AAAC;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+				<div class="level-img hidden">
+					<div class="level">LV.3</div>
+				</div>
+				<div class="progress-my hidden">
+					<div class="progress-bg-my">
+						<div class="progress-bar-my" style="width: 10%;"></div>
+					</div>
+				</div>
+				<div class="exp flex-box flex-center-center hidden">
+					<div class="min">59</div>
+					<div class="center flex-1">还差840</div>
+					<div class="max">899</div>
+				</div>
+				<div class="tips hidden">
+					<div>
+						观看直播就可以获得经验值哦
+					</div>
+					<div>
+						想自己直播？没问题，直播经验更多
+					</div>
+					<div>
+						不想等待，礼物刷起来，刷的越多，升级越快
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/template" template="main">
+		<div class="level-img">
+			<div class="level">LV.{{= it.level}}</div>
+		</div>
+		<div class="progress-my">
+			<div class="progress-bg-my">
+				<div class="progress-bar-my" style="width: {{= parseFloat(it.experience / it.nextexp) *100 > 100 ? 100 : parseFloat(it.experience / it.nextexp) *100}}%;"></div>
+			</div>
+		</div>
+		<div class="exp flex-box flex-center-center">
+			<div class="min">{{= it.experience }}</div>
+			<div class="center flex-1">还差{{= it.remain }}</div>
+			<div class="max">{{= it.nextexp }}</div>
+		</div>
+		<div class="tips">
+			<div>
+				观看直播就可以获得经验值哦
+			</div>
+			<div>
+				想自己直播？没问题，直播经验更多
+			</div>
+			<div>
+				不想等待，礼物刷起来，刷的越多，升级越快
+			</div>
+		</div>
+	</script>
+	<script type="text/javascript">
+		//获取等级
+		function level(){
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'level',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token)
+					}
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: true,
+				success: function(ct) {
+					T.html('#main','main',ct);
+				}
+			});
+		}
+		apiready = function(){
+			level();
+		}
+	</script>
+</html>

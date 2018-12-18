@@ -1,0 +1,340 @@
+.img-frm,
+.img {
+  background-image: url(../../image/avatar.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+}
+.gift_img>.img{
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 0;
+  width: 36px;
+  height: 36px;
+}
+/* 头部 直播  */
+
+.zhubo {
+  min-width: 120px;
+  border-radius: 25px;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 3px;
+}
+
+.pd8 {
+  padding: 0 8px 0 10px;
+}
+
+.pd8> div {
+  font-size: 12px;
+  color: #fff;
+}
+
+.fans_list {
+  overflow-x: auto;
+  padding-left: 10px;
+}
+
+.fans {
+  padding-right: 5px;
+  min-width: 40px;
+}
+
+.fans:last-child {
+  padding: 0;
+}
+
+.charm {
+  padding-top: 10px;
+}
+
+.charm> div {
+  /*font-size: 14px;*/
+  color: #fff;
+  padding: 8px 15px;
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.2);
+  letter-spacing: 1px;
+}
+
+.ct-icon-arrow-right {
+  font-size: 18px;
+  color: #fff;
+  padding-left: 5px;
+}
+/* 底部按钮 */
+
+.chat,
+.msg,
+.more,
+.close {
+  margin: 0 3px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 45px;
+  height: 45px;
+}
+
+.chat {
+  background-image: url(../../image/room-down-publicchat.png);
+}
+
+.msg {
+  background-image: url(../../image/room-down-privatechat.png);
+}
+
+.more {
+  background-image: url(../../image/room-down-more.png);
+}
+
+.close {
+  background-image: url(../../image/room-down-close.png);
+}
+
+.bottom_btn {
+  position: absolute;
+  bottom: 10px;
+  width: 95%;
+}
+/*弹幕*/
+
+.barrage_list_box{
+  position: relative;
+  margin-bottom: 40px;
+}
+.live_gift{
+  position: absolute;
+  font-size: 12px;
+  max-width: 220px;
+  width: 220px;
+  bottom: 40px;
+  /*overflow: hidden;*/
+}
+
+.gift_item {
+  position: relative;
+  border-radius: 20px;
+  padding: 3px;
+  background-color: rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px;
+}
+
+.gift_item:last-child {
+  margin-bottom: 0;
+}
+
+.pd10 {
+  padding-left: 10px;
+}
+
+.name {
+  color: #fff;
+}
+
+.content {
+  padding-top: 3px;
+  color: #FFDE3F;
+}
+
+.gift_img {
+  position: absolute;
+  right: 0;
+}
+
+.num {
+  color: #FFDE3F;
+  font-size: 25px;
+  position: absolute;
+  right: -100px;
+  top: 3px;
+  width: 100px;
+}
+.num .gift_num{
+  color: #FFDE3F;
+}
+/*底部消息*/
+
+.live_msg {
+  width: 250px;
+  position: relative;
+  bottom: 40px;
+  height: 120px;
+  overflow-y: auto;
+}
+
+.live_msg> div> span {
+  display: inline;
+}
+
+.live_msg .title {
+  color: #ffd942;
+}
+
+.live_msg> div {
+  color: #ffd942;
+  padding-bottom: 5px;
+}
+
+.live_msg> div:last-child {
+  padding: 0;
+}
+
+.ct-icon-close {
+  font-size: 14px;
+  font-weight: bold;
+  color: #FFDE3F;
+}
+
+.level {
+  width: 36px;
+  height: 16px;
+  min-width: 36px;
+  background-image: url(../../image/level/rank_1.png);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  top: 3px;
+  position: relative;
+}
+/* 系统消息 */
+
+.blue {
+  color: #ffd942;
+  line-height: 20px;
+}
+/* 道具消息 */
+
+.pink {
+  color: #37d0b1;
+  line-height: 20px;
+}
+/* 用户消息 */
+
+.white {
+  color: #fff;
+  line-height: 20px;
+}
+/* 发送消息 */
+
+.msg-barrage-off,
+.msg-barrage-on {
+  background-image: url(../../image/message-barrage-off.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 55px;
+  height: 30px;
+}
+
+.msg-barrage-on {
+  background-image: url(../../image/message-barrage-on.png);
+}
+/* 聊天 */
+
+.talk {
+  background-color: #fff;
+  padding: 10px;
+}
+
+.talk input {
+  width: 100%;
+  font-size: 12px;
+}
+
+.send {
+  padding-right: 10px;
+}
+
+.send> div {
+  color: #FE5F99;
+}
+
+.list {
+  position: relative;
+}
+/*更多*/
+
+.more.active {
+  background-image: url(../../image/room-down-more-p.png);
+}
+
+.more-list {
+  display: none;
+  position: absolute;
+  top: -189px;
+  right: -41px;
+  padding: 0 5px;
+  width: 134px;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+.more.active+.more-list {
+  display: block;
+}
+
+.more-list::after {
+  content: "";
+  position: absolute;
+  left: 57px;
+  border-top: 10px solid #FFF;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
+
+.more-list .item {
+  margin: 18px 0;
+  font-size: 14px;
+}
+
+.more-list .item-img {
+  width: 50px;
+  text-align: center;
+}
+
+.more-list .item-img>span {
+  width: 30px;
+  height: 18px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.more-list .item-img .share-img {
+  background-image: url(../../image/live-more-share.png);
+}
+
+.more-list .item-img .turn-img {
+  background-image: url(../../image/live-more-turn.png);
+}
+
+.more-list .item-img .flash-img {
+  background-image: url(../../image/live-more-flash-off.png);
+}
+.more-list .item-img .flash-img.on {
+  background-image: url(../../image/live-more-flash-on.png);
+}
+
+.more-list .item-img .beauty-img {
+  background-image: url(../../image/live-more-beauty-off.png);
+}
+.more-list .item-img .beauty-img.on {
+  background-image: url(../../image/live-more-beauty-on.png);
+}
+.more-list .item-img .secret-img {
+  background-image: url(../../image/live-more-secret-on.png);
+}
+.more-list .item-img .secret-img.on {
+  background-image: url(../../image/live-more-secret-on.png);
+}
+.more-list .item-img .time-img {
+  background-image: url(../../image/live-more-time-on.png);
+}
+.more-list .item-img .time-img.on {
+  background-image: url(../../image/live-more-time-on.png);
+}

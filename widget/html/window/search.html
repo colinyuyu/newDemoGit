@@ -1,0 +1,251 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<title>win</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			body {
+				font-size: 14px;
+			}
+			.ct-icon-arrow-left {
+				color: #FFFFFF;
+			}
+			.topbar,
+			#header {
+				background-color: #FE5F99;
+			}
+			#header .tit_icon {
+				font-size: 13px;
+				width: 50px;
+				right: 0;
+			}
+			.search {
+				width: 100%;
+				margin: 0 50px;
+			}
+			.search > div{
+				height: 30px;
+				border-radius: 20px;
+				background-color: #fff;
+			}
+			input {
+				width: 100%;
+				line-height: 25px;
+				font-size: 12px;
+				letter-spacing: 1px;
+				margin: 1px 4px 0 0;
+			}
+			.search input::-webkit-input-placeholder{ 
+				color: #d9d9d9; 
+			} 
+			.search input:-moz-placeholder{ 
+				color: #d9d9d9;
+			} 
+			.search input::-moz-placeholder { 
+				color: #d9d9d9; 
+			} 
+			.search input:-ms-input-placeholder{ 
+				color: #d9d9d9;
+			} 
+			.ct-icon-search {
+				font-size: 16px;
+				padding: 0 8px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="header" class="header">
+				<div class="topbar flex-box" style="">
+					<div class="ct-icon-arrow-left" onclick="close_win()" tapmode=""></div>
+	        <div class="search flex-box flex-h-ce">
+	        	<div class="flex-1 flex-box flex-h-ce">
+	        		<span class="ct-icon-search"></span>
+	        		<input name="search" id="ser" disabled="" type="text" placeholder="" />
+	        	</div>
+	        </div>
+	        <!--<span class="title text-overflow" style="max-width: 200px;"></span>-->
+	        <div class="tit_icon" onclick="search()" tapmode="">搜索</div>
+				</div>
+			</div>
+			<div id="main">
+				<!--<div class="null">
+					<div class="small_font text-center">加载中</div>
+				</div>-->
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript">
+		var fname = '';
+		
+		function setTitle(title){
+			$api.text($api.dom('span.title'), title);
+		}
+		
+		function close_win(winname) {
+			setTimeout(function(){
+				api.closeWin();
+			},200)
+		}
+		
+		function search(){
+			
+			var UIInput = api.require('UIInput');
+			UIInput.value(function(ret, err) {
+		    if(ret && ret.msg) {
+	     		var keyword = ret.msg;
+	     		UIInput.closeKeyboard({
+		    		id: 0
+		    	});
+		    	setTimeout(function(){
+						openSearch(keyword);
+					},200);
+		    }else {
+		    	Tool.toast('请先输入搜索内容~');
+					return;
+		    }
+		  });
+		  
+		  return;
+			
+			
+			var search_text = $api.val($api.dom('[name=search]'));
+			if(!search_text){
+				Tool.toast('请先输入搜索内容~');
+				return;
+			}
+			$api.dom('[name=search]').blur();
+			setTimeout(function(){
+				openSearch(search_text);
+			},200);
+		}
+		//打开搜索结果页面
+		function openSearch(search_text){
+			if(api.pageParam.frameParam == 'fans'){
+				api.openWin({
+					name: 'result',
+					url: api.wgtRootDir + '/zhibo/html/window/win.html',
+					pageParam:{
+						headerTitle: '搜索结果',
+						frameName: 'result',
+						frameUrl: api.wgtRootDir + '/zhibo/html/find/search.html',
+						frameParam:{
+							search: search_text,
+							fans : true
+						}
+					}
+				});
+			}else{
+				api.openWin({
+					name: 'result',
+					url: api.wgtRootDir + '/zhibo/html/window/win.html',
+					pageParam:{
+						headerTitle: '搜索结果',
+						frameName: 'result',
+						frameUrl: api.wgtRootDir + '/zhibo/html/find/search.html',
+						frameParam:{
+							search: search_text
+						}
+					}
+				});
+			}
+		}
+		
+		
+		//打开搜索框弹出键盘
+		function openInput() {
+			var serDom = $api.dom('#ser'),
+					serPos = $api.offset(serDom);
+			var UIInput = api.require('UIInput');
+			UIInput.open({
+		    rect: {
+					x: serPos.l,
+					y: serPos.t,
+					w: serPos.w,
+					h: serPos.h
+		    },
+		    styles: {
+	        bgColor: 'rgba(0,0,0,0)',
+	        size: 13,
+//	        color: '#9C9C9C',
+	        placeholder: {
+//          color: '#9C9C9C'
+	        }
+	    	},
+//	    	keyboardType: 'search',
+	    	autoFocus: true,
+	    	placeholder: '请输入昵称/ID'
+			}, function(ret, err) {
+				if(ret && ret.eventType == 'search') {
+				}
+			});
+		}
+		
+		var test = 0;
+		apiready = function(){
+			var header = $api.byId('header');
+			$api.fixIos7Bar(header);
+			var main = $api.byId('main'),
+					headerPos = $api.offset(header),
+					winParam = api.pageParam,
+					mainPos = $api.offset(main);
+			
+			api.addEventListener({
+				name: 'keyback'
+			}, function(ret, err){
+				api.closeWin();
+			});
+			
+			var UIInput = api.require('UIInput');
+			var ser = $api.dom('#ser');
+			openInput();
+			api.addEventListener({
+				name: 'viewappear'
+			}, function() {
+				if(test++ > 0) {
+					UIInput.popupKeyboard({
+				    id: 0
+					});
+				}
+			})
+			
+			if(typeof winParam.frameParam != "undefined"){
+				api.openFrame({
+					name: winParam.frameName,
+					url: winParam.frameUrl,
+					bounces: winParam.bounces||false,
+					pageParam: winParam.frameParam,
+					rect: {
+						x: 0,
+						y: headerPos.h,
+						w: 'auto',
+						h: mainPos.h
+					},
+					bgColor: '#fff',
+					reload: true,
+					allowEdit: true
+				});
+			}else{
+				api.openFrame({
+					name: winParam.frameName,
+					url: winParam.frameUrl,
+					bounces: winParam.bounces||false,
+					rect: {
+						x: 0,
+						y: headerPos.h,
+						w: 'auto',
+						h: mainPos.h
+					},
+					bgColor: '#fff',
+					reload:true,
+					allowEdit: true
+				});
+			}
+//			$api.html($api.dom(header, '.title'), winParam.headerTitle||'');
+		}
+	</script>
+</html>

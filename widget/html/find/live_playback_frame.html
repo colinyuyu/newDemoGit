@@ -1,0 +1,732 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>直播回放页面</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			html,
+			body,
+			#wrap {
+				background-color: transparent;
+			}
+			
+			#wrap {
+				z-index: 999;
+				position: relative;
+				background-color: transparent;
+			}
+			
+			#main {
+				/*background-color: rgba(0,0,0,0.25);*/
+				padding: 25px 10px;
+				font-size: 14px;
+			}
+			
+			.img-frm,
+			.img {
+				background-image: url(../../image/avatar.jpg);
+				background-size: cover;
+				background-position: center;
+				background-repeat: no-repeat;
+				border-radius: 50%;
+				width: 36px;
+				height: 36px;
+			}
+			.gift_img>.img{
+				background-size: cover;
+				background-position: center;
+				background-repeat: no-repeat;
+				border-radius: 0;
+				width: 36px;
+				height: 36px;
+			}
+			/* 头部 直播  */
+			
+			.zhubo {
+				min-width: 150px;
+				border-radius: 25px;
+				background-color: rgba(0, 0, 0, 0.2);
+				padding: 3px;
+			}
+			
+			.pd8 {
+				padding: 0 8px 0 10px;
+			}
+			
+			.pd8> div {
+				font-size: 12px;
+				color: #fff;
+			}
+			
+			.follow {
+				padding: 0 8px;
+			}
+			
+			.follow> span {
+				text-align: center;
+				width: 52px;
+				font-size: 12px;
+				padding: 5px 8px;
+				background-color: #FFDE3F;
+				border-radius: 20px;
+			}
+			
+			.fans_list {
+				overflow-x: auto;
+				padding-left: 10px;
+			}
+			
+			.fans {
+				padding-right: 5px;
+				min-width: 40px;
+			}
+			
+			.fans:last-child {
+				padding: 0;
+			}
+			
+			.charm {
+				padding-top: 10px;
+			}
+			
+			.charm> div {
+				/*font-size: 14px;*/
+				color: #fff;
+				padding: 8px 15px;
+				border-radius: 20px;
+				background-color: rgba(0, 0, 0, 0.2);
+				letter-spacing: 1px;
+			}
+			
+			.ct-icon-arrow-right {
+				font-size: 18px;
+				color: #fff;
+				padding-left: 5px;
+			}
+			/* 底部按钮 */
+			
+			.pause,
+			.msg,
+			.gift,
+			.share,
+			.play,
+			.close {
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				width: 45px;
+				height: 45px;
+			}
+			
+			.pause {
+				background-image: url(../../image/record-room-stop.png);
+			}
+			
+			.play{
+				background-image: url(../../image/record-room-play.png);
+			}
+			
+			.msg {
+				background-image: url(../../image/room-down-privatechat.png);
+			}
+			
+			.gift {
+				background-image: url(../../image/room-down-gift.png);
+			}
+			
+			.share {
+				background-image: url(../../image/room-down-share.png);
+			}
+			
+			.close {
+				background-image: url(../../image/room-down-close.png);
+			}
+			
+			.bottom_btn {
+				position: absolute;
+				bottom: 10px;
+				width: 100%;
+			}
+			/*弹幕*/
+			
+			.barrage_list_box {
+				position: relative;
+				margin-bottom: 40px;
+			}
+			
+			.live_gift {
+				position: absolute;
+				font-size: 12px;
+				max-width: 220px;
+				width: 220px;
+				bottom: 50px;
+				/*overflow: hidden;*/
+			}
+			
+			.gift_item {
+				position: relative;
+				border-radius: 20px;
+				padding: 3px;
+				background-color: rgba(0, 0, 0, 0.2);
+				margin-bottom: 10px;
+				z-index: 999;
+			}
+			
+			.gift_item:last-child {
+				margin-bottom: 0;
+			}
+			
+			.pd10 {
+				padding-left: 10px;
+			}
+			
+			.name {
+				color: #fff;
+			}
+			
+			.content {
+				padding-top: 3px;
+				color: #FFDE3F;
+			}
+			
+			.gift_img {
+				position: absolute;
+				right: 0;
+			}
+			
+			.num {
+				color: #FFDE3F;
+				font-size: 25px;
+				position: absolute;
+				right: -80px;
+				top: 3px;
+				width: 75px;
+			}
+			
+			.num .gift_num {
+				color: #FFDE3F;
+			}
+			/*底部消息*/
+			
+			.live_msg {
+				width: 250px;
+				position: relative;
+				bottom: 60px;
+				height: 120px;
+				overflow-y: auto;
+			}
+			
+			.live_msg> div> span {
+				display: inline;
+			}
+			
+			.live_msg .title {
+				color: #ffd942;
+			}
+			
+			.live_msg> div {
+				color: #ffd942;
+				padding-bottom: 5px;
+			}
+			
+			.live_msg> div:last-child {
+				padding: 0;
+			}
+			
+			.ct-icon-close {
+				font-size: 14px;
+				font-weight: bold;
+				color: #FFDE3F;
+			}
+			
+			.level {
+				width: 36px;
+				height: 16px;
+				min-width: 36px;
+				background-image: url(../../image/level/rank_1.png);
+				background-size: contain;
+				background-position: center;
+				background-repeat: no-repeat;
+				top: 3px;
+				position: relative;
+			}
+			/* 系统消息 */
+			
+			.blue {
+				color: #ffd942;
+				line-height: 20px;
+			}
+			/* 道具消息 */
+			
+			.pink {
+				color: #37d0b1;
+				line-height: 20px;
+			}
+			/* 用户消息 */
+			
+			.white {
+				color: #fff;
+				line-height: 20px;
+			}
+			/* 发送消息 */
+			
+			.msg-barrage-off,
+			.msg-barrage-on {
+				background-image: url(../../image/message-barrage-off.png);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				width: 55px;
+				height: 30px;
+			}
+			
+			.msg-barrage-on {
+				background-image: url(../../image/message-barrage-on.png);
+			}
+			/* 聊天 */
+			
+			.talk {
+				background-color: #fff;
+				padding: 10px;
+			}
+			
+			.talk input {
+				width: 100%;
+				font-size: 12px;
+			}
+			
+			.send {
+				padding-right: 10px;
+			}
+			
+			.send> div {
+				color: #FE5F99;
+			}
+			/* 礼物  */
+			
+			.swipe-wrap .img {
+				background-image: url(../../image/logo.png);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				width: 60px;
+				height: 60px;
+			}
+			
+			.gift_wrap {
+				background-color: rgba(0, 0, 0, 0.2);
+			}
+			
+			.gift_wrap> div {
+				padding: 10px 0;
+				border-right: 1px solid #909090;
+			}
+			
+			.gift_wrap> div:last-child {
+				border: 0;
+			}
+			
+			.gift_wrap .img {
+				background-image: url(../../image/logo.png);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: contain;
+				width: 40px;
+				height: 40px;
+				border-radius: 0;
+			}
+			
+			.price {
+				padding: 5px 0;
+			}
+			
+			.price> span {
+				color: #FE5F99;
+			}
+			
+			.diamond {
+				background-image: url(../../image/diamond.png);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				width: 13px;
+				height: 10px;
+				margin-left: 5px;
+			}
+			
+			.xp {
+				color: #D9D9D9;
+				font-size: 10px;
+			}
+			
+			.xp> span {
+				color: #D9D9D9;
+			}
+			/*.gift_wrap > div:not(:first-child){
+				border-top: 1px solid #DCDCDC;
+			}
+			.gift_wrap > div.border_bottom {
+				border-bottom: 1px solid #EDEDED;
+			}*/
+			
+			.recharge {
+				font-size: 14px;
+				padding: 10px;
+				background-color: rgba(0, 0, 0, 0.25);
+				position: relative;
+			}
+			
+			.recharge> div> div,
+			.recharge> div> div>span {
+				color: #FE5F99;
+			}
+			
+			.recharge .ct-icon-arrow-right {
+				color: #FE5F99;
+				font-size: 14px;
+				padding-left: 3px;
+			}
+			
+			.list {
+				position: relative;
+			}
+			
+			.recharge .send {
+				color: #313131;
+				background-color: #FFDE3F;
+				padding: 5px 15px;
+				border-radius: 20px;
+			}
+			
+			.ct-icon-select-yes {
+				position: absolute;
+				top: 5px;
+				right: 9px;
+			}
+			
+			.ct-icon-select-yes .path2::before {
+				color: rgba(0, 0, 0, 0.2);
+			}
+			/* 连送 */
+			
+			.recharge .liansong {
+				color: #313131;
+				background-color: #FFDE3F;
+				position: absolute;
+				right: -8px;
+				top: -13px;
+				border-radius: 50%;
+				width: 55px;
+				height: 55px;
+			}
+			
+			.liansong> div {
+				color: #313131;
+			}
+			
+			.gift_box {
+				overflow: hidden;
+			}
+			.duration {
+				font-size: 14px;
+				color: #fff;
+				padding: 0 20px 20px 20px;
+			}
+			.duration > span{
+				color: inherit;
+			}
+			input[type=range] {
+				padding: 0 10px;
+				width: 100%;
+		    -webkit-appearance: none;
+			}
+			input[type=range]::-webkit-slider-thumb {
+		    -webkit-appearance: none;
+			}  
+			input[type=range]::-webkit-slider-thumb {
+		    -webkit-appearance: none;
+		    height: 15px;
+		    width: 15px;
+		    margin-top: -7px; /*使滑块超出轨道部分的偏移量相等*/
+		    background: #fff; 
+		    border-radius: 50%; /*外观设置为圆形*/
+		    border: solid 4px rgba(0,0,0,0.1); /*设置边框*/
+			}
+			input[type=range]::-webkit-slider-runnable-track {
+		    height: 2px;
+		    background-color: #fff;
+			}
+			input[type=range]::-moz-range-progress {
+		    background: #0085D8;
+			}
+			input[type=range]::-ms-fill-lower {
+				background: #0085D8;
+			}
+			input[type=range]:focus::-ms-fill-lower {
+		    background: #0085D8;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main" class=" flex-box-v">
+				<!-- 顶部 -->
+				<div class="live_top">
+					<div class="flex-box flex-h-ce">
+						<div class="zhubo flex-box flex-h-ce">
+							<div class="flex-box flex-h-ce" onclick="openFrame('anchor','component','anchor','','fade')" tapmode="">
+								<div class="img-frm">
+									<div class="img"></div>
+								</div>
+								<div class="flex-1 pd8">
+									<div>44直播</div>
+									<div>15611</div>
+								</div>
+							</div>
+							<div class="follow" onclick="follow(this)" tapmode=""><span>关注</span></div>
+						</div>
+						<div id="fans_list" class="fans_list flex-1 flex-box">
+							<div class="fans" onclick="openFrame('fans','component','anchor','','fade')" tapmode="">
+								<div class="img-frm">
+									<div class="img"></div>
+								</div>
+							</div>
+							<div class="fans">
+								<div class="img-frm">
+									<div class="img"></div>
+								</div>
+							</div>
+							<div class="fans">
+								<div class="img-frm">
+									<div class="img"></div>
+								</div>
+							</div>
+							<div class="fans">
+								<div class="img-frm">
+									<div class="img"></div>
+								</div>
+							</div>
+							<div class="fans">
+								<div class="img-frm">
+									<div class="img"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="charm flex-box ">
+						<div class="flex-h-ce flex-box" onclick="openWin('win','charm','魅力贡献榜','find','charm')" tapmode="">魅力: <span style="color: inherit;">0</span><span class="ct-icon-arrow-right"></span></div>
+					</div>
+				</div>
+				<!-- 道具栏 -->
+				<div class="barrage_list_box flex-1" id="barrage_list_box">
+					<div class="live_gift">
+						<div class="gift_item flex-box flex-h-ce">
+							<div class="img-frm">
+								<div class="img"></div>
+							</div>
+							<div class="pd10">
+								<div class="name">哈哈哈</div>
+								<div class="content">送了一个戒指</div>
+							</div>
+							<div class="gift_img flex-1">
+								<div class="img "></div>
+								<div class="num"><span class="ct-icon-close"></span>1000</div>
+							</div>
+						</div>
+						<div class="gift_item flex-box flex-h-ce">
+							<div class="img-frm">
+								<div class="img"></div>
+							</div>
+							<div class="pd10">
+								<div class="name">哈哈哈</div>
+								<div class="content">送了一个戒指</div>
+							</div>
+							<div class="gift_img flex-1">
+								<div class="img "></div>
+								<div class="num"><span class="ct-icon-close"></span>1000</div>
+							</div>
+						</div>
+						<div id="gift9_10" class="gift_item flex-box flex-h-ce">
+							<div class="img-frm">
+								<div class="img"></div>
+							</div>
+							<div class="pd10">
+								<div class="name">哈哈哈</div>
+								<div class="content">送了一个戒指</div>
+							</div>
+							<div class="gift_img flex-1">
+								<div class="img "></div>
+								<div class="num"><span class="ct-icon-close"></span><span class="gift_num">1</span></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 消息栏 -->
+				<div class="live_msg">
+					<div class="list">
+						<span class="title">直播消息：</span>
+						<span class="blue">我们提倡绿色直播，封面和直播内容含吸烟、低俗、引诱暴露</span>
+					</div>
+					<div class="list">
+						<span>
+							<span class="level" style="display: inline-block;"></span>
+							<span class="title">嘿嘿嘿：</span>
+							<span class="blue pink">我送了一个钻石戒指</span>
+						</span>
+					</div>
+					<div class="list">
+						<span class="level" style="display: inline-block;"></span>
+						<span class="title">嘿嘿嘿：</span>
+						<span class="blue pink">我送了一个钻石戒指</span>
+					</div>
+					<div class="list">
+						<span class="level" style="display: inline-block;"></span>
+						<span class="title">嘿嘿嘿：</span>
+						<span class="pink">我送了一个钻石戒指</span>
+					</div>
+					<div class="list">
+						<span class="level" style="display: inline-block;"></span>
+						<span class="title">嘿嘿嘿：</span>
+						<span class="white">我送了一个钻石戒指钻石戒指</span>
+					</div>
+				</div>
+			</div>
+			<!-- 底部按钮 -->
+			<div id="footer" class="bottom_btn ">
+				<div class="text-right duration">
+					<span class="dur_play">15</span>
+					<span class="all_dur">15</span>
+				</div>
+				<div class="hidden" style="padding-bottom: 10px;">
+					<input type="range" value="1" />
+				</div>
+				<div class="flex-box tools" style="padding: 0 10px;">
+					<div class="flex-1 ">
+						<div class="pause" onclick="ispause(this)" tapmode=""></div>
+					</div>
+					<div class="flex-box flex-2">
+						<div class="flex-1">
+							<div class="msg " onclick="openWin('msg','msg','消息','msg','msg')" tapmode=""></div>
+						</div>
+						<div class="flex-1">
+							<div class="gift " onclick="" tapmode=""></div>
+						</div>
+						<div class="flex-1">
+							<div class="share " onclick="" tapmode=""></div>
+						</div>
+						<div class="flex-1 ">
+							<div class="close" onclick="api.closeWin()" tapmode=""></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript" src="../../script/touch.js" ></script>
+	<script type="text/javascript">
+		var result;
+		//轮播
+		function picSwipe() {
+			window.mySwipe = new Swipe(document.getElementById('slider'), {
+				startSlide: 0,
+				auto: 4000,
+				speed: 400,
+				continuous: true,
+				disableScroll: false,
+				stopPropagation: false,
+				callback: function(index, elem) {
+					try {
+						var pointer = $api.byId('pointer');
+						var p = $api.domAll(pointer, '.point');
+						if (index == p.length) {
+							for (var i = 0; i < p.length; i++) {
+								$api.removeCls(p[i], 'active');
+							}
+							$api.addCls($api.byId('p0'), 'active');
+						} else if (index - p.length == 1) {
+							for (var i = 0; i < p.length; i++) {
+								$api.removeCls(p[i], 'active');
+							}
+							$api.addCls($api.byId('p1'), 'active');
+						} else {
+							for (var i = 0; i < p.length; i++) {
+								$api.removeCls(p[i], 'active');
+							}
+							$api.addCls($api.byId('p' + index), 'active');
+						}
+					} catch (e) {}
+				},
+				transitionEnd: function(index, elem) {}
+			});
+		}
+		//是否暂停播放
+		function ispause(_this){
+			if($api.hasCls(_this,'pause')){
+				$api.addCls(_this,'play');
+				$api.removeCls(_this,'pause');
+				api.sendEvent({
+					name: 'pause'
+				});
+			}else{
+				$api.addCls(_this,'pause');
+				$api.removeCls(_this,'play');
+				api.sendEvent({
+					name: 'play'
+				});
+			}
+		}
+		
+		function formatSeconds(value) {
+	    var sec = parseInt(value);// 秒
+	    var minute = 0;// 分
+	    var hour = 0;// 小时
+	    if(sec > 60) {
+        minute = parseInt(sec/60);
+        sec = parseInt(sec%60);
+        if(minute > 60) {
+        hour  = parseInt(minute/60);
+        minute = parseInt(minute%60);
+        }
+	    }
+	    if(sec < 10){
+	    	result = "0：0"+parseInt(sec);
+	    }else if(sec == 59){
+	    	result = ""+parseInt(sec);
+	    }else{
+	    	if(minute > 0){
+	    		result = ""+parseInt(sec);
+	    	}else{
+	    		result = "0："+parseInt(sec);
+	    	}
+	    }
+      if(minute > 0) {
+      result = ""+parseInt(minute)+"："+result;
+      }
+      if(hour > 0) {
+      result = ""+parseInt(hour)+"："+result;
+      }
+	    return result;
+		}
+		
+		apiready = function(){
+			var param = api.pageParam;
+			$api.text($api.dom('.all_dur'),param.duration);
+			api.addEventListener({
+				name: 'duration'
+			},function(ret){
+				if(ret && ret.value){
+					var duration = ret.value.duration;
+					formatSeconds(duration);
+					$api.text($api.dom('.dur_play'), result + ' / ');
+				}
+			});
+		}
+	</script>
+</html>

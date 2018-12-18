@@ -1,0 +1,846 @@
+<!doctype html>
+<html>
+	<head>
+
+	
+		<meta charset="UTF-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<title>直播-首页</title>
+		<link rel="stylesheet" href="css/swiper.min.css">
+		<link href="css/style.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" type="text/css" href="css/ct.css" />
+		<link rel="stylesheet" type="text/css" href="css/aui.css" />
+		<style>
+			h3 {
+				margin-top: 0px;
+				margin-bottom: auto;
+			}
+			#footer {
+				width: 100%;
+				text-align: center;
+				z-index: 999;
+				border-top: 1px solid #D9DAD9;
+			}
+			#red {
+				color: #FE5F99
+			}
+			#footer .circle {
+				z-index: 2;
+			}
+			#footer .circle, #footer .circle_line, #footer .rect {
+				border-radius: 50%;
+				width: 59px;
+				height: 67px;
+				background-color: #fff;
+				position: absolute;
+				top: -10px;
+				left: 50%;
+				margin-left: -30px;
+			}
+			#footer .circle_line {
+				width: 60px;
+				height: 60px;
+				border: 1px solid #D9DAD9;
+				margin-top: -1px;
+			}
+			#footer .rect {
+				height: 48px;
+				width: 100px;
+				top: 0;
+				border-radius: 0;
+				z-index: 1;
+			}
+		</style>
+		<style>
+			.ct-icon-sys-message222 {
+				font-size: 30px;
+				margin-right: 20px;
+				padding: 2%
+			}
+			.dbadge {
+				height: auto;
+				top: 0;
+				width: auto;
+				min-width: 12px;
+				border-radius: 5px;
+			}
+			.num {
+				padding: 2px 3px;
+				font-size: 9px;
+				color: #fff;
+				position: absolute;
+				/*top: 2px;*/
+				right: 0;
+				z-index: 2;
+				/*width: 12px;*/
+				height: 15px;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<!--头部 -->
+		<div id="wrap">
+			<header>
+				<div class="header" id="header">
+					<span class="left icon"><a href="#"  onclick="openSearch()">&#xe606;</a></span>
+					<h1><a onclick="scrollToTop()">直播大厅</a></h1>
+					<!--
+					<span class="right icon"><a href="#" onclick="paihangbang()">&#xe605;</a></span>
+					-->
+					<div class="ct-icon-sys-message222 flex-center-center flex-box" onclick="openWin('msg','msg','消息','msg','msg')" tapmode  >
+						<span class="right icon">&#xe622;</span><span class=" dbadge num orange">0</span>
+					</div>
+				</div>
+				<!--头部 -->
+				<!--导航 -->
+				<div class="nav">
+					<!--<div class="nav-icon">
+					<a href="#"><i class="icon">&#xe601;</i></a>
+					</div>-->
+					<div class="swiper-container">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide1 swiper-slide1" style="width:33%;margin:-1px auto">
+								<a href="#" onclick="switchBtn(this,event)" current-modal="follow" id="gz" style="font-size: 16px">关注</a>
+							</div>
+							<div class="swiper-slide1 swiper-slide2" style="width:33%;margin:-1px auto">
+								<a href="#" current-modal="hot" onclick="switchBtn(this,event)" id="rm" class="now" style="font-size: 16px">热门</a>
+							</div>
+							<div class="swiper-slide1 swiper-slide3" style="width:33%;margin:-1px auto">
+								<a href="#"  onclick="switchBtn(this,event)" current-modal="near" id="fj" style="font-size: 16px">附近</a>
+							</div>
+							<!--<div class="swiper-slide1 swiper-slide4" style="width:25%;margin:3px auto">
+								<a href="#"  onclick="switchBtn(this,event)" current-modal="dsp" id="dsp" style="font-size: 16px">短视频 </a>
+							</div>-->
+							
+						</div>
+					</div>
+				</div>
+				<!--导航 -->
+				<!--banner -->
+				<div class="banner">
+					<div class="swiper-container">
+						<div class="swiper-wrapper" id="bannerList">
+							<div class="swiper-slide"><img src="image/banner01.png" />
+							</div>
+							<!--
+							<div class="swiper-slide"><img src="image/banner01.jpg" />
+							</div>
+							<div class="swiper-slide"><img src="image/banner01.jpg" />
+							</div>
+							-->
+						</div>
+						<div class="swiper-pagination"></div>
+					</div>
+				</div>
+			</header>
+			<!--banner -->
+			<!--列表 -->
+			<div class="girl" id="main" ></div>
+			<!--列表 -->
+			<!--底部 -->
+			<input id="aaaa1" value="bbbb" type="hidden">
+			
+			<div class="footer" id="footer">
+				
+				
+				<footer class="aui-nav">
+					<ul class="aui-bar-tab" >
+						<li class="active-dark" onclick="randomSwitchBtn('find',0)" tapmode >
+							<span class="aui-iconfont aui-icon-favor" style="color: #FE5F99"></span>
+							<p style="margin-left:0.3em;">首页</p>
+						</li>
+						<li onclick="paihangbang()" tapmode >
+							<span class="aui-iconfont aui-icon-mark" style="color: #FE5F99"></span>
+							<p style="margin-left:0.3em;">排行榜</p>
+						</li>
+						<li>
+							<span class="aui-iconfont"></span>
+							<p></p>
+						</li>
+						<li onclick="openWin('recharge','recharge','充值','mine','recharge','','',250)" tapmode>
+							<span class="aui-iconfont aui-icon-like" style="color: #FE5F99"></span>
+							<p style="margin-left:0.3em;">充值</p>
+						</li>
+						<li onclick="randomSwitchBtn('mine',2)" tapmode >
+							<span class="aui-iconfont aui-icon-my" style="color: #FE5F99"></span>
+							<p style="margin-left:0.3em;">我的</p>
+						</li>
+					</ul>
+				</footer>
+			</div>
+			
+			
+				
+			<!--底部 -->
+		</div>
+		<!-- Swiper JS -->
+		<script src="script/swiper.min.js"></script>
+		<!-- Initialize Swiper -->
+		<script></script>
+	</body>
+	<script type="text/javascript" src="script/api.js"></script>
+	<script type="text/javascript" src="script/doT.min.js" ></script>
+	<script type="text/javascript" src="script/common.js"></script>
+	<script type="text/javascript" src="script/ajpush.js"></script>
+	<script type="text/javascript" src="script/anchor.js"></script>
+	<script type="text/javascript" src="script/rongCloud2.js"></script>
+	<script type="text/javascript" src="script/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript">
+		//alert(3333);
+		var status = 1;
+		function setFrameGroupIndex(name, index) {
+			api.setFrameGroupIndex({
+				name : name,
+				index : index
+			});
+		}
+
+		function paihangbang() {
+			api.openWin({
+				name : 'charm2',
+				url : api.wgtRootDir + '/zhibo/html/find/charm2.html',
+				bgColor : '#F0F0F0',
+				bounces : false,
+				reload : true,
+			});
+		}
+
+		//点击切换 头部按钮
+		//点击切换 头部按钮
+		function switchBtn(_this, event) {
+			var gz = $api.byId('gz');
+			var rm = $api.byId('rm');
+			var fj = $api.byId('fj');
+		//	var dsp  = $api.byId('dsp');
+			event.stopPropagation();
+			var curModal = $api.attr(_this, 'current-modal');
+			var middleDom = $api.dom(_this, '.middle'), activeDom = $api.domAll('.active'), hotDom = $api.dom('.hot-active');
+			var hotDom = $api.dom('.hot > span'), isHot = false;
+			if ($api.hasCls(hotDom, 'active')) {
+				isHot = true;
+			} else {
+				isHot = false;
+			}
+			if (activeDom.length != 0) {
+				$api.removeCls(activeDom[0], 'active');
+				$api.addCls($api.dom(activeDom[0], '.bottom_icon'), 'hidden');
+			}
+			$api.addCls(_this, 'active');
+			$api.removeCls($api.dom(_this, '.bottom_icon'), 'hidden');
+			if (curModal == 'hot') {
+				setFrameGroupIndex('findGroup', 1);
+				if (isHot) {
+					openScreen();
+				}
+				$api.addCls(hotDom, 'hot-active');
+				$api.addCls(rm, 'now');
+				$api.removeCls(gz, 'now');
+				$api.removeCls(fj, 'now');
+				//$api.removeCls(dsp, 'now');
+			}
+//			else if (curModal == 'dsp') {
+//				setFrameGroupIndex('findGroup', 3);
+//				$api.removeCls(hotDom, 'hot-active');
+//				$api.removeCls(rm, 'now');
+//				$api.removeCls(gz, 'now');
+//				$api.removeCls(fj, 'now');
+//				$api.addCls(dsp, 'now');
+//				
+//				
+//				
+//				
+//			} 
+			else if (curModal == 'follow') {
+				setFrameGroupIndex('findGroup', 0);
+				$api.removeCls(hotDom, 'hot-active');
+				$api.removeCls(rm, 'now');
+				$api.addCls(gz, 'now');
+				$api.removeCls(fj, 'now');
+				//$api.removeCls(dsp, 'now');
+			} else {
+				setFrameGroupIndex('findGroup', 2);
+				$api.removeCls(hotDom, 'hot-active');
+				$api.removeCls(rm, 'now');
+				$api.removeCls(gz, 'now');
+				$api.addCls(fj, 'now');
+			//	$api.removeCls(dsp, 'now');
+			}
+		}
+
+		//点击显示 筛选
+		function openScreen() {
+			api.openFrame({
+				name : 'screen',
+				url : api.wgtRootDir + '/zhibo/html/find/screen.html',
+				bgColor : 'transparent',
+			});
+		}
+
+		//极光推送监听
+		function jpushListen(ret) {
+			if (ret) {
+				Tool.toast(ret.content);
+				if (ret.extra) {
+					var ct = ret.extra;
+					if ( typeof ret.extra == "string") {
+						ct = $api.strToJson(ret.extra);
+					}
+					Debug.alt(JSON.stringify(ct, null, 2))
+					if (ct.status) {
+						api.notification({
+							vibrate : [500, 500],
+							sound : 'default',
+							light : api.systemType == 'ios' ? false : true
+						});
+						switch(ct.status) {
+							case 'withdraw':
+							//提现消息
+							case 'live':
+							//直播消息
+							case 'recharge':
+							//充值消息
+							case 'systemnews':
+								//后台发送消息
+								api.sendEvent({
+									name : 'refreshMsgRed',
+									extra : {
+										count : ct.content.count
+									}
+								});
+								if (ct.status == 'withdraw') {
+									api.sendEvent({
+										name : 'charm'
+									})
+								}
+								break;
+							case 'roomnews':
+								//房间 公告
+								api.sendEvent({
+									name : 'roomnews',
+									extra : {
+										notice : ret.content
+									}
+								});
+								break;
+							case 'roombans':
+								//房间 禁停
+								break;
+						}
+					}
+				}
+			}
+		}
+
+		//查看是否有定位权限
+		function privacy() {
+			var privacy = api.require('privacy');
+			privacy.location(function(ret, err) {
+				if (!ret.status) {
+					api.alert({
+						title : '温馨提示',
+						msg : '未开启定位服务设置,可在设置里找到APP开启定位！'
+					}, function(ret, err) {
+						return;
+						//本来是直接关闭APP的
+						//api.closeWidget({
+						//silent : true
+						//});
+					});
+				}
+			});
+		}
+
+		//打开 发现 frameGroup
+		function findGroup(headerPos, mainPos) {
+			api.openFrameGroup({
+				name : 'findGroup',
+				scrollEnabled : true,
+				preload : 0,
+				rect : {
+					x : 0,
+					y : headerPos.h,
+					w : 'auto',
+					h : mainPos.h-4
+				},
+				index : 1,
+				frames : [{
+					name : 'follow',
+					scrollToTop : false,
+					url : api.wgtRootDir + '/zhibo/html/find/follow.html',
+					bounces : true
+				}, {
+					name : 'hot',
+					scrollToTop : false,
+					url : api.wgtRootDir + '/zhibo/html/find/hot.html',
+					bounces : false
+				}, {
+					name : 'nearby',
+					scrollToTop : false,
+					url : api.wgtRootDir + '/zhibo/html/find/nearby.html',
+					bounces : true
+				}, 
+//				{
+//					name : 'dsp',
+//					scrollToTop : false,
+//					url : api.wgtRootDir + '/zhibo/html/live/dsp.html',
+//					bounces : true
+//				}
+				]
+			}, function(ret) {
+				if (ret.index == 1 && ret.name == 'hot') {
+					$api.removeCls(fj, 'now');
+					$api.removeCls(gz, 'now');
+					$api.addCls(rm, 'now');
+					//$api.removeCls(dsp, 'now');
+				} else if (ret.index == 0 && ret.name == 'follow') {
+					$api.removeCls(fj, 'now');
+					$api.removeCls(rm, 'now');
+					$api.addCls(gz, 'now');
+					//$api.removeCls(dsp, 'now');
+				}  
+//				else if (ret.index == 3 && ret.name == 'dsp') {
+//					$api.removeCls(fj, 'now');
+//					$api.removeCls(rm, 'now');
+//					$api.removeCls(gz, 'now');
+//					$api.addCls(dsp, 'now');
+//				}
+				else {
+					$api.addCls(fj, 'now');
+					$api.removeCls(rm, 'now');
+					$api.removeCls(gz, 'now');
+					//$api.removeCls(dsp, 'now');
+				}
+			});
+		}
+
+		// 获取 融云 未读条数  与 获取 系统 消息 未读条数 设置 角标
+		function setBadge() {
+			RongCloud2.getTotalUnreadCount(function(num) {
+				// syscount 系统消息 条数  num 为 融云 消息 条数
+				//$api.html($api.dom('.orange'),'0'); //看过后清除叹号
+				var syscount = $api.getStorage('unreadCount'), badge = 0;
+				$api.html($api.dom('.orange'), num);
+				//小红点数量
+				if (num > 0) {
+					if (parseInt(syscount) > 0) {
+						badge = parseInt(num) + parseInt(syscount);
+					} else {
+						badge = parseInt(num);
+					}
+				} else {
+					if (parseInt(syscount) > 0) {
+						badge = parseInt(syscount);
+					} else {
+						badge = 0;
+					}
+				}
+				api.setAppIconBadge({
+					badge : parseInt(badge)
+				});
+				if (badge > 0) {
+					$api.removeCls($api.dom('.msg_badge'), 'hidden');
+				} else {
+					$api.addCls($api.dom('.msg_badge'), 'hidden');
+				}
+			});
+		}
+
+		//标识当前模块
+		var curPage = 'find';
+		apiready = function() {
+//		if(api.systemType != 'ios'){
+//api.getPhoneNumber(function(ret, err) {
+//  var phoneNumber = ret.value||9999;
+//  if(phoneNumber){
+// // alert($api.getStorage(CONFIG.memberId));
+//  // alert(phoneNumber);
+//   api.ajax({
+//				url : window.DOMAIN + '/zhiboApp/phone',
+//				method : 'post',
+//				data : {
+//					values: {
+//							phone: phoneNumber,
+//							uid: $api.getStorage(CONFIG.memberId),
+//				
+//						}
+//				}
+//			}, function(ret, err) {
+//				
+//			});
+//  }
+// 
+//});
+//}
+		$api.setStorage('winHeight',api.winHeight);
+		$api.setStorage('mopi',50);  //设置磨皮等美颜效果默认值
+$api.setStorage('meibai',50);
+$api.setStorage('hongrun',50);
+$api.setStorage('saihong',10);
+$api.setStorage('shoulian',10);
+$api.setStorage('xiaolian',10);
+$api.setStorage('dayan',10);
+		
+		var alivcLivePusher = api.require('alivcLivePusher');
+alivcLivePusher.destroy(); //阿里云直播销毁 销毁后美颜才生效
+alivcLivePusher.stopPush();
+			api.addEventListener({
+				name : 'zhubo'
+			}, function(retzb) {
+				//111
+				
+				getRongToken(function(ret1) {
+					//alert(self.uid);
+					RongCloud2.init(function(a1, a2) {
+						RongCloud2.setConnectionStatusListener();
+						RongCloud2.setOnReceiveMessageListener(function(ret) {
+							setOnReceiveMessageListener(ret);
+						});
+					});
+				});
+			});
+			//$api.dom('.msg_badge','10');
+			var push = api.require('push');
+			push.bind({
+				userName : 'testName',
+				userId : 'testId'
+			}, function(ret, err) {
+			});
+			var header = $api.dom('header');
+			$api.fixIos7Bar(header);
+			//$api.fixStatusBar(header);
+			var main = $api.dom('#main'), mainPos = $api.offset(main), headerPos = $api.offset(header);
+			api.closeFrame({
+				name : 'login_type'
+			});
+			//设置退出机制
+			Tool.exitApp();
+			openCircle();
+			api.bringFrameToFront({
+				from : 'circle'
+			});
+			//打开 发现 frameGroup
+			findGroup(headerPos, mainPos);
+			joinBanner();
+			//获取  融云 token
+			getRongToken(function(ret1) {
+				memberInfo(function(ct) {
+					var tags = [];
+					//极光推送
+					jpush(tags, function() {
+					});
+					countMsg();
+					RongCloud2.init(function() {
+						RongCloud2.setConnectionStatusListener();
+						RongCloud2.setOnReceiveMessageListener(function(ret) {
+							if (ret) {
+								api.sendEvent({
+									name : 'newMessage',
+									extra : ret
+								});
+								setBadge();
+							}
+						});
+						RongCloud2.connect({
+							token : ret1.token
+						}, function() {
+							//连接成功后，更新融云列表
+							api.sendEvent({
+								name : 'imList'
+							});
+							setBadge();
+						});
+					});
+				});
+			});
+			//设置消息为已读
+			api.addEventListener({
+				name : 'setReadMsg'
+			}, function(ret) {
+				if (ret && ret.value) {
+					var count = $api.getStorage('unreadCount');
+					if (parseInt(count) != ret.value.count) {
+						count = ret.value.count;
+					}
+					RongCloud2.getTotalUnreadCount(function(num) {
+						if (num > 0 && count > 0 || num > 0 || count > 0) {
+							$api.removeCls($api.dom('.msg_badge'), 'hidden');
+						} else {
+							$api.addCls($api.dom('.msg_badge'), 'hidden');
+						}
+					});
+				}
+			});
+			//监听 后台推送消息
+			api.addEventListener({
+				name : 'refreshMsgRed'
+			}, function(ret) {
+				if (ret && ret.value.count > 0) {
+					var count = $api.getStorage('unreadCount');
+					$api.setStorage('unreadCount', parseInt(count) + 1);
+					$api.removeCls($api.dom('.msg_badge'), 'hidden');
+				}
+			});
+			//监听融云有新的消息
+			api.addEventListener({
+				name : 'newMessage'
+			}, function(ret) {
+			if(JSON.parse(ret.value.message.content.extra).caozuo=='dongjie'){
+			
+			if(JSON.parse(ret.value.message.content.extra).dongjieid==$api.getStorage(CONFIG.memberId)&&JSON.parse(ret.value.message.content.extra).dongjietoken==$api.getStorage(CONFIG.token))
+		Tool.toast('账号被冻结,请联系管理员');
+		var myTimer = api.require('myTimer');
+myTimer.startTimer({
+    step:2,
+    isLoop:false
+},function(ret) {
+    if(ret.status){
+   
+  relogin(); //收到融云冻结的
+   
+    }
+});
+			
+			
+			}
+				RongCloud2.getTotalUnreadCount(function(num) {
+					if (num > 0) {
+						$api.html($api.dom('.orange'), num);
+						//收到消息加叹号
+						$api.removeCls($api.dom('.msg_badge'), 'hidden');
+					}
+				})
+			});
+			//用于清除 Im未读消息数
+			api.addEventListener({
+				name : 'clearMsgUnreadStatus'
+			}, function(ret) {
+				setBadge();
+			});
+			//应用进入后台事件
+			api.addEventListener({
+				name : 'pause'
+			}, function(ret, err) {
+				//设置角标
+				setBadge();
+			});
+			//开始定位
+			
+		
+			
+			var aMapLBS = api.require('aMapLBS');
+aMapLBS.configManager({
+    accuracy: 'hundredMeters',
+    filter: 1
+}, function(ret, err) {
+
+    if (ret.status) {
+        aMapLBS.singleLocation({
+    timeout: 10
+}, function(ret, err) {
+//alert('aaa'+JSON.stringify(ret));
+    if (ret.status) {
+   // alert(JSON.stringify(ret.lon));
+    $api.setStorage('lon',ret.lon||0);
+     $api.setStorage('lat',ret.lat||0);
+    }
+});
+    }else{
+    
+    if (api.systemType == 'ios') {
+				privacy();
+				}
+    }
+});
+			
+			
+		}
+		// 随意切换按钮
+		function randomSwitchBtn(name, index) {
+			var header = $api.dom('header'), headerPos = $api.offset(header), main = $api.dom('#main'), mainPos = $api.offset(main), footer = $api.dom('#footer'), footerPos = $api.offset(footer);
+			if (curPage == name) {
+				return;
+			}
+			var $footer = $api.byId('footer'), navDom = $api.dom('.nav'), $titleBar = $api.domAll(header, '.topbar');
+			for (var i = 0; i < $titleBar.length; i++) {
+				$api.removeCls($titleBar[i], 'activebar');
+			}
+			$api.addCls($api.byId(name), 'activebar');
+			var $footer = $api.byId('footer'), $footerBar = $api.domAll($footer, 'li');
+			for (var j = 0; j < $footerBar.length; j++) {
+				$api.removeCls($footerBar[j], 'active');
+			}
+			$api.addCls($api.eq(navDom, index + 1), 'active');
+			if (name == 'mine') {
+				//memberInfo();
+				api.sendEvent({
+					name : 'viewappear'
+				});
+				$api.addCls($api.dom('.ct-icon-bar-my-line'), 'hidden');
+				$api.removeCls($api.dom('.ct-icon-bar-my-color'), 'hidden');
+				$api.addCls($api.dom('.ct-icon-bar-found-color'), 'hidden');
+				$api.removeCls($api.dom('.ct-icon-bar-found-line'), 'hidden');
+			} else if (name == "find") {
+				$api.removeCls($api.dom('.ct-icon-bar-my-line'), 'hidden');
+				$api.addCls($api.dom('.ct-icon-bar-my-color'), 'hidden');
+				$api.removeCls($api.dom('.ct-icon-bar-found-color'), 'hidden');
+				$api.addCls($api.dom('.ct-icon-bar-found-line'), 'hidden');
+			} else {
+				if ($api.hasCls($api.dom('.ct-icon-bar-found-line'), 'hidden')) {
+					$api.addCls($api.dom('.ct-icon-bar-found-color'), 'hidden');
+					$api.removeCls($api.dom('.ct-icon-bar-found-line'), 'hidden');
+				}
+				if ($api.hasCls($api.dom('.ct-icon-bar-my-line'), 'hidden')) {
+					$api.removeCls($api.dom('.ct-icon-bar-my-line'), 'hidden');
+					$api.addCls($api.dom('.ct-icon-bar-my-color'), 'hidden');
+				}
+			}
+			if ($api.hasCls(header, curPage)) {
+				$api.removeCls(header, curPage);
+			}
+			$api.addCls(header, name);
+			header = $api.dom('header');
+			headerPos = $api.offset(header);
+			main = $api.dom('#main');
+			mainPos = $api.offset(main);
+			//隐藏当前模块
+			switch(curPage) {
+				case 'find':
+					api.setFrameGroupAttr({
+						name : curPage + 'Group',
+						hidden : true
+					});
+					break;
+				case 'live':
+					api.setFrameAttr({
+						name : curPage,
+						hidden : true
+					});
+					break;
+				case 'mine':
+					api.setFrameAttr({
+						name : curPage,
+						hidden : true
+					});
+					break;
+			}
+			mainPos = $api.offset(main);
+			//显示当前模块
+			switch(name) {
+				case 'find':
+					api.setFrameGroupAttr({
+						name : name + 'Group',
+						hidden : false
+					});
+					curPage = 'find';
+					break;
+				case 'live':
+					api.openFrame({
+						name : 'mine',
+						url : api.wgtRootDir + '/zhibo/html/live/index.html',
+						bounces : false,
+						bgColor : '#F0F0F0',
+						rect : {
+							x : 0,
+							y : 0,
+							w : 'auto',
+							h : mainPos.h + headerPos.h
+						}
+					});
+					curPage = 'live';
+					break;
+				case 'mine':
+					api.openFrame({
+						name : 'mine',
+						url : api.wgtRootDir + '/zhibo/html/mine/index.html',
+						bounces : false,
+						bgColor : '#FCFBF5',
+						rect : {
+							x : 0,
+							y : 0,
+							w : 'auto',
+							h : mainPos.h + headerPos.h-4
+						}
+					});
+					curPage = 'mine';
+					break;
+			}
+			api.bringFrameToFront({
+				from : 'circle'
+			});
+		}
+
+		/*
+		 function joinBanner() {
+		 var content = "";
+		 ajax.get({
+		 ctrl : 'zhiboApp',
+		 fn : 'bannerList',
+		 hideLoading : true,
+		 showError : true,
+		 showProgress : true,
+		 data : {
+		 values : {
+		 }
+		 },
+		 success : function(ct) {
+		 for (var key in ct.bannerList) {
+		 content += '<div class="swiper-slide"><img src="' + ct.bannerList[key].banner + '" /></div>'
+		 }
+		 $api.html($api.dom('#bannerList'), content);
+		 var swiper = new Swiper('.nav .swiper-container', {
+		 slidesPerView : 3,
+		 paginationClickable : true,
+		 spaceBetween : 0
+		 });
+		 var swiper = new Swiper('.banner .swiper-container', {
+		 pagination : '.swiper-pagination',
+		 nextButton : '.swiper-button-next',
+		 prevButton : '.swiper-button-prev',
+		 paginationClickable : true,
+		 spaceBetween : 0,
+		 centeredSlides : true,
+		 autoplay : 2500,
+		 autoplayDisableOnInteraction : false
+		 });
+		 }
+		 });
+		 }
+		 */
+		function joinBanner() {
+			var content = "";
+			api.ajax({
+				url : window.DOMAIN + '/zhiboApp/bannerList',
+				method : 'post',
+				data : {
+					values : {
+					}
+				}
+			}, function(ret, err) {
+				if (ret) {
+					//callback(ret.content);
+					var ct = ret.content;
+					for (var key in ct.bannerList) {
+						content += '<div class="swiper-slide"><img src="' + ct.bannerList[key].banner + '" /></div>'
+					}
+					$api.html($api.dom('#bannerList'), content);
+					var swiper = new Swiper('.nav .swiper-container', {
+						slidesPerView : 3,
+						paginationClickable : true,
+						spaceBetween : 0
+					});
+					var swiper = new Swiper('.banner .swiper-container', {
+						pagination : '.swiper-pagination',
+						nextButton : '.swiper-button-next',
+						prevButton : '.swiper-button-prev',
+						paginationClickable : true,
+						spaceBetween : 0,
+						centeredSlides : true,
+						autoplay : 2500,
+						autoplayDisableOnInteraction : false
+					});
+				}
+			});
+		}
+	</script>
+</html>

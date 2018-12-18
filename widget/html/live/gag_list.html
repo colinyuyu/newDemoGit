@@ -1,0 +1,286 @@
+<!doctype html>
+<html >
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no">
+		<title>管理员人列表</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css" />
+		<style type="text/css">
+			.search_wrap {
+				padding-left: 5px;
+			}
+			
+			.img-frm {
+				border: 1px solid #D9D9D9;
+			}
+			
+			.img-frm,
+			.img {
+				background-image: url(../../image/avatar.jpg);
+				background-size: cover;
+				background-position: center;
+				background-repeat: no-repeat;
+				border-radius: 50%;
+				width: 36px;
+				height: 36px;
+			}
+			
+			.info {
+				padding-left: 8px;
+				font-size: 12px;
+			}
+			
+			.list {
+				padding: 15px 0;
+				border-bottom: 1px solid #E2E2E2;
+			}
+			
+			.signature {
+				padding-top: 5px;
+			}
+			
+			.level {
+				width: 36px;
+				height: 16px;
+				min-width: 36px;
+				background-image: url(../../image/level/rank_1.png);
+				background-size: contain;
+				background-position: center;
+				background-repeat: no-repeat;
+			}
+			
+			.sex {
+				margin: 0 5px;
+				width: 16px;
+				height: 16px;
+				min-width: 16px;
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+			}
+			
+			.female {
+				background-image: url(../../image/sex-female.png);
+			}
+			
+			.male {
+				background-image: url(../../image/sex-male.png);
+			}
+			
+			.name {
+				font-size: 14px;
+				display: -webkit-box!important;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				word-break: break-all;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 1;
+			}
+			
+			.icon_circle {
+				padding: 0 10px;
+				font-size: 23px;
+			}
+			
+			.icon_circle> span {
+				display: inherit;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="wrap">
+			<div id="main">
+				<div class="search_wrap hidden">
+					<div class="flex-box list" onclick="openFrame('detail','find','profile')" tapmode="">
+						<div class="img-frm">
+							<div class="img"></div>
+						</div>
+						<div class="flex-1 info ">
+							<div class="flex-box">
+								<div class="name">晨晨晨晨晨啦啦啦啦啦啦啦啦啦</div>
+								<span class="sex female"></span>
+								<span class="level"></span>
+							</div>
+							<div class="signature text-overflow">啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦~</div>
+						</div>
+						<div class="icon_circle flex-box flex-h-ce" onclick="switchBtn(event,this)" tapmode="">
+							<span class="ct-icon-select-yes icon">
+								<span class="path1"></span><span class="path2"></span>
+							</span>
+						</div>
+					</div>
+					<div class="flex-box list">
+						<div class="img-frm">
+							<div class="img"></div>
+						</div>
+						<div class="flex-1 info">
+							<div class="flex-box">
+								<div class="name">晨晨晨晨晨啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦</div>
+								<span class="sex male"></span>
+								<span class="level" style="background-image: url(../../image/level/rank_101.png);"></span>
+							</div>
+							<div class="signature text-overflow">啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦~</div>
+						</div>
+						<div class=" icon_circle flex-box flex-h-ce" onclick="switchBtn(event,this)" tapmode="">
+							<span class="ct-icon-select-circle icon">
+								<span class="path1"></span><span class="path2"></span>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/template" template="main">
+		{{? it instanceof Array && it.length != 0}}
+		<div class="search_wrap">
+			{{~ it :value:index}}
+			<div class="flex-box list"  onclick="openProfile('{{= value.memberid}}')" tapmode="">
+				<div class="img-frm">
+					<div class="img" data-original="{{= Tool.imageCompressByQiNiu(value.avatar,0,200,200)}}"></div>
+				</div>
+				<div class="flex-1 info ">
+					<div class="flex-box">
+						<div class="name">{{= value.nickname || ''}}</div>
+						<span class="sex {{? value.sex == '1'}}male{{?? value.sex== '2'}}female{{?}}"></span>
+						<span class="level" style="background-image: url(../../image/level/rank_{{= value.level}}.png);"></span>
+					</div>
+					<div class="signature text-overflow">{{= rmNull(value.signature) }}</div>
+				</div>
+				<div class="icon_circle flex-box flex-h-ce" onclick="switchBtn(event,this,{{= value.memberid}})" tapmode="">
+					<span mid = {{= value.memberid}} class="ct-icon-select-yes icon">
+						<span class="path1"></span><span class="path2"></span>
+					</span>
+				</div>
+			</div>
+			{{~}}
+		</div>
+		{{??}}
+		<div class="null flex-box">
+			<div class="flex-1">暂无相关内容~</div>
+		</div>
+		{{?}}
+	</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery.lazyload.min.js"></script>
+	<script type="text/javascript">
+		var values = {};
+		values.id = $api.getStorage(CONFIG.memberId);
+		values.token = $api.getStorage(CONFIG.token);
+		//切换勾选 与不勾选
+		function switchBtn(event, _this) {
+			event.stopPropagation();
+			if($api.dom(_this, '.ct-icon-select-yes')) {
+				$api.removeCls($api.dom(_this, '.icon'), 'ct-icon-select-yes');
+				$api.addCls($api.dom(_this, '.icon'), 'ct-icon-select-circle');
+			} else {
+				$api.removeCls($api.dom(_this, '.icon'), 'ct-icon-select-circle');
+				$api.addCls($api.dom(_this, '.icon'), 'ct-icon-select-yes');
+			}
+		}
+		//处理
+		function closeHandler() {
+			var doms = $api.domAll('.ct-icon-select-circle');
+			var mid = [];
+			var targetNickname = [];
+			for(var i = 0;i<doms.length;i++){
+				mid.push(parseInt($api.attr(doms[i],'mid')));
+				targetNickname.push($api.text($api.dom($api.closest(doms[i],'.list'),'.name')));
+			}
+			if(mid.length == 0){
+				api.closeWin();
+			}else{
+				ajax.get({
+					ctrl: 'zhiboApp',
+					fn: 'notgag',
+					data: {
+						values: {
+							id: values.id,
+							token: values.token,
+							roomid: values.roomid,
+							memberid: mid
+						}
+					},
+					hideLoading: true,
+					showError: true,
+					showProgress: true,
+//					test:true,
+					success: function(ct) {
+						api.sendEvent({
+							name: 'live_user_init'
+						});
+						api.sendEvent({
+							name: 'sendGagOrder',
+							extra: {
+								isGag: 0,
+								memberid: values.id,
+								nickname: $api.getStorage(CONFIG.memberInfo).nickname,
+								targetId: mid,
+								targetNickname: targetNickname
+							}
+						})
+						api.closeWin();
+					}
+				});
+			}
+		}
+
+
+		//管理员列表
+		function init() {
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'gaglist',
+				data: {
+					values: values
+				},
+				hideLoading: false,
+				showError: true,
+				showProgress: false,
+				success: function(ct) {
+					T.html('#main', 'main', ct);
+					$('div.img').lazyload({
+						effect: "fadeIn"
+					});
+				}
+			});
+		}
+
+		apiready = function() {
+			var param = api.pageParam;
+			if(param) {
+				values.roomid = param.roomid;
+			}
+			init();
+			Refresh.init({
+				ctrl: 'zhiboApp',
+				fn: 'gaglist',
+				values: values,
+				template: 'main',
+				success: function() {
+					$('div.img').lazyload({
+						effect: "fadeIn"
+					});
+				}
+			});
+			LoadMore.init({
+				ctrl: 'zhiboApp',
+				fn: 'gaglist',
+				countSelector: '.search_wrap > div',
+				template: 'main',
+				values: values,
+			}, function(ct, page) {
+				$('div.img').slice((page - 1) * 10).lazyload({
+					effect: "fadeIn"
+				});
+			});
+		}
+	</script>
+
+</html>

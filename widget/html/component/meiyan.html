@@ -1,0 +1,137 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>分享</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			html,
+			body,
+			#wrap,
+			#main {
+				background-color: transparent;
+			}
+			body{
+				overflow: hidden;
+			}
+			#main,
+			#footer {
+				font-size: 14px;
+			}
+			.share {
+				border-radius: 10px 10px 0 0;
+				background-color: #fff;
+				position: absolute;
+				width: 100%;
+				bottom: -150px;
+				transition: bottom linear 0.2s;
+				-moz-transition: bottom linear 0.2s;
+				-webkit-transition: bottom linear 0.2s;
+				-o-transition: bottom linear 0.2s;
+			}
+			.border_bottom{
+				padding: 10px 0;
+				border-bottom: 1px solid #D9D9D9;
+			}
+			.icon {
+				font-size: 40px;
+				padding-bottom: 10px;
+			}
+			.friend {
+				background-image: url(../../image/share-moments.png);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				width: 40px;
+				height: 40px;
+				margin: 0 auto;
+			}
+			.ct-icon-wechat{
+				color: #54C855;
+			}
+			.ct-icon-weibo{
+				color: #FA6820;
+			}
+			.ct-icon-qq{
+				color: #0085D8;
+			}
+			.share_btn {
+				padding: 15px 0;
+			}
+			.share_btn > div {
+				color: #767C7E;
+			}
+			.close {
+				position: absolute;
+				top: 20px;
+				right: 25px;
+			}
+			.ct-icon-close {
+				font-size: 20px;
+				color: #fff;
+				text-shadow: 1px 1px 1px #9E918A;
+				z-index: 1;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+				<div class="close" onclick="guanmeiyan();" tapmode>
+					<span class="ct-icon-close"> </span>
+				</div>
+			</div>
+			<div id="footer">
+				<div class="share">
+					
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+
+	<script type="text/javascript" src="../../script/common.js" ></script>
+
+	<script type="text/javascript">
+		var param;
+		function guanmeiyan(){
+		api.sendEvent({  //关闭美颜页面 并显示底部
+					name: 'bottom'
+				});
+        setTimeout(function(){ //关闭美颜页面 并显示底部
+					api.closeFrame({
+		name:'meiyan'
+        });
+				},300);
+		
+		}
+		apiready = function(){
+//		注释说明，方便复制
+//beautyBuffing:$api.getStorage('mopi'),          //磨皮
+//beautyWhite:$api.getStorage('meibai'),             //美白
+//beautyRuddy:$api.getStorage('hongrun'),         //红润
+//beautyCheekPink:$api.getStorage('saihong'),     //腮红
+//beautyShortenFace:$api.getStorage('shoulian'),         //瘦脸
+//beautyThinFace:$api.getStorage('xiaolian'),    //下吧,也就是小脸
+//beautyBigEye:$api.getStorage('dayan'),          //大眼
+	
+	api.sendEvent({
+	    name:'meiyan'
+    }); //不用来发送，直接调用安卓关闭美颜后会卡住
+			$api.css($api.dom('.share'),'bottom:0');
+			param = api.pageParam;
+			$api.addEvt($api.dom('#main'),'click',function(){
+				$api.css($api.dom('.share'),'bottom:-150px');
+				api.sendEvent({
+					name: 'bottom'
+				});
+				
+				setTimeout(function(){
+					api.closeFrame();
+				},300);
+			})
+		}
+	</script>
+</html>

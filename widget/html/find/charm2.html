@@ -1,0 +1,623 @@
+<!doctype html>
+<html >
+	<head>
+	<link rel="stylesheet" type="text/css" href="../css/aui.css" />
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>魅力榜</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+		<style type="text/css">
+			#main {
+				font-size: 14px;
+			}
+			.top {
+				width: 100%;
+				position: fixed;
+				z-index: 1;
+			}
+			.switch_btn {
+				background-color: #fff;
+			}
+			.switch_btn > div{
+				padding: 10px 0;
+				color: #909090;
+				border-bottom: 1px solid #F5F5F5;
+			}
+			.switch_btn > div.active{
+				color: #FE5F99;
+				border-bottom: 1px solid #FE5F99;
+			}
+			.charm {
+				background-color: #fff;
+				padding: 15px 0;
+				border-bottom: 1px solid #F5F5F5;
+			}
+			.charm > div {
+				font-size: 16px;
+				letter-spacing: 0.5px;
+				color: #F53434;
+			}
+			.charm > div > span {
+				padding-right: 8px;
+				color: inherit;
+			}
+			/*魅力列表 开始*/
+			.list {
+				padding: 20px 10px;
+				border-bottom: 1px solid #F5F5F5;
+			}
+			.first {
+				padding-top: 40px;
+				position: relative;
+			}
+			.img-frm,
+			.img {
+				background-image: url(../../image/avatar.jpg);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				border-radius: 50%;
+				width: 65px;
+				height: 65px;
+			}
+			.rank {
+				background-image: url(../../image/toplist-eft-lv1.png);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				width: 30px;
+				height: 35px;
+				position: absolute;
+			}
+			.sex {
+				margin: 0 5px;
+				width: 16px;
+				height: 16px;
+				min-width: 16px;
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+			}
+			.female{
+				background-image: url(../../image/sex-female.png);
+			}
+			.male{
+				background-image: url(../../image/sex-male.png);
+			}
+			.name {
+				font-size: 14px;
+				display:-webkit-box!important;
+				overflow:hidden; 
+				text-overflow:ellipsis; 
+				word-break:break-all; 
+				-webkit-box-orient:vertical; 
+				-webkit-line-clamp:1;
+			}
+			.level {
+				width: 36px;
+				height: 16px;
+				min-width: 36px;
+				background-image: url(../../image/level/rank_1.png);
+				background-size: contain;
+				background-position: center;
+				background-repeat: no-repeat;
+			}
+			.devote {
+				padding-top: 8px;
+				color: #909090;
+			}
+			.first .devote > span ,
+			.devote > span{
+				padding: 0 5px;
+				color: #FE5F99;
+			}
+			.devote > span {
+				color: #909090;
+			}
+			.top_list {
+				width: 100%;
+				position: relative;
+				/*top: 22px;*/
+			}
+			.bg {
+				background-image: url(../../image/toplist-lv1.png);
+				background-size: cover;
+				background-position: center;
+				background-repeat: no-repeat;
+				width: 80px;
+				height: 105px;
+				position: absolute;
+			}
+			.first .info {
+				padding-top: 30px;
+			}
+			.first .bg {
+				width: 200px;
+				height: 110px;
+				top: -22px;
+				margin-left: -100px;
+				left: 50%;
+			}
+			.charm_list {
+				padding-top: 87px;
+			}
+		</style>
+		<style type="text/css">
+			body {
+				font-size: 14px;
+			}
+			.ct-icon-arrow-left {
+				color: #FFFFFF;
+			}
+			.topbar,
+			#header {
+				background-color: #FE5F99;
+			}
+			#header .tit_icon {
+				font-size: 13px;
+				width: 50px;
+				right: 0;
+			}
+			.search {
+				width: 100%;
+				margin: 0 50px;
+			}
+			.search > div{
+				height: 30px;
+				border-radius: 20px;
+				background-color: #fff;
+			}
+			input {
+				width: 100%;
+				line-height: 25px;
+				font-size: 12px;
+				letter-spacing: 1px;
+				margin: 1px 4px 0 0;
+			}
+			.search input::-webkit-input-placeholder{ 
+				color: #d9d9d9; 
+			} 
+			.search input:-moz-placeholder{ 
+				color: #d9d9d9;
+			} 
+			.search input::-moz-placeholder { 
+				color: #d9d9d9; 
+			} 
+			.search input:-ms-input-placeholder{ 
+				color: #d9d9d9;
+			} 
+			.ct-icon-search {
+				font-size: 16px;
+				padding: 0 8px;
+			}
+		</style>
+	</head>
+	<body>
+	
+	
+		<div id="wrap">
+		
+			
+			<div id="main">
+			<div id="header" class="header" style="position: absolute; z-index: 100; width: 100%;position:fixed;top:0;left: 0; ">
+			
+				<div class="topbar" style="padding-top: 8px">
+					<span class="ct-icon-arrow-left" style="padding-top: 8px" onclick="close_win()" tapmode=""></span>
+	        <span class="title text-overflow" style="max-width: 200px;"></span>
+	        
+	        <span class="" onclick="renqibang()" tapmode="" style="color: #fff;text-decoration:underline;font-size: 16px">人气榜</span>　　　
+	        
+	         <span class="" onclick="tuhaobang()" tapmode="" style="color: #fff;font-size: 16px">土豪榜</span>
+				</div>
+			
+			
+				<div class="top ">
+					<div class="switch_btn flex-box text-center">
+						<div class="flex-1 active" onclick="switchBtn(this)" tapmode="">日榜</div><div style="color: #D9D9D9;">|</div>
+						<div class="flex-1 all" onclick="switchBtn(this)" tapmode="zou">周榜</div>
+						<div class="flex-1 alll" onclick="switchBtn(this)" tapmode="yue">月榜</div>
+					</div>
+				
+					<div class="charm">
+						<div class="text-center"> <span>0</span>魅力</div>
+					</div>
+				</div>
+				</div>
+				
+				<div class="charm_list " style="margin-top: 20%">
+					<div class="first list flex-box flex-h-ce hidden">
+						<div class="rank"></div>
+						<div class="top_list flex-box-v flex-h-ce flex-h-zhu">
+							<div class="img-frm">
+								<div class="img"></div>
+							</div>
+							<div class="info flex-box">
+								<div class="name">哈哈哈</div>
+								<span class="sex female"></span>
+								<span class="level" ></span>
+							</div>
+							<div class="devote">
+								贡献<span>454654</span>魅力
+							</div>
+							<div class="bg"></div>
+						</div>
+					</div>
+					<div class="list flex-box flex-h-ce hidden">
+						<div class="rank" style="	background-image: url(../../image/toplist-eft-lv2.png);"></div>
+						<div class="top_list flex-box flex-h-ce flex-h-zhu">
+							<div style="width: 85px;">
+								<div class="img-frm">
+									<div class="img"></div>
+								</div>
+								<div class="bg" style="background-image: url(../../image/toplist-lv2.png);margin-left: -7px;top: -20px;"></div>
+							</div>
+							<div style="">
+								<div class="info flex-box">
+									<div class="name">哈哈哈</div>
+									<span class="sex male"></span>
+									<span class="level" ></span>
+								</div>
+								<div class="devote">
+									贡献<span>454654</span>魅力
+								</div>
+							</div>
+							
+						</div>
+					</div>
+					<div class="list flex-box flex-h-ce hidden">
+						<div class="rank" style="	background-image: url(../../image/toplist-eft-lv3.png);"></div>
+						<div class="top_list flex-box flex-h-ce flex-h-zhu">
+							<div class="img-frm">
+								<div class="img"></div>
+							</div>
+							<div style="padding-left: 20px;">
+								<div class="info flex-box">
+									<div class="name">哈哈哈</div>
+									<span class="sex male"></span>
+									<span class="level" ></span>
+								</div>
+								<div class="devote">
+									贡献<span>454654</span>魅力
+								</div>
+							</div>
+							<div class="bg" style="background-image: url(../../image/toplist-lv3.png);margin-left: -107px;top: -20px;"></div>
+						</div>
+					</div>
+					<div class="list flex-box flex-h-ce hidden">
+						<div>NO.4</div>
+						<!--<div class="rank" style="	background-image: url(../../image/toplist-eft-lv3.png);"></div>-->
+						<div class="top_list flex-box flex-h-ce flex-h-zhu">
+							<div class="img-frm">
+								<div class="img"></div>
+							</div>
+							<div style="padding-left: 20px;">
+								<div class="info flex-box">
+									<div class="name">哈哈哈</div>
+									<span class="sex male"></span>
+									<span class="level" ></span>
+								</div>
+								<div class="devote">
+									贡献<span>454654</span>魅力
+								</div>
+							</div>
+							<!--<div class="bg" style="background-image: url(../../image/toplist-lv3.png);margin-left: -107px;top: -20px;"></div>-->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript" src="../../script/jquery.lazyload.min.js" ></script>
+	<script type="text/template" template="main">
+			{{? it.list instanceof Array && it.list.length != 0}}
+			{{~ it.list :value:index}}
+			<div class="{{= index == 0 ? 'first': ''}} list flex-box flex-h-ce">
+				{{? index < 3}}
+				<div class="rank" style="	background-image: url(../../image/toplist-eft-lv{{=index+1}}.png);"></div>
+				{{??}}
+					NO.{{=index+1}}
+				{{?}}
+				<div class="top_list {{=index == 0 ? 'flex-box-v' : 'flex-box'}} flex-h-ce flex-h-zhu">
+					{{? index == 0}}
+						<div class="img-frm" style="{{?index == 0}}width: 67px;{{?}}">
+							<div class="img" data-original="{{= Tool.imageCompressByQiNiu(value.avatar,0,200,200)}}" style="{{?index == 0}}width: 67px;{{?}};"></div>
+						</div>
+						<div class="bg" style="background-image: url(../../image/toplist-lv{{= index+1}}.png);{{? index != 0}}margin-left: -105px;top: -20px;{{?}}"></div>
+					{{??}}
+						<div style=" width:{{= api.systemType == 'ios'? 80:  85}}px;">
+							<div class="img-frm" style="{{?index == 0}}width: 67px;{{?}}">
+								<div class="img" data-original="{{= Tool.imageCompressByQiNiu(value.avatar,0,200,200)}}" style="{{?index == 0}}width: 67px;{{?}};"></div>
+							</div>
+							{{? index < 3}}
+							<div class="bg" style="background-image: url(../../image/toplist-lv{{= index+1}}.png);{{? index != 0}}margin-left: -7px;top: -20px;{{?}}"></div>
+							{{?}}
+						</div>
+					{{?}}
+					{{? index == 0}}
+						<div class="info flex-box" onclick="openProfile('{{=value.setid}}')" tapmode="">
+							<div class="name">{{= value.nickname || ''}}</div>
+							<span class="sex {{? value.sex == '1'}}male{{??}}female{{?}}"></span>
+							
+						</div>
+						<div class="devote">
+							收到魅力<span>{{= value.charm}}</span><span style="padding-left: 20px;font-size: 18px;color: #fe5f99" onclick="concern(this,'{{=value.setid}}')" tapmode>{{= value.concernstatus == 0 ? '关注' :'已关注'}}</span>
+						</div>
+						
+					{{??}}
+						<div style="">
+							<div class="info flex-box" onclick="openProfile('{{=value.setid}}')" tapmode="">
+								<div class="name">{{= value.nickname || ''}}</div>
+								<span class="sex {{? value.sex == '1'}}male{{??}}female{{?}}"></span>
+								
+							</div>
+							<div class="devote">
+								收到魅力<span>{{= value.charm}}</span><span style="padding-left: 20px;font-size: 18px;color: #fe5f99" onclick="concern(this,'{{=value.setid}}')" tapmode>{{= value.concernstatus == 0 ? '关注' :'已关注'}}</span>
+							</div>
+						</div>
+					{{?}}
+				</div>
+			</div>
+			{{~}}
+			{{??}}
+			<div class="small_font text-center" style="padding-top: 50px;font-size: 12px;">暂无相关内容~</div>
+			{{?}}
+	</script>		
+	<script type="text/javascript">
+		var today = 1,
+				type = 1,
+				ctrl,fn;
+		var args = {
+				ctrl: '',
+				fn:　'charmlist2',
+				values: {
+					id: $api.getStorage(CONFIG.memberId),
+					token: $api.getStorage(CONFIG.token),
+					type: 1,
+					today:1
+				},
+				container: '.charm_list',
+				countSelector: '.charm_list > div',
+				template: 'main',
+				success:function(){
+					$('div.img').lazyload({
+			      effect : "fadeIn"
+			    });
+		   	}
+			};	
+		//切换日榜 总榜
+		function switchBtn(_this){
+			var activeDom = $api.domAll('.active');
+			if(activeDom.length != 0){
+				$api.removeCls(activeDom[0],'active');
+			}
+			$api.addCls(_this,'active');
+			var sdsdsdsd = $api.addCls(_this,'active');
+			var shijian = $api.addCls(_this,'active');
+			var shijianqu = shijian['clicker']['clas'];
+			if($api.hasCls(_this,'all') && shijianqu == 'yue'){
+			today = 2;
+				type = 2;
+				args.values.today = today;
+				args.values.type = type;
+			}else if($api.hasCls(_this,'all') && shijianqu == 'zou'){
+			today = 3;
+				type = 3;
+				args.values.today = today;
+				args.values.type = type;
+			
+			}else{
+			today = 1;
+				type = 1;
+				args.values.today = today;
+				args.values.type = type;
+			}
+			if(api.frameName == 'live_charm' || api.frameName == 'charm_list'){
+				charmList();
+			}else{
+				charm();
+			}
+		}
+		
+		//获取魅力贡献榜
+		function charm(){
+			ajax.get({
+//				ctrl: 'zhiboApp',
+                ctrl: 'zhiboApp',
+				fn: 'charmlist2',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						today: today
+					}
+				},
+				showError: true,
+				hideLoading: true,
+				showProgress: true,
+				success: function(ct){
+					T.html('.charm_list','main',ct);
+					$('div.img').lazyload({
+			      effect : "fadeIn"
+			    });
+					if(ct.allcharm){
+						$api.text($api.dom('.charm > div > span'),ct.allcharm);
+					}else{
+						$api.text($api.dom('.charm > div > span'),0);
+					}
+				}
+			});
+		}
+		function renqibang(){
+		
+		
+		api.openFrame({
+						name : 'charm2',
+						url : api.wgtRootDir + '/zhibo/html/find/charm2.html',
+						bounces : false,
+						bgColor : '#F0F0F0',
+						reload : true,
+						rect : {
+							x : 0,
+							y : 0,
+							w : 'auto',
+							h : 'auto'
+						}
+					});
+					}
+					function tuhaobang(){
+		
+		
+		api.openFrame({
+						name : 'charm3',
+						url : api.wgtRootDir + '/zhibo/html/find/charm3.html',
+						bounces : false,
+						bgColor : '#F0F0F0',
+						reload : true,
+						rect : {
+							x : 0,
+							y : 0,
+							w : 'auto',
+							h : 'auto'
+						}
+					});
+					}
+		//获取魅力贡献榜
+		function charmList(){
+			ajax.get({
+//				ctrl: 'zhiboApp',
+                ctrl: 'zhiboApp',
+				fn: 'anothercharmlist',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						memberid: api.pageParam.mid,
+						type: type
+					}
+				},
+				showError: true,
+				hideLoading: true,
+				showProgress: true,
+				success: function(ct){
+					T.html('.charm_list','main',ct);
+					$('div.img').lazyload({
+			      effect : "fadeIn"
+			    });
+					if(ct.allcharm){
+						$api.text($api.dom('.charm > div > span'),ct.allcharm);
+					}else{
+						$api.text($api.dom('.charm > div > span'),0);
+					}
+				}
+			});
+		}
+		//点击关注
+		function concern(_this,mid){
+			var status_text = $api.text(_this);
+			if(status_text == '已关注'){
+				unfollow(_this,mid);
+			}else{
+				follow(_this,mid);
+			}
+		}
+		
+		//取消关注
+		function unfollow(_this,aid){
+			ajax.get({
+//				ctrl: 'zhiboApp',
+				ctrl: 'zhiboApp',
+				fn: 'unfollow',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						aid: aid
+					}
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: true,
+				success: function(ct) {
+					$api.text(_this,'关注');
+					var fans_num = $api.text($api.dom('.fans_num'));
+					if(fans_num == 0){
+						$api.html($api.dom('.fans_num'),0);
+					}else{
+						$api.text($api.dom('.fans_num'),parseInt(fans_num)-1);
+					}
+					api.sendEvent({
+						name: 'follow'
+					});
+				}
+			});
+		}
+		
+		//关注
+		function follow(_this,mid){
+			ajax.get({
+//				ctrl: 'zhiboApp',
+				ctrl: 'zhiboApp',
+				fn: 'concern',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						memberid: mid
+					}
+				},
+				showProgress: true,
+				hideLoading: true,
+				showError: true,
+				success: function(ct){
+					$api.text(_this,'已关注');
+					var fans_num = $api.text($api.dom('.fans_num'));
+					$api.html($api.dom('.fans_num'),parseInt(fans_num)+1);
+					api.sendEvent({
+						name: 'follow'
+					});
+				}
+			});
+		}
+		function close_win() {
+			
+			api.closeWin();
+		}
+		apiready = function(){
+			if(api.frameName == 'live_charm' || api.frameName == 'charm_list'){
+				args.ctrl = 'zhiboApp';
+				args.values.memberid = api.pageParam.mid;
+				args.fn = 'anothercharmlist';
+				charmList();
+			}else{
+				args.ctrl = 'zhiboApp';
+				args.fn = 'charmlist2';
+				charm();
+			}
+			
+			Refresh.init(args);
+			LoadMore.init({
+				ctrl: '',
+				fn:　'charmlist2',
+				values: {
+					id: $api.getStorage(CONFIG.memberId),
+					token: $api.getStorage(CONFIG.token),
+					type: args.values.type,
+					today: args.values.today
+				},
+				container: '.charm_list',
+				countSelector: '.charm_list > div',
+				template: 'main',
+			},function(ct, page){
+				$('div.img').slice((page - 1) * 10).lazyload({
+		      effect : "fadeIn"
+		    });
+			});
+		}
+	</script>
+</html>

@@ -1,0 +1,608 @@
+<!doctype html>
+<html >
+	<head>
+		<link rel="stylesheet" type="text/css" href="../css/aui.css" />
+	<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no">
+		<title>准备直播</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css" />
+		<script type="text/javascript" src="../../script/rongCloud2.js" ></script>
+		<style type="text/css">
+			html, body, #main {
+				background-color: rgba(0, 0, 0, 0);
+			}
+			#wrap {
+				position: relative;
+			}
+			#main {
+				font-size: 14px;
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+			}
+			.close {
+				position: absolute;
+				top: 20px;
+				right: 25px;
+			}
+			.ct-icon-close {
+				font-size: 30px;
+				color: #fff;
+				text-shadow: 1px 1px 1px #9E918A;
+				z-index: 1;
+			}
+			.title {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+			}
+			.title .a{
+			position:relative;
+				width: 164px;
+				font-size: 18px;
+				text-align: center;
+				color: #fff;
+				outline: none;
+				resize: none;
+				text-shadow: 1px 1px 1px #9E918A;
+			}
+			.title textarea {
+			padding-top: 15px;
+				width: 164px;
+				font-size: 15px;
+				text-align: left;
+				color: #fff;
+				outline: none;
+				resize: none;
+				text-shadow: 1px 1px 1px #9E918A;
+			}
+			.title textarea::-webkit-input-placeholder {
+				color: #fff;
+			}
+			.start {
+				position: absolute;
+				bottom: 5%;
+				width: 100%;
+			}
+			.btn {
+				margin: 0 15%;
+				width: 70%;
+				border-radius: 50px;
+				padding: 12px 0;
+				background-color: #FE5F99;
+				color: #FFF;
+			}
+		</style>
+	</head>
+	<body>
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		<div id="wrap">
+			<div id="main">
+				<div class="close" onclick="close_win()" tapmode>
+					<span class="ct-icon-close"> </span>
+				</div>
+				<div  style="text-align:center;width:100%;height:40px;margin-top:30%;color: #FFFFFF;font-size: 18px">直播封面</div>
+				<div style="width:50px;height:19px"></div>
+				<div style="width:100%;height:100px;">
+				
+				<div onclick="uploadAvatar()" tapmode style="width:100px;height:100px;margin:0 auto;border-radius:10px;border-style:solid; border-color:#FE5F99;border-width:2px;">
+				
+				<img class="fengmian"  src="../../image/jiaw.png" style="width:100%;height:100%;border-radius:10px;">
+				
+				
+				</div>
+				
+				
+			
+				
+				</div>
+				<div style="width:50px;height:19px"></div>
+				
+					<div id='shezhi' onclick="gaizhuangtai(this)"  tapmode style="width:80px;height:30px;margin: 0 auto;border-bottom:1px solid #FFFFFF;">
+				
+	<div style="width:30%;height:70%;float: left" >
+	<img src="../../image/suo.png" style="width:20px;height:20px">
+	</div>
+	<div  style="width:70%;height:70%;float: right;color: #FFFFFF;" class="fangjianzhuangtai">普通</div>
+				
+				
+			
+				
+				</div>
+					<div  onclick="dakaimeiyan()"  tapmode style="width:80px;height:30px;margin: 0 auto;border-bottom:1px solid #FFFFFF;margin-top: 10px">
+				
+	<div style="width:30%;height:70%;float: left" >
+	<img src="../../image/meiyan.png" style="width:20px;height:20px">
+	</div>
+	<div  style="width:70%;height:70%;float: right;color: #FFFFFF;" class="fangjianzhuangtai">美颜</div>
+				
+				
+			
+				
+				</div>
+				<!--
+				<div class="title flex-box flex-center-center">
+				<textarea name="name" rows="2" cols="" placeholder="" oninput="onTitleInput(this)"> </textarea>
+				</div>
+				
+			
+				<div   class="flex-box flex-center-center" style="padding-top: 65%;">
+				
+				
+				
+				<span  onclick="shijian(this)" style="background-color: #FE5F99;color: #fff;border-radius:5px 0 0 5px";>时间收费:</span><span onclick="shijian(this)" id="shijian" style="background-color: #FE5F99;color: #fff;border-radius:0 5px 5px 0;"><span>
+					
+					
+					
+				</div>
+				<div   class="flex-box flex-center-center" style="padding-top: 30px">
+				
+				
+				
+				<span  onclick="simi(this)" style="background-color: #FE5F99;color: #fff;border-radius:5px 0 0 5px">私密收费:</span><span onclick="simi(this)" id="simi" style="background-color: #FE5F99;color: #fff;border-radius:0 5px 5px 0;"><span>
+					
+					
+					
+				</div>-->
+				<div class="start">
+					<div class="btn" onclick="Anchor.live()" tapmode>
+						开始直播
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="item-box">
+					<div class="item avatar flex-box flex-h-ce" imgUrl="" data-status="" data-key="" data-callbackEvent="uploadAvatar" onclick="uploadAvatar()" tapmode>
+						 
+				</div>
+		<!--上传头像！-->	
+	<script type="text/template" template="avatar">
+		<div class="close hidden"></div>
+		
+	</script>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+
+	<script type="text/javascript" src="../../script/gotyeLive.Publisher.js"></script>
+	<script type="text/javascript" src="../../script/gotyeLive.Chat.js" ></script>
+	<script type="text/javascript" src="../../script/anchor.js" ></script>
+	
+	<script type="text/javascript" src="../../script/upload.js" ></script>
+	<script type="text/javascript">
+	
+	function gaizhuangtai(_this){
+	api.actionSheet({
+    destructiveTitle: '房间类型设置',
+    cancelTitle: '取消',
+    buttons: ['普通房间','时间收费','私密收费']
+},function( ret, err ){
+   if(ret.buttonIndex==2){
+ $api.text($api.dom('.fangjianzhuangtai'),'普通');
+   Anchor.quxiaoshoufei(event);
+   
+  
+   }else if(ret.buttonIndex==3){
+  $api.text($api.dom('.fangjianzhuangtai'),'时间收费');
+   Anchor.configTime(event);
+   
+   }else if(ret.buttonIndex==4){
+   $api.text($api.dom('.fangjianzhuangtai'),'私密收费');
+    
+   Anchor.configSecret(event);
+   
+   }
+});
+
+	
+	}
+	
+	//上传直播的头像
+
+	
+	var avatar = '';
+		//上传头像
+		function uploadAvatar(){
+			Tool.actionSheet({
+				buttons:['拍照上传','上传手机中的照片'],
+				success:function(buttonIndex){
+					if(buttonIndex < 3){
+						Tool.getOnePic({
+							encodingType: 'jpg',
+							sourceType: buttonIndex === 1 ? 'camera' : 'library',
+							allowEdit: true,
+							success:function(ret){
+								avatar = ret.data;
+								if('ios' == api.systemType){
+									T.html('.img-frm', 'avatar', ret.data);
+									Upload.init({
+										file: {
+											url: ret.data,
+											callbackEvent: 'uploadAvatar'
+										}
+									});
+								}else{
+									/*若为android系统，则使用screenClip模块进行截图*/
+									if(ret.data){
+										api.openWin({
+											name: 'imageClip',
+											url: api.wgtRootDir + '/zhibo/html/window/image_clip.html',
+											pageParam: {
+												imgSrc: ret.data,
+												callbackEvent: 'getAvatarClipImage'
+											}
+										});	
+									}
+								}
+							}
+						});
+					}
+				}
+			})
+		}
+	
+	
+	
+	
+	
+		function onTitleInput(_this) {
+			//alert(JSON.stringify($api.val(_this)));
+			if ($api.val(_this).length > 0) {
+				$api.css(_this, "width:70%;text-align:center;");
+			} else {
+				$api.css(_this, "width:182px;text-align:left;");
+			}
+		}
+
+		function shijian(_this) {
+		
+	
+		Anchor.configTime(event,$api.val(_this));
+			//alert(JSON.stringify($api.val(_this)));
+			//if ($api.val(_this).length > 0) {
+				//$api.css(_this, "width:70%;text-align:center;");
+		//	} else {
+				//$api.css(_this, "width:182px;text-align:left;");
+			//}
+		}
+		function simi(_this) {
+		
+	
+		Anchor.configSecret(event,$api.val(_this));
+			//alert(JSON.stringify($api.val(_this)));
+			//if ($api.val(_this).length > 0) {
+				//$api.css(_this, "width:70%;text-align:center;");
+		//	} else {
+				//$api.css(_this, "width:182px;text-align:left;");
+			//}
+		}
+
+		function close_win() {
+			//QJ.Core.destroyRoomSession(Anchor.session);
+			var alivcLivePusher = api.require('alivcLivePusher');
+alivcLivePusher.destroy(); //阿里云直播销毁 销毁后美颜才生效
+
+			api.closeWin();
+		}
+		//时间收费改前台
+  function shijians(){
+  var uid=$api.getStorage(CONFIG.memberId);
+		var utoken=$api.getStorage(CONFIG.token);
+		
+		
+  api.ajax({
+				url : window.DOMAIN + '/zhiboApp/chaxun',
+				method : 'post',
+				data : {
+					values : {
+						 id : uid,
+					 token : utoken,
+					 roomid : uid,  //准备播放页面应该提交房间号
+					 uid : uid
+					}
+				}
+			}, function(ret, err) {
+			
+					if (ret.content.timePrice != 0) {
+							$api.text($api.dom('#shijian'),ret.content.timePrice+'钻石每分钟');
+					}else{
+					$api.text($api.dom('#shijian'),'当前为免费房间');
+					}
+					
+			});
+  
+  }
+    function simis(){
+  var uid=$api.getStorage(CONFIG.memberId);
+		var utoken=$api.getStorage(CONFIG.token);
+		//alert($api.getStorage('roomid'));
+  api.ajax({
+				url : window.DOMAIN + '/zhiboApp/chaxun',
+				method : 'post',
+				data : {
+					values : {
+						 id : uid,
+					 token : utoken,
+					 roomid : uid,
+					 uid : uid
+					}
+				}
+			}, function(ret, err) {
+				
+				//alert(JSON.stringify(ret.content));
+					if (ret.content.secretDiamond != '0'&&!isNaN(ret.content.secretDiamond)) {
+					if(ret.content.simi==1){
+					$api.text($api.dom('#simi'),'房间密码'+ret.content.secretPassword+',进入房间需' + ret.content.secretDiamond + '钻石');
+						
+								}else{
+									$api.text($api.dom('#simi'),'进入房间需' + ret.content.secretDiamond + '钻石');
+								}
+					}else{
+					$api.text($api.dom('#simi'),'当前为公开房间');
+					}
+					
+			});
+  
+  }
+ function meiyanquxiao(){
+
+ api.sendEvent({  //关闭美颜页面 并显示底部
+					name: 'bottom'
+				});
+        setTimeout(function(){ //关闭美颜页面 并显示底部
+					api.closeFrame({
+		name:'meiyan'
+        });
+				},300);
+ 
+ }
+ function dakaimeiyan(){
+ api.openFrame({
+				name: 'meiyan',
+				url: api.wgtRootDir + '/zhibo/html/component/meiyan.html',
+				bgColor: 'rgba(0,0,10,0.5)',
+				rect: {
+					x: 0,
+					y: api.frameHeight/2,
+					w: api.frameWidth,
+					h: api.frameHeight
+				}
+			});
+ 
+ }
+		apiready = function() {
+		 dakaimeiyan();
+		 api.addEventListener({
+	         name:'putong'
+         },function(ret,err){
+         	//coding...
+         	$api.text($api.dom('.fangjianzhuangtai'),'普通房间');
+         });
+		//这里是看房间的普通的还是设置过的
+		api.addEventListener({
+    name: 'zhuangtyai'
+}, function(ret, err) {
+
+  if(ret.value.zhuangtyai == 1){
+ 
+  $api.text($api.dom('.fangjianzhuangtai'),'普通房间');
+  api.closeFrame({
+    name: 'gaizhuangtai'
+});
+return;
+  }else if(ret.value.zhuangtyai == 2){
+
+ Anchor.configTime(event);
+    $api.text($api.dom('.fangjianzhuangtai'),'时间收费');
+    api.closeFrame({
+    name: 'gaizhuangtai'
+});
+return;
+  }else if(ret.value.zhuangtyai == 3){
+   Anchor.configSecret(event);
+   $api.text($api.dom('.fangjianzhuangtai'),'私密收费');
+  api.closeFrame({
+    name: 'gaizhuangtai'
+});
+return;
+  }else{
+   $api.text($api.dom('.fangjianzhuangtai'),'普通房间');
+ api.closeFrame({
+    name: 'gaizhuangtai'
+    
+});
+  return;
+  }
+});
+		
+		
+		shijians(); //时间收费改前台
+		simis(); //时间收费改前台
+		
+		
+		
+			//alert(111);
+			
+			//$api.css($api.dom('#main'), "background-image: url(" + $api.getStorage(CONFIG.memberInfo).avatar + ");") 不去掉，推流不能渲染
+			//QJ.Core.registerApp();
+			//QJ.Core.setDebugLogEnabled({
+				//enabled : true
+			//});
+			//主播室初始化
+			Anchor.init();
+			//事件：摄像头切换
+			api.addEventListener({
+				name : 'switchCamera'
+			}, function(ret, err) {
+				QJ.Publisher.switchCamera();
+			});
+			//事件：闪光灯开关
+			api.addEventListener({
+				name : 'setTorchOn'
+			}, function(ret, err) {
+//				QJ.Publisher.setTorchOn({
+//					on : ret.value.on
+//				});
+				var alivcLivePusher = api.require('alivcLivePusher');
+alivcLivePusher.setFlash({
+    isFlash:ret.value.on
+});
+			});
+			api.addEventListener({
+	            name:'meiyan'
+            },function(ret,err){
+            
+            		mopi('meiyan',0); //'meiyan'代表frame名字，为了fix
+	meibai('meiyan',0);
+	hongrun('meiyan',0);
+	saihong('meiyan',0);
+	shoulian('meiyan',0);
+	xiaolian('meiyan',0);
+	dayan('meiyan',0);
+	
+            });
+			//事件：滤镜模式-美白磨皮
+			api.addEventListener({
+				name : 'setFilter'
+			}, function(ret, err) {
+			//alert('美颜'+ret.value.filter);
+			if(ret.value.filter==1){
+			//alert('开启美颜');
+			
+			}else{
+			//alert('关闭美颜');
+		
+
+			}
+			
+//				QJ.Publisher.setFilter({
+//					filter : ret.value.filter
+//				});
+			});
+			//事件：主播退出
+			
+			
+			api.addEventListener({
+				name : 'stopPublish'
+			}, function(ret, err) {
+				//api.require('gotyeLivePublisher').stop();
+				var alivcLivePusher = api.require('alivcLivePusher');
+alivcLivePusher.destroy(); //阿里云直播销毁 销毁后美颜才生效
+alivcLivePusher.stopPush();
+				//api.require('gotyeLiveP2P').leaveRoom();
+				api.sendEvent({
+					name : 'live_list_init',
+					extra : {
+						roomid : Anchor.session.roomId
+					}
+				});
+				
+				//
+				
+				setTimeout("api.closeWin();",300);
+                
+				//				QJ.Publisher.endRecording(function(ret,err){
+				//					QJ.Publisher.stop();
+				//					QJ.Core.destroyRoomSession(Anchor.session);
+				//					api.sendEvent({
+				//						name: 'live_list_init',
+				//						extra: {
+				//							roomid: Anchor.session.roomId
+				//						}
+				//					});
+				//
+				//					//判断录制视频是否保存成功
+				////					console.log(JSON.stringify(err, null, 2))
+				//					if(err && err.code){
+				//						setTimeout("api.closeWin();",300);
+				//					}else{
+				//						api.sendEvent({
+				//							name:'quit_liver_saveSuccess'
+				//						});
+				//					}
+				//				});
+			});
+			
+			
+			
+			//小吴加的头像
+			
+			//上传头像
+			api.addEventListener({
+				name: 'uploadAvatar'
+			}, function(ret, err) {
+				var key = $api.attr($api.dom('.avatar'), 'data-key');
+				if(key) {
+					ajax.get({
+						ctrl: 'zhiboApp',
+						fn: 'avatar',
+						data: {
+							values: {
+								id: $api.getStorage(CONFIG.memberId),
+								token: $api.getStorage(CONFIG.token),
+								avatar: key,
+								fenmian :1
+							}
+						},
+						hideLoading: true,
+						showError: true,
+						showProgress: true,
+						success: function() {
+							Tool.toast('封面上传成功~');
+							//刷新我的头像
+						
+							$api.attr($api.dom('.fengmian'),'src','http://pifkki2aj.bkt.clouddn.com/'+key)
+							api.showProgress();
+							api.sendEvent({
+								name: 'refresh_avatar',
+								extra: {
+									avatar: avatar
+								}
+							});
+							api.hideProgress();
+						}
+					});
+				}else {
+					Tool.toast('封面上传失败，请重新上传~');
+				}
+			});
+			
+			//监听头像截图
+			api.addEventListener({
+			
+				name: 'getAvatarClipImage'
+			},function(ret,err){
+		
+				T.html('.img-frm', 'avatar', ret.value.url);
+				avatar = ret.value.url;
+				Upload.init({
+					file: {
+						url: ret.value.url,
+						callbackEvent: 'uploadAvatar'
+					}
+				});
+			});
+			
+		}
+	</script>
+</html>

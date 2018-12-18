@@ -1,0 +1,195 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>startRecord</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			html,
+			body {
+				background-color: rgba(0,0,0,0);				
+			}
+			/*遮罩层*/
+			.zhezhao {
+				z-index:1000; 
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				justify-content: center;
+				align-items: center;
+				-webkit-align-items: center;
+				-webkit-box-align: center;
+			}
+			.content { 
+				position: relative;
+				top: 20px;
+				width: 150px; 
+				height: 150px; 
+				background-color: rgba(0,0,0,0.6); 
+				z-index:1500; 
+				border-radius: 10px;
+				-webkit-border-radius: 10px;
+			}
+			.content div {
+				color: #fff;
+			  font-size: 14px;
+			} 
+			.zhezhao div {
+				text-align: center;
+			}
+			.str {
+				padding: 3px;
+				margin-top: 20px;
+			}
+			.move {
+				background-color: #cc0000;
+				padding: 3px;
+				-webkit-border-radius: 3px;
+				border-radius: 3px;
+			}
+			
+			/*语音icon*/
+			[class*="icono-"] {
+		    display: inline-block;
+		    vertical-align: middle;
+		    position: relative;
+		    font-style: normal;
+		    text-align: left;
+		    text-indent: -9999px;
+		    direction: ltr;
+		    width: 22px;
+		    height: 22px;
+			}
+			[class*="icono-"]:before, [class*="icono-"]:after {
+		    content: '';
+			}
+			.send .icono {
+				text-align: right;
+				padding-right: 5px;
+			}
+			.accept .icono {
+				text-align: left;
+				padding-left: 5px;
+			}
+			.send .icono-rss {
+				overflow: hidden;
+		    transform: rotate(-135deg);
+		    -webkit-transform: rotate(-135deg);
+		    -moz-transform: rotate(-135deg);
+			}
+			.accept .icono-rss {
+				overflow: hidden;
+		    transform: rotate(40deg);
+		    -webkit-transform: rotate(40deg);
+		    -moz-transform: rotate(40deg);
+			}
+			.icono-rss:before, 
+			.icono-rss:after {
+		    position: absolute;
+		    -webkit-border-radius: 50%;
+		    -moz-border-radius: 50%;
+		    -o-border-radius: 50%;
+		    border-radius: 50%;
+			}
+			.send .icono-rss:before, 
+			.send .icono-rss:after {
+				color: #fff;
+			}
+			.accept .icono-rss:before, 
+			.accept .icono-rss:after {
+				color: #1D9BE4;
+			}
+			.icono-rss:after {
+		    width: 25px;
+		    height: 25px;
+		    right: 15%;
+		    top: 15%;
+		    border: 4px solid transparent;
+		    box-shadow: inset 0 0 0 2px,0 0 0 2px;
+			}
+			.icono-rss:before {
+		    width: 6px;
+		    height: 6px;
+		    box-shadow: 0 0 32px inset;
+		    left: 0;
+		    bottom: 0;
+			}
+			
+			.icono-microphone, 
+			.icono-microphone:before {
+			    border: 2px solid;
+			}
+			.icono-microphone:before {
+		    width: 20px;
+		    height: 35px;
+		    top: -11px;
+		    -webkit-border-radius: 20px;
+		    -moz-border-radius: 20px;
+		    -o-border-radius: 20px;
+		    border-radius: 20px;
+			}
+			.icono-microphone {
+		    width: 36px;
+		    height: 35px;
+		    border-width: 0 2px 2px;
+		    -webkit-border-radius: 20px / 0 0 20px 20px;
+		    -moz-border-radius: 20px / 0 0 20px 20px;
+		    -o-border-radius: 20px / 0 0 20px 20px;
+		    border-radius: 20px / 0 0 20px 20px;
+		    margin: 12px 6px 7px;
+			}
+			.icono-microphone:after {
+		    width: 4px; 
+		    height: 3px;
+		    bottom: -4px; 
+		    box-shadow: inset 0 0 0 32px,0 2px,0 3px,0 4px,0 5px,0 6px,0 4px,-2px 7px,-4px 7px,-6px 7px,2px 7px,4px 7px,6px 7px;
+			}
+			.icono-microphone:after,
+			.icono-microphone:before
+			 {
+		    position: absolute;
+		    left: 50%;
+		    -webkit-transform: translateX(-50%);
+		    -moz-transform: translateX(-50%);
+		    -ms-transform: translateX(-50%);
+		    -o-transform: translateX(-50%);
+		    transform: translateX(-50%);
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+				<!--<div class="zhezhao flex-box flex-center-center" style="width: 100%;">
+					<div class="content flex-h-ce flex-box-v flex-center-center">
+						<div class="move_in ">
+							<div><i class="icono-microphone"></i></div> 
+							<div class="str">手指上滑，取消发送</div>
+						</div>
+						<div class="move_out hidden">
+							<div><i class="icono-microphone"></i></div> 
+							<div class="str move">松开手指，取消发送</div>
+						</div>
+						<div class="move_over hidden">
+							<div><i class="icono-microphone"></i></div> 
+							<div class="str">说话时间太短</div>
+						</div>
+					</div>
+				</div>-->
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/touch.js" ></script>
+	<script type="text/javascript">
+		apiready = function(){
+			
+		}
+	</script>
+</html>

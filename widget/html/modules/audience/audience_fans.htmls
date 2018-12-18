@@ -1,0 +1,5 @@
+<div class="fans" id="fans{{= it.memberid}}" onclick="Audience.getAnchor('{{= it.memberid}}')" tapmode="">
+	<div class="img-frm">
+		<div class="img" style="background-image: url({{= Tool.imageCompressByQiNiu(it.avatar,0,200,200)}});"></div>
+	</div>
+</div>

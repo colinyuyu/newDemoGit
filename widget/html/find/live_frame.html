@@ -1,0 +1,1132 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no">
+		<title>观看直播有弹幕</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ctbin.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/barrager.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/live_frame.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/swiper.min.css" />
+		<style type="text/css">
+			html, body, #wrap, #main {
+				background-color: transparent;
+			}
+			body {
+				transition: all 0.5s ease;
+			}
+			#wrap {
+				position: relative;
+				background-color: transparent;
+			}
+			#main {
+				/*background-color: rgba(0,0,0,0.25);*/
+				padding: 25px 10px;
+				font-size: 14px;
+				height: 100%;
+			}
+			.audience-bg {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0,0,0,0);
+				opacity: 0;
+				z-index: -1;
+			}
+			.audience-bg {
+				background-color: rgba(0,0,0,0.3);
+			}
+			.demo {
+				padding-top: 12%;
+				width: 100%;
+				height: 100%;
+				z-index: -1;
+				position: absolute;
+			}
+			.aixin {
+				width: 40px;
+				height: 40px;
+				z-index: 99;
+				position: absolute;
+			}
+			.sidebar-btn {
+				position: absolute;
+				top: 50%;
+				width: 50px;
+				height: 50px;
+				background: yellow;
+				right: 10px;
+				margin-top: -60px;
+			}
+			.sidebar {
+				position: absolute;
+				top: 110px;
+				right: -160px;
+				height: 360px;
+				overflow: hidden;
+			}
+			.sidebar2 {
+				width: 70px !important;
+				height: 90px !important;
+			}
+			.sidebar2 div {
+				width: 68px;
+				height: 68px;
+				border: 1px solid #FFFFFF;
+				border-radius: 50%;
+				overflow: hidden;
+			}
+			.sidebar2 span {
+				display: block;
+				width: 70px;
+				height: 20px;
+				text-align: center;
+				overflow: hidden; /*自动隐藏文字*/
+				text-overflow: ellipsis;/*文字隐藏后添加省略号*/
+				white-space: nowrap;
+				line-height: 20px;
+				color: #fff;
+			}
+		</style>
+		<style>		
+			.ct-icon-sys-message222 {
+				font-size: 30px;
+			margin-right: 20px;
+				
+				color: #fff;
+			}
+			.dbadge {
+				height: auto;
+				top: 0;
+				width: auto;
+				min-width: 12px;
+				border-radius: 5px;
+			}
+			.num {
+				padding: 2px 3px;
+				font-size: 9px;
+				color: #fff;
+				position: absolute;
+				/*top: 2px;*/
+				right: 0;
+				z-index: 2;
+				/*width: 12px;*/
+				height: 15px;
+				text-align: center;
+			}
+			
+			
+		</style>
+	</head>
+	<body>
+		<!--<div class="yanhua"></div>-->
+		<!--<div class="yanhua"></div>
+		烟花特效
+		<div class="demo"><img  src="../../image/gift/gift_vip1.gif" width="100%" height="100%" alt="" /></div>
+		烟花特效 -->
+		<!--<div id="wrap"  onclick="weChat1()">-->
+		<div class="demo"></div>
+		<div id="wrap">
+			<!--大礼物放里面了，就不需要hidden了
+			<div class="demo"></div>-->
+			<!--大斌新加的,为了先显示信息-->
+			<div class="audience-bg" onclick="Audience.closeAnchor()" tapmode=''></div>
+<div class="audience-wrap"></div>
+<div class="share_bg" onclick="Audience.closeShare()" tapmode></div>
+<div class="share_wrap"></div>
+<div class="gift_bg" onclick="Audience.closeGift()" tapmode></div>
+<div class="gift_wrap"></div>
+			<!--大斌新加的-->
+			<div id="slider" class="swipe">
+				<div class="swipe-wrap">
+					<div style="height: 100%;">
+						<div id="main" class="flex-box-v" >
+							<!-- 顶部 -->
+							<div class="live_top">
+								<div class="flex-box flex-h-ce">
+									<div class="zhubo flex-box flex-h-ce">
+										<div class="flex-box flex-h-ce" onclick="tishi()" tapmode="">
+											<div class="img-frm">
+												<div class="img"></div>
+											</div>
+											<div class="flex-1 pd8">
+												<div>
+													直播
+												</div>
+												<div>
+													1
+												</div>
+											</div>
+										</div>
+										<div class="follow" onclick="tishi()" tapmode="">
+											<span>关注</span>
+										</div>
+									</div>
+									<div id="fans_list" class="fans_list flex-1 flex-box">
+										<div class="fans" onclick="tishi()" tapmode="">
+											<div class="img-frm">
+												<div class="img"></div>
+											</div>
+										</div>
+										<div class="fans">
+											<div class="img-frm">
+												<div class="img"></div>
+											</div>
+										</div>
+										<div class="fans">
+											<div class="img-frm">
+												<div class="img"></div>
+											</div>
+										</div>
+										<div class="fans">
+											<div class="img-frm">
+												<div class="img"></div>
+											</div>
+										</div>
+										<div class="fans">
+											<div class="img-frm">
+												<div class="img"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="charm flex-box ">
+									<div class="flex-h-ce flex-box" onclick="tishi()" tapmode="">
+										魅力: <span class="live_charm" style="color: inherit;">0</span><span class="ct-icon-arrow-right"></span>
+									</div>
+								</div>
+							</div>
+							<!-- 道具栏 -->
+							<div class="barrage_list_box flex-1" id="barrage_list_box">
+								<div class="live_gift">
+
+					</div>
+							</div>
+							<!-- 消息栏 -->
+							<div class="live_msg">
+								<div class="list">
+									<span class="title">直播消息：</span>
+									<span class="blue">欢迎光临</span>
+								</div>
+								
+								<div class="list hidden">
+									<span> <span class="level" style="display: inline-block;"></span> <span class="title">嘿嘿嘿：</span> </span>
+									<span class="blue pink">我送了一个钻石戒指</span>
+								</div>
+								<div class="list hidden">
+									<span class="level" style="display: inline-block;"></span>
+									<span class="title">嘿嘿嘿：</span>
+									<span class="blue pink">我送了一个钻石戒指</span>
+								</div>
+								<div class="list hidden">
+									<span class="level" style="display: inline-block;"></span>
+									<span class="title">嘿嘿嘿：</span>
+									<span class="pink">我送了一个钻石戒指</span>
+								</div>
+								<div class="list hidden">
+									<span class="level" style="display: inline-block;"></span>
+									<span class="title">嘿嘿嘿：</span>
+									<span class="white">我送了一个钻石戒指钻石戒指</span>
+								</div>
+							</div>
+							<div class="sidebar-btn hidden" onclick="show1()"></div>
+							<div class="swiper-container2 sidebar" id="myswiper">
+								<div class="swiper-wrapper">
+									<div class="swiper-slide sidebar2">
+										<div></div><span>啊啊啊</span>
+									</div>
+									<div class="swiper-slide sidebar2">
+										<div></div><span>啊啊啊</span>
+									</div>
+								</div>
+							</div>
+							<!--连麦主播头像-->
+							<!--<div onclick="javascript:alert(api.pageParam.roomid)" style="position:absolute;top: 50%;width: 80px;height: 80px;border-radius: 50%;background-image: url(../image/avatar.jpg);background-color:#000;right:10px;margin-top: -40px;"></div>-->
+						</div>
+						<!-- 底部按钮 -->
+						<!-- 暂时的大斌底部按钮 -->
+			<div id="footer" class="bottom_btn">
+				<div class="flex-box tools " style="padding: 0 10px;">
+					<div class="flex-1" onclick="Chat.openChatInput(event)">
+						<div class="chat" ></div>
+					</div>
+					<div class="flex-box flex-2" >
+						<!-- 右上角消息直播页面 -->
+			<div class="flex-1 ct-icon-sys-message222 flex-center-center flex-box" onclick="openWin('msg','msg','消息','msg','msg')" tapmode="">
+							<div class="msg" ><span class=" dbadge num msg1">0</span></div>
+						</div>
+						<div class="flex-1" onclick="Audience.gift()" tapmode="">
+							<div class="gift" ></div>
+						</div>
+						<div class="flex-1" onclick="Audience.share('{{= it.pcurl}}','{{= it.roomname}}')" tapmode="">
+							<div class="share" ></div>
+						</div>
+						<div class="flex-1 " onclick="Audience.quitLive()" tapmode="">
+							<div class="close" ></div>
+						</div>
+								</div>
+							</div>
+							<div id="talk_box">
+								<!-- 聊天输入框 -->
+								<div class="flex-box flex-h-ce talk ">
+									<div class="msg-barrage-off" onclick="Chat.switchBarrageBtn(this)" tapmode=""></div>
+									<div style="padding: 0 8px;color: #909090;">
+										|
+									</div>
+									<div class="flex-1">
+										<input id="talk" type="text" name="talk"  placeholder="和大家说点什么" />
+									</div>
+									<div class="send" onclick="Chat.sendTextEvent()" tapmode=''>
+										发送
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- 底部按钮 -->
+					<div style="height: 100%;">
+						<div id="footer" class="bottom_btn ">
+							<div class="flex-box tools" style="padding: 0 10px;">
+								<div class="flex-1">
+									<div class="chat" onclick="chat()" tapmode=""></div>
+								</div>
+								<div class="flex-box flex-2">
+									<div class="flex-1">
+										<div class="msg" onclick="openWin('msg','msg','消息','msg','msg')" tapmode=""></div>
+									</div>
+									<div class="flex-1">
+										<div class="gift" onclick="gift()" tapmode=""></div>
+									</div>
+									<div class="flex-1">
+										<div class="share" onclick="share()" tapmode=""></div>
+									</div>
+									<div class="flex-1 ">
+										<div class="close" onclick="Audience.quitLive()" tapmode=""></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id="share">
+	<div class="border_bottom">
+		<div class="text-center">分享</div>
+	</div>
+	<div class="share_btn flex-box text-center">
+		<div class="flex-1" onclick="Audience.shareWx()" tapmode>
+			<div class="ct-icon-wechat icon"></div>
+			微信
+		</div>
+		<div class="flex-1" onclick="Audience.shareWxFriend()" tapmode>
+			<div class="friend" style="margin-bottom: 10px;"></div>
+			朋友圈
+		</div>
+		<div class="flex-1" onclick="Audience.weibo()" tapmode>
+			<div class="ct-icon-weibo icon"></div>
+			微博
+		</div>
+		<div class="flex-1" onclick="Audience.shareQQ()" tapmode>
+			<div class="ct-icon-qq icon"></div>
+			QQ
+		</div>
+	</div>
+</div>
+
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery.lazyload.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery.ellipsis.js"></script>
+	<script type="text/javascript" src="../../script/gotyeLive.Core.js"></script>
+	<script type="text/javascript" src="../../script/gotyeLive.Chat.js"></script>
+	<script type="text/javascript" src="../../script/gotyeLive.Player.js"></script>
+	<script type="text/javascript" src="../../script/velocity.js"></script>
+	<script type="text/javascript" src="../../script/jquery.barrager.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/chat.js"></script>
+	<script type="text/javascript" src="../../script/gift.js" ></script>
+	<script type="text/javascript" src="../../script/anchor.js"></script>
+	<script type="text/javascript" src="../../script/audience.js"></script>
+	<script type="text/javascript" src="../../script/swipe.js"></script>
+	<script type="text/javascript" src="../../script/touch.js"></script>
+	<script type="text/javascript" src="../../script/wx.js" ></script>
+	<script type="text/javascript" src="../../script/qq.js" ></script>
+	<script type="text/javascript" src="../../script/weibo.js" ></script>
+	<script type="text/javascript" src="../../index_data/jquery.js"></script>
+	<script type="text/javascript" src="../../script/swiper.min.js" ></script>
+	<script type="text/javascript" src="../../script/rongCloud2.js" ></script>
+	<!-- 主模块 -->
+	<script type="text/template" template="main"></script>
+	<!--普通文字消息-->
+	<script type="text/template" template='live_msg_text'></script>
+	<!--直播间公告-->
+	<script type="text/template" template='live_msg_notice'></script>
+	<!--禁言公告-->
+	<script type="text/template" template='live_msg_gag'></script>
+	<!--礼物文字消息-->
+	<script type="text/template" template='live_msg_gift'></script>
+	<!--礼物展示-->
+	<script type="text/template" template='live_gift'></script>
+	<!--观众模版-->
+	<script type="text/template" template='live_fans'></script>
+	<!--用户资料卡模版-->
+	<script type="text/template" template='audience_detail'></script>
+	<!--礼物-->
+	<script type="text/template" template='gift_box'></script>
+	<!--礼物展示-->
+	<script type="text/template" template='live_gift_big'></script>
+	<script type="text/javascript">
+		var values = {};
+		values.id = $api.getStorage(CONFIG.memberId);
+		values.token = $api.getStorage(CONFIG.token);
+		var session = '';
+		var chatprice = 1;
+		/*用于缓存弹幕价格*/
+		var chatstate = 0;
+		/*用于缓存禁言状态*/
+		var giftArray = [];
+		var memberinfo = $api.getStorage(CONFIG.memberInfo);
+		//选择礼物
+		function tishi(){
+		
+		Tool.toast('房间异常,请重新进入房间');
+	setTimeout("Audience.quitLive()","2000");
+		}
+		function selectGift(_this, event) {
+			event.stopPropagation();
+			var select_yes = $api.dom(_this, '.ct-icon-select-yes'), check = $api.domAll('.check');
+			if (check.length != 0) {
+				$api.addCls(check[0], 'hidden');
+				$api.removeCls(check[0], 'check');
+			}
+			if ($api.hasCls(select_yes), 'hidden') {
+				$api.removeCls(select_yes, 'hidden');
+				$api.addCls(select_yes, 'check');
+			}
+		}
+
+		//读取模板
+		function readFile(args, callback) {
+			if (args.sync) {
+				return api.readFile({
+					sync : true,
+					path : args.path
+				});
+			}
+			api.readFile({
+				sync : false,
+				path : args.path,
+			}, function(ret, err) {
+				if (ret.status) {
+					if ( typeof callback == 'function') {
+						callback(ret);
+					}
+				} else {
+					Debug.alt(err.msg);
+				}
+			});
+		}
+
+		/*
+		 $('.yanhua').fireworks({
+		 sound: false, // sound effect
+		 opacity: 0.9,
+		 width: '50%',
+		 height: '60%'
+		 });
+		 */
+		apiready = function() {
+		api.addEventListener({
+				name: 'yonghumeili'
+			},function(ret){
+		
+				if(ret && ret.value.meili){
+				var liveCharm = $api.dom('.live_charm');
+		$api.text(liveCharm, parseInt($api.text(liveCharm)) + parseInt(ret.value.meili));
+				}
+			});
+			
+			//用户端监听融云有新的短消息
+			api.addEventListener({
+				name : 'newMessage'
+			}, function() {
+			
+			//alert('aa'+$api.dom('.orange'));
+			//alert('bb'+$api.dom('.msg1'));
+				RongCloud2.getTotalUnreadCount(function(num) {
+				
+					if (num > 0) {
+					$api.html($api.dom('.msg1'),num); //收到消息加叹号
+						//$api.html($api.dom('.orange'),'!'); //收到消息加叹号
+						//$api.removeCls($api.dom('.msg_badge'), 'hidden');
+					}
+				})
+			});
+		$api.html($api.dom('.blue'), $api.getStorage('notice'));
+			Audience.chatInit();
+			//将底部工具栏显示
+			Audience.addShowToolsEventListener();
+			//监听 安卓点击返回键 退出直播房间
+			Audience.addkeyBackEventListener();
+			//监听 本地发送礼物
+			Audience.addsendGiftOfLacalEventListener();
+			//监听 处理发送礼物
+			Audience.addpushGiftToServerEventListener();
+			//监听 在查看主播详情 关注主播
+			Audience.addfollowEventListener();
+			//监听 充值成功
+			Audience.addDiamondsEventListener();
+			//监听 是否打开聊天框
+			Audience.addSetAudienceEventListener();
+			//守护监听禁言和取消大斌 //大斌守护处理
+			api.addEventListener({
+				name : 'sendGagOrder'
+			}, function(ret, err) {
+				if (!ret || !ret.value) {
+					return;
+				}
+				extra = {
+					type : 4, // 命令消息
+					extra : {
+						type : ret.value.isGag == 1 ? 3 : 4, //type=1  观众进入房间 type=2  观众退出房间  type=3 观众被禁言  type=4  观众禁言被解除
+						memberid : ret.value.memberid, //发送人id
+						nickname : ret.value.nickname, //发送人昵称
+						targetId : ret.value.targetId,
+						targetNickname : ret.value.targetNickname
+					}
+				}
+				RongCloud2.sendTextMessage({
+					text : '命令消息',
+					extra : extra,
+					targetId : api.pageParam.memberid,
+					conversationType : 'CHATROOM',
+					success : function() {
+						//console.log(JSON.stringify(extra.extra));
+						if (extra.extra.targetId instanceof Array && extra.extra.targetId.length > 0) {
+							//如果目标id是数组，则为批量处理
+							for (var i = 0; i < extra.extra.targetId.length; i++) {
+								T.append('.live_msg', 'live_msg_gag', {
+									type : extra.extra.type,
+									memberid : extra.extra.memberid,
+									nickname : extra.extra.nickname,
+									targetId : extra.extra.targetId[i],
+									targetNickname : extra.extra.targetNickname[i]
+								});
+								$('.live_msg').scrollTop($('.live_msg')[0].scrollHeight);
+							}
+						} else {//否则为单个处理
+							//判断 禁言目标id为自己的时候，修改自身禁言状态，并发送禁言事件到talk.html
+							T.append('.live_msg', 'live_msg_gag', extra.extra);
+							$('.live_msg').scrollTop($('.live_msg')[0].scrollHeight);
+						}
+					}
+				})
+			})
+			//守护监听禁言和取消大斌
+			$api.addCls($api.dom('.demo'), 'hidden');
+			//alert($api.getStorage('memberInfo').diamonds);
+			//同步方式读取主模块
+			if (api.systemType == 'ios') {
+				//观众端大斌新读取方式
+				var fs = api.require('fs');
+				fs.open({
+					// path: 'widget://zhibo/html/modules/live/live_main.htmls',
+					path : 'widget://zhibo/html/modules/audience/audience_main.htmls',
+					flags : 'read'
+				}, function(ret, err) {
+					if (ret.status) {
+						fd1 = ret.fd;
+						//成功后
+						fs.read({
+							fd : fd1,
+							offset : 0,
+							length : 0
+						}, function(ret, err) {
+							if (ret.status) {
+								data = ret.data;
+								$api.html($api.dom('[template=main]'), data);
+								//  alert(data);
+								//return data ;
+							} else {
+							api.alert({
+							title : '请稍后登录房间!'
+						}, function(ret, err) {
+							api.closeWin({
+								
+							});
+							return;
+						});
+							}
+						});
+						//成功结束
+					} else {
+						api.alert({
+							title : '请稍后登录房间!'
+						}, function(ret, err) {
+							api.closeWin({
+								
+							});
+							return;
+						});
+					}
+				});
+				//结束一段
+				fs.open({
+					// path: 'widget://zhibo/html/modules/live/live_main.htmls',
+					path : 'widget://zhibo/html/modules/audience/audience_msg_text.htmls',
+					flags : 'read'
+				}, function(ret, err) {
+					if (ret.status) {
+						fd1 = ret.fd;
+						//成功后
+						fs.read({
+							fd : fd1,
+							offset : 0,
+							length : 0
+						}, function(ret, err) {
+							if (ret.status) {
+								data = ret.data;
+								$api.html($api.dom('[template=live_msg_text]'), data);
+								//  alert(data);
+								//return data ;
+							} else {
+								api.alert({
+							title : '请稍后登录房间!'
+						}, function(ret, err) {
+							api.closeWin({
+								
+							});
+							return;
+						});
+							}
+						});
+						//成功结束
+					} else {
+						api.alert({
+							title : '请稍后登录房间!'
+						}, function(ret, err) {
+							api.closeWin({
+								
+							});
+							return;
+						});
+					}
+				});
+				//结束一段
+				fs.open({
+					// path: 'widget://zhibo/html/modules/live/live_main.htmls',
+					path : 'widget://zhibo/html/modules/audience/audience_msg_notice.htmls',
+					flags : 'read'
+				}, function(ret, err) {
+					if (ret.status) {
+						fd1 = ret.fd;
+						//成功后
+						fs.read({
+							fd : fd1,
+							offset : 0,
+							length : 0
+						}, function(ret, err) {
+							if (ret.status) {
+								data = ret.data;
+								$api.html($api.dom('[template=live_msg_notice]'), data);
+								//  alert(data);
+								//return data ;
+							} else {
+								api.alert({
+							title : '请稍后登录房间!'
+						}, function(ret, err) {
+							api.closeWin({
+								
+							});
+							return;
+						});
+							}
+						});
+						//成功结束
+					} else {
+						api.alert({
+							title : '请稍后登录房间!'
+						}, function(ret, err) {
+							api.closeWin({
+								
+							});
+							return;
+						});
+					}
+				});
+				//结束一段
+				fs.open({
+					// path: 'widget://zhibo/html/modules/live/live_main.htmls',
+					path : 'widget://zhibo/html/modules/audience/audience_msg_gag.htmls',
+					flags : 'read'
+				}, function(ret, err) {
+					if (ret.status) {
+						fd1 = ret.fd;
+						//成功后
+						fs.read({
+							fd : fd1,
+							offset : 0,
+							length : 0
+						}, function(ret, err) {
+							if (ret.status) {
+								data = ret.data;
+								$api.html($api.dom('[template=live_msg_gag]'), data);
+								//  alert(data);
+								//return data ;
+							} else {
+								api.alert({
+							title : '请稍后登录房间!'
+						}, function(ret, err) {
+							api.closeWin({
+								
+							});
+							return;
+						});
+							}
+						});
+						//成功结束
+					} else {
+						api.alert({
+							title : '请稍后登录房间!'
+						}, function(ret, err) {
+							api.closeWin({
+								
+							});
+							return;
+						});
+					}
+				});
+				//结束一段
+				fs.open({
+					// path: 'widget://zhibo/html/modules/live/live_main.htmls',
+					path : 'widget://zhibo/html/modules/audience/audience_msg_gift.htmls',
+					flags : 'read'
+				}, function(ret, err) {
+					if (ret.status) {
+						fd1 = ret.fd;
+						//成功后
+						fs.read({
+							fd : fd1,
+							offset : 0,
+							length : 0
+						}, function(ret, err) {
+							if (ret.status) {
+								data = ret.data;
+								$api.html($api.dom('[template=live_msg_gift]'), data);
+								//  alert(data);
+								//return data ;
+							} else {
+								api.alert({
+							title : '请稍后登录房间!'
+						}, function(ret, err) {
+							api.closeWin({
+								
+							});
+							return;
+						});
+							}
+						});
+						//成功结束
+					} else {
+						api.alert({
+							title : '请稍后登录房间!'
+						}, function(ret, err) {
+							api.closeWin({
+								
+							});
+							return;
+						});
+					}
+				});
+				//结束一段
+				fs.open({
+					// path: 'widget://zhibo/html/modules/live/live_main.htmls',
+					path : 'widget://zhibo/html/modules/audience/audience_gift.htmls',
+					flags : 'read'
+				}, function(ret, err) {
+					if (ret.status) {
+						fd1 = ret.fd;
+						//成功后
+						fs.read({
+							fd : fd1,
+							offset : 0,
+							length : 0
+						}, function(ret, err) {
+							if (ret.status) {
+								data = ret.data;
+								$api.html($api.dom('[template=live_gift]'), data);
+								//  alert(data);
+								//return data ;
+							} else {
+								api.alert({
+							title : '请稍后登录房间!'
+						}, function(ret, err) {
+							api.closeWin({
+								
+							});
+							return;
+						});
+							}
+						});
+						//成功结束
+					} else {
+						api.alert({
+							title : '请稍后登录房间!'
+						}, function(ret, err) {
+							api.closeWin({
+								
+							});
+							return;
+						});
+					}
+				});
+				//结束一段
+				fs.open({
+					// path: 'widget://zhibo/html/modules/live/live_main.htmls',
+					path : 'widget://zhibo/html/modules/audience/audience_fans.htmls',
+					flags : 'read'
+				}, function(ret, err) {
+					if (ret.status) {
+						fd1 = ret.fd;
+						//成功后
+						fs.read({
+							fd : fd1,
+							offset : 0,
+							length : 0
+						}, function(ret, err) {
+							if (ret.status) {
+								data = ret.data;
+								$api.html($api.dom('[template=live_fans]'), data);
+								//  alert(data);
+								//return data ;
+							} else {
+								api.alert({
+							title : '请稍后登录房间!'
+						}, function(ret, err) {
+							api.closeWin({
+								
+							});
+							return;
+						});
+							}
+						});
+						//成功结束
+					} else {
+						api.alert({
+							title : '请稍后登录房间!'
+						}, function(ret, err) {
+							api.closeWin({
+								
+							});
+							return;
+						});
+					}
+				});
+				//结束一段
+				fs.open({
+					// path: 'widget://zhibo/html/modules/live/live_main.htmls',
+					path : 'widget://zhibo/html/modules/audience/audience_detail.htmls',
+					flags : 'read'
+				}, function(ret, err) {
+					if (ret.status) {
+						fd1 = ret.fd;
+						//成功后
+						fs.read({
+							fd : fd1,
+							offset : 0,
+							length : 0
+						}, function(ret, err) {
+							if (ret.status) {
+								data = ret.data;
+								$api.html($api.dom('[template=audience_detail]'), data);
+								//  alert(data);
+								//return data ;
+							} else {
+								api.alert({
+							title : '请稍后登录房间!'
+						}, function(ret, err) {
+							api.closeWin({
+								
+							});
+							return;
+						});
+							}
+						});
+						//成功结束
+					} else {
+						api.alert({
+							title : '请稍后登录房间!'
+						}, function(ret, err) {
+							api.closeWin({
+								
+							});
+							return;
+						});
+					}
+				});
+				//结束一段
+				fs.open({
+					// path: 'widget://zhibo/html/modules/live/live_main.htmls',
+					path : 'widget://zhibo/html/modules/audience/gift.htmls',
+					flags : 'read'
+				}, function(ret, err) {
+					if (ret.status) {
+						fd1 = ret.fd;
+						//成功后
+						fs.read({
+							fd : fd1,
+							offset : 0,
+							length : 0
+						}, function(ret, err) {
+							if (ret.status) {
+								data = ret.data;
+								$api.html($api.dom('[template=gift_box]'), data);
+								//  alert(data);
+								//return data ;
+							} else {
+								api.alert({
+							title : '请稍后登录房间!'
+						}, function(ret, err) {
+							api.closeWin({
+								
+							});
+							return;
+						});
+							}
+						});
+						//成功结束
+					} else {
+						api.alert({
+							title : '请稍后登录房间!'
+						}, function(ret, err) {
+							api.closeWin({
+								
+							});
+							return;
+						});
+					}
+				});
+				//结束一段
+				fs.open({
+					// path: 'widget://zhibo/html/modules/live/live_main.htmls',
+					path : 'widget://zhibo/html/modules/audience/audience_gift_big.htmls',
+					flags : 'read'
+				}, function(ret, err) {
+					if (ret.status) {
+						fd1 = ret.fd;
+						//成功后
+						fs.read({
+							fd : fd1,
+							offset : 0,
+							length : 0
+						}, function(ret, err) {
+							if (ret.status) {
+								data = ret.data;
+								$api.html($api.dom('[template=live_gift_big]'), data);
+								//  alert(data);
+								//return data ;
+							} else {
+								api.alert({
+							title : '请稍后登录房间!'
+						}, function(ret, err) {
+							api.closeWin({
+								
+							});
+							return;
+						});
+							}
+						});
+						//成功结束
+					} else {
+						api.alert({
+							title : '请稍后登录房间!'
+						}, function(ret, err) {
+							api.closeWin({
+								
+							});
+							return;
+						});
+					}
+				});
+				//结束一段
+				//大斌的获取方式结束
+			} else {
+				//观众端大斌xin
+				var audience_main = readFile({
+					sync : true,
+					path : api.wgtRootDir + '/zhibo/html/modules/audience/audience_main.htmls'
+				});
+				var res = $api.html($api.dom('[template=main]'), audience_main);
+				//异步方式 获取 其他模块
+				readFile({
+					path : api.wgtRootDir + '/zhibo/html/modules/audience/audience_msg_text.htmls'
+				}, function(ret) {
+					$api.html($api.dom('[template=live_msg_text]'), ret.data);
+				});
+				readFile({
+					path : api.wgtRootDir + '/zhibo/html/modules/audience/audience_msg_notice.htmls'
+				}, function(ret) {
+					$api.html($api.dom('[template=live_msg_notice]'), ret.data);
+				});
+				readFile({
+					path : api.wgtRootDir + '/zhibo/html/modules/audience/audience_msg_gag.htmls'
+				}, function(ret) {
+					$api.html($api.dom('[template=live_msg_gag]'), ret.data);
+				});
+				readFile({
+					path : api.wgtRootDir + '/zhibo/html/modules/audience/audience_msg_gift.htmls'
+				}, function(ret) {
+					$api.html($api.dom('[template=live_msg_gift]'), ret.data);
+				});
+				readFile({
+					path : api.wgtRootDir + '/zhibo/html/modules/audience/audience_gift.htmls'
+				}, function(ret) {
+					$api.html($api.dom('[template=live_gift]'), ret.data);
+				});
+				readFile({
+					path : api.wgtRootDir + '/zhibo/html/modules/audience/audience_fans.htmls'
+				}, function(ret) {
+					$api.html($api.dom('[template=live_fans]'), ret.data);
+				});
+				readFile({
+					path : api.wgtRootDir + '/zhibo/html/modules/audience/audience_detail.htmls'
+				}, function(ret) {
+					$api.html($api.dom('[template=audience_detail]'), ret.data);
+				});
+				readFile({
+					path : api.wgtRootDir + '/zhibo/html/modules/audience/gift.htmls'
+				}, function(ret) {
+					$api.html($api.dom('[template=gift_box]'), ret.data);
+				});
+				//大礼物
+				readFile({
+					path : api.wgtRootDir + '/zhibo/html/modules/audience/audience_gift_big.htmls'
+				}, function(ret) {
+					$api.html($api.dom('[template=live_gift_big]'), ret.data);
+				});
+			}
+			//爱心
+			//大礼物
+			//直播房间 初始化
+		}
+		function aixin() {
+			Gift.heartsGift();
+			//发送爱心消息
+			var x = 100;
+			var y = 900;
+			var num = Math.floor(Math.random() * 9 + 1);
+			var index = $('#aixin').children('img').length + 1;
+			var rand = parseInt(Math.random() * (x - y + 1) + y);
+			$("#wrap").append("<img src='../../image/loveImg/" + num + ".png' style='left:52%;top:88%;' class='aixin'>");
+			readFile({
+				path : api.wgtRootDir + '/zhibo/html/modules/audience/aixin.htmls'
+			}, function(ret) {
+				$api.html($api.dom('[template=aixin]'), ret.data);
+			});
+			$("img").animate({
+				top : "-40px",
+				opacity : "0",
+				left : rand,
+			}, 3000)
+		}
+
+		function hearts() {
+			var x = 100;
+			var y = 900;
+			var num = Math.floor(Math.random() * 9 + 1);
+			var index = $('#aixin').children('img').length + 1;
+			var rand = parseInt(Math.random() * (x - y + 1) + y);
+			$("#wrap").append("<img src='../../image/loveImg/" + num + ".png' style='left:52%;top:88%;' class='aixin'>");
+			readFile({
+				path : api.wgtRootDir + '/zhibo/html/modules/audience/aixin.htmls'
+			}, function(ret) {
+				$api.html($api.dom('[template=aixin]'), ret.data);
+			});
+			$("img").animate({
+				top : "-40px",
+				opacity : "0",
+				left : rand,
+			}, 3000)
+		}
+
+		function goLive(id, memberid, avatar, secretState, iosreview, videoURL) {
+			//alert(id);alert(memberid);return;
+			var extra = {
+				type : 4,
+				extra : {
+					type : 2,
+					memberid : $api.getStorage(CONFIG.memberId),
+				}
+			};
+			QJ.Player.stop();
+			api.closeToWin({
+				name : 'look_live'
+			});
+			api.closeFrame({
+				name : 'live_gift'
+			});
+			api.closeFrame({
+				name : 'share'
+			});
+			api.closeFrame({
+				name : 'talk'
+			});
+			RongCloud2.sendTextMessage({
+				text : '退出直播',
+				extra : extra,
+				targetId : api.pageParam.memberid,
+				conversationType : 'CHATROOM',
+			});
+			//退出聊天室 不再接收聊天信息
+			//QJ.Chat.logout();
+			RongCloud2.quitChatRoom({
+				chatRoomId : memberid
+			});
+			//			QJ.Chat.sendText({
+			//				text : '退出直播',
+			//				extra : extra
+			//			});
+			//			QJ.Chat.logout();
+			api.pageParam.roomid = id;
+			api.pageParam.memberid = memberid;
+			Audience.openLive(id, memberid, "222222", Tool.imageCompressByQiNiu(avatar, 0, 200, 200), secretState, iosreview, videoURL);
+		}
+
+		function cancelBubble(e) {
+			var evt = e ? e : window.event;
+			if (evt.stopPropagation) {//W3C
+				evt.stopPropagation();
+			} else {//IE
+				evt.cancelBubble = true;
+			}
+		};
+		function show1() {
+			$(".sidebar-btn").hide();
+			$("#lianmaidiv").hide();
+			$(".sidebar").animate({
+				right : "10px"
+			}, 300);
+			cancelBubble();
+		}
+
+
+		$("#wrap").click(function(e) {
+			$(".sidebar-btn").click(function() {
+				return;
+			})
+			$(".sidebar-btn").show();
+			$("#lianmaidiv").show();
+			$(".sidebar").animate({
+				right : "-160px"
+			}, 300);
+			cancelBubble(e);
+		});
+	</script>
+</html>

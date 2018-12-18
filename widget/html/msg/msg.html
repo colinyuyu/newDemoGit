@@ -1,0 +1,657 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>消息列表</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			#main {
+				font-size: 14px;
+			}
+			.img-frm,
+			.img {
+				background-image: url(../../image/avatar.jpg);
+				background-size: cover;
+				background-position: center;
+				background-repeat: no-repeat;
+				border-radius: 50%;
+				width: 50px;
+				height: 50px;
+			}
+			.img {
+				position: relative;
+			}
+			.list {
+				padding-left: 8px;
+				padding-top: 15px;
+			}
+			.line_bottom{
+				border-bottom: 1px solid #D9D9D9;
+				padding-bottom: 10px;
+				padding-right: 5px;
+				margin-left: 8px;
+			}
+			.content {
+				color: #909090;
+				padding-top: 10px;
+				display:-webkit-box!important;
+				overflow:hidden; 
+				text-overflow:ellipsis; 
+				word-break:break-all; 
+				-webkit-box-orient:vertical; 
+				-webkit-line-clamp:1;
+			}
+			.official{
+				height: 14px;
+				margin-left: 8px;
+				font-size: 11px;
+				width: 32px;
+				border-radius: 4px;
+				background-color: #FFDE3F;
+			}
+			.ct-icon-sys-message {
+				font-size: 30px;
+				width: 50px;
+				height: 50px;
+				background-color: #FFDE3F;
+				border-radius: 50%;
+			}
+			.dbadge {
+				height: auto;
+				top: 0;
+				width: auto;
+				min-width: 12px;
+				border-radius: 5px;
+			}
+			.num {
+				padding: 2px 3px;
+				font-size: 9px;
+				color: #fff;
+				position: absolute;
+				/*top: 2px;*/
+				right: 0;
+				z-index: 2;
+				/*width: 12px;*/
+				height: 15px;
+				text-align: center;
+			}
+			.im_num {
+				line-height: 13px;
+			}
+			img.expression{
+				position: relative;
+				width: 15px;
+				height: 15px;
+				top: 5px;
+			}
+			p {
+				color: #D9D9D9;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+				<div class="system_box">
+					<div class="list hidden flex-box" onclick="openWin('win','sys_msg','系统消息','msg','system_msg')" tapmode="">
+						<div class="ct-icon-sys-message flex-center-center flex-box">
+							<span class=" dbadge msg_badge num">1</span>
+						</div>
+						<div class="flex-1 line_bottom">
+							<div class="flex-box">
+								<div class="flex-1 flex-box flex-h-ce">系统消息 <span class="official text-center">官方</span></div>
+								<p>1小时前</p>
+							</div>
+							<div class="content">你关注的[啦啦啦]发起了一个直播直播直播直播直播直播</div>
+						</div>
+					</div>
+				</div>
+				<div class="msg_box">
+					<div class="list hidden flex-box" onclick="openTalkWith('哈哈')" tapmode="">
+						<div class="img-frm">
+							<div class="img">
+								<span class="dbadge msg_badge num im_num">10</span>
+							</div>
+						</div>
+						<div class="flex-1 line_bottom">
+							<div class="flex-box">
+								<div class="flex-1 flex-box flex-h-ce">啦啦啦啦啦</div>
+								<p>1小时前</p>
+							</div>
+							<div class="content">你关注的[啦啦啦]发起了一个直播直播直播直播直播直播</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/touch.js" ></script>
+	<script type="text/javascript" src="../../script/rongCloud2.js" ></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript" src="../../script/jquery.lazyload.min.js" ></script>
+	
+	<script type="text/template" template="system">
+		{{? it instanceof Array && it.length != 0}}
+		<div class="list flex-box sys_list" onclick="openWin('win','sys_msg','系统消息','msg','system_msg')" tapmode="">
+			<div class="ct-icon-sys-message flex-center-center flex-box">
+				<span class="dbadge msg_badge num sysmsg_num hidden">0</span>
+			</div>
+			<div class="flex-1 line_bottom">
+				<div class="flex-box">
+					<div class="flex-1 flex-box flex-h-ce">系统消息 <span class="official text-center">官方</span></div>
+					<p>{{= D.t2(it[0].createdtime )}}</p>
+				</div>
+				<div class="content">{{= it[0].content }}</div>
+			</div>
+		</div>
+		{{?}}
+	</script>
+	
+	<script type="text/template" template="main">
+		{{? it instanceof Array && it.length != 0}}
+			{{~ it:value:index}}
+			{{? typeof value.latestMessage == 'object'}}
+			<div class="list flex-box im_list" sendId="{{= value.senderUserId}}" memberid="{{= strToJson(value.latestMessage.extra).memberid}}" targetId="{{= value.targetId}}"  nickname="{{= strToJson(value.latestMessage.extra).nickname}}" latestMessageId="{{= value.latestMessageId}}" avatar="{{= strToJson(value.latestMessage.extra).avatar}}"  onclick="openTalkWith(this)">
+				<div class="img-frm">
+					{{? value.senderUserId == value.targetId}}
+					<div class="img" mavatar="{{= strToJson(value.latestMessage.extra).mavatar}}" style="background-image: url({{= Tool.imageCompressByQiNiu(strToJson(value.latestMessage.extra).mavatar,0,200,200)}});">
+						<span class="dbadge msg_badge num im_num {{= value.unreadMessageCount == 0 ? 'hidden' : ''}}">{{= (value.unreadMessageCount < 100 ? value.unreadMessageCount: 99)}}</span>
+					</div>
+					{{??}}
+					<div class="img" style="background-image: url({{= Tool.imageCompressByQiNiu(strToJson(value.latestMessage.extra).avatar,0,200,200)}});">
+						<span class="dbadge msg_badge num im_num {{= value.unreadMessageCount == 0 ? 'hidden' : ''}}">{{= (value.unreadMessageCount < 100 ? value.unreadMessageCount: 99)}}</span>
+					</div>
+					{{?}}
+				</div>
+				<div class="flex-1 line_bottom">
+					<div class="flex-box">
+						{{? value.senderUserId === value.targetId}}
+						<div class="flex-1 flex-box flex-h-ce name" mid="{{= strToJson(value.latestMessage.extra).mid}}">{{= strToJson(value.latestMessage.extra).mname}}</div>
+						{{??}}
+						<div class="flex-1 flex-box flex-h-ce name" mid="{{= strToJson(value.latestMessage.extra).mid}}">{{= strToJson(value.latestMessage.extra).nickname}}</div>
+						{{?}}
+						<p class="im_time">{{= D.t2(value.receivedTime)}}</p>
+					</div>
+					<div class="content" data-msgId="{{= value.latestMessageId }}">
+						{{= getLastMsg(value.targetId,value.latestMessageId,value.objectName,strToJson(value.latestMessage.extra).content.substr(0, 4)+'..') || ''}}
+					</div>
+				</div>
+			</div>
+			{{?}}
+		{{~}}
+	{{?}}
+	</script>
+	
+	<script type="text/javascript">
+		function strToJson(value){
+			var str = JSON.parse(value);
+			return str;
+		}
+		//转义
+		function h(str){
+			if(str){
+				var regx = /(\&[l,g]t;)|(api.wgtRootDir)/gm,
+						_html = str.replace(regx, function(match){
+							switch(match){
+								case '&lt;':
+									return '<';
+								case '&gt;':
+									return '>';
+								case 'api.wgtRootDir':
+									return '../..';
+							}
+						});
+				return _html;
+			}else{
+				return '';
+			}
+		}
+		//清除融云未读消息 状态
+		function clearMessagesUnreadStatus(targetArr){
+			for(var i=0;i<targetArr.length;i++){
+				RongCloud2.clearMessagesUnreadStatus({
+					targetId: targetArr[i]
+				})
+			}
+		}
+		
+		//忽略未读
+		function readAllMsg(){
+			var listDom = $api.domAll('.list'),
+					activeLen = 0,
+					targetArr = [];
+			for(var i=0;i<listDom.length;i++){
+				if(!$api.hasCls($api.dom(listDom[i],'.msg_badge'),'hidden')){
+					if($api.attr(listDom[i],'targetId')){
+						targetArr.push($api.attr(listDom[i],'targetId'));
+					}
+					activeLen += 1;
+				}
+			}
+			if(activeLen == 0) return;
+			api.confirm({
+				title: '提示消息',
+				msg: '是否忽略全部未读消息？',
+				buttons: ['确定','取消']
+			},function(ret){
+				if(ret.buttonIndex == 1){
+					ajax.get({
+//						ctrl: 'zhiboApp',
+//						fn: 'readallmsg',
+						ctrl: 'zhiboApp',
+						fn: 'readallmsg',
+						data: {
+							values: {
+								id: $api.getStorage(CONFIG.memberId),
+								token: $api.getStorage(CONFIG.token)
+							}
+						},
+						hideLoading: true,
+						showError: false,
+						showProgress: false,
+						success: function(ct) {
+							var msgDom = $api.domAll('.msg_badge');
+							if(msgDom.length != 0){
+								for(var i=0;i<msgDom.length;i++){
+									$api.addCls(msgDom[i], 'hidden');
+								}
+							}else{
+								$api.addCls(msgDom, 'hidden');
+							}
+							clearMessagesUnreadStatus(targetArr);
+							$api.setStorage('unreadCount',0);
+							api.sendEvent({
+								name: 'setReadMsg',
+								extra:{
+									count: 0
+								}
+							});
+						}
+					});
+				}
+			})
+		}
+		
+		//判断 是否被主播拉黑
+		function isblack(mid,nickname,str){
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'isblack',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						memberid: mid
+					}
+				},
+				hideLoading: true,
+				showError: false,
+				showProgress: true,
+				success: function(ct) {
+				
+				//var  teding=$api.getStorage('teding');
+			//alert('gg'+teding); //聊天页面
+			//alert('bb'+mid); //聊天页面
+			//alert('ee'+$api.getStorage(CONFIG.memberId)); //聊天页面
+			//alert('cc'+$api.getStorage(CONFIG.memberInfo).teding);
+			//if(teding=='1'){
+		
+			//Tool.toast('刷特定礼物才能私信哦~');
+			
+			//return;
+			//}
+					if(ct.state == 1){
+						Tool.toast('您已拉黑该主播,不能进入与TA私聊~');
+					}else{
+						if(ct.status == 1){
+							Tool.toast('您已被主播拉黑,不能进入与TA私聊~');
+						}else{
+							if(ct.tidings == '0' || ct.tidings == '1' && ct.concernstatus == 1){
+								api.openWin({
+									name:　'talk_with',
+									url:  api.wgtRootDir + '/zhibo/html/window/talk_with.html',
+									pageParam: {
+										headerTitle: nickname,
+										frameName: 'talk_with',
+										frameUrl: api.wgtRootDir + '/zhibo/html/component/talk_with.html',
+										frameParam: str
+									},
+									slidBackEnabled: false
+								});
+							}else{
+								Tool.toast('TA不接收陌生人私信~');
+							}
+						}
+					}
+				}
+			});
+		}
+		
+		
+		//打开 聊天
+		function openTalkWith(_this){
+			var targetId = $api.attr(_this,'targetId'),
+					nickname = $api.attr(_this,'nickname'),
+					avatar = $api.attr(_this,'avatar'),
+					memberid = $api.attr(_this,'memberid'),
+					sendId = $api.attr(_this,'sendId');
+			var str = {};
+			if(sendId == targetId){
+				var mnickname = $api.text($api.dom(_this,'.name'));
+				str.username = targetId;
+				str.nickname = mnickname;
+				str.avatar = $api.attr($api.dom(_this,'.img'),'mavatar');
+				str.memberid = $api.attr($api.dom(_this,'.name'),'mid');
+				isblack(str.memberid,mnickname,str);
+			}else{
+				str.username = targetId;
+				str.nickname = nickname;
+				str.avatar = avatar;
+				str.memberid = memberid;
+				isblack(str.memberid,nickname,str);
+			}
+		}
+		
+		//获取最新一条消息内容
+		function getLastMsg(targetId, lastMsgId, objName, _text){
+			RongCloud2.getLatestMessages({
+				targetId: targetId,
+				count: 1
+			},function(result){
+				var lastDom = $api.dom('[data-msgId="' + lastMsgId + '"]');
+				var msg = '';
+				switch(objName){
+					case 'RC:TxtMsg':
+						msg = h(_text) || '';
+						$api.html(lastDom, msg);
+					break;
+					case 'RC:VcMsg':
+						msg = '[语音]';
+						$api.html(lastDom, msg);
+					break;
+					case 'RC:CmdNtf':
+						msg = '[礼物]';
+						$api.html(lastDom, msg);
+					break;
+					default: 
+						for(var i=0;i<result.length;i++){
+							if(result[i].content.extra && JSON.parse(result[i].content.extra).type == 'gift'){
+								msg = '[礼物]';
+							}else{
+								msg = '[图片]';
+							}
+						}
+						$api.text(lastDom, msg);
+					break;
+				}
+			})
+		}
+		
+		//获取系统消息列表中的第一条消息
+		function getFirstMsg(){
+			ajax.get({
+//				ctrl: 'zhiboApp',
+//				fn: 'msglist',
+				ctrl: 'zhiboApp',
+				fn: 'msglist',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token)
+					}
+				},
+				hideLoading: true,
+				showProgress: true,
+			  showError: true,
+				_403: function(){},
+				success: function(ct) {
+					if(!$api.dom('.sys_list')){
+						if(ct instanceof Array && ct.length!= 0){
+							T.html('.system_box','system',ct);
+						}
+					}
+					imList(ct);
+				}
+			});
+		}
+		
+		//获取IM列表
+		function imList(){
+			RongCloud2.getConversationList(function(result){
+				T.html('.msg_box','main',result);
+//				if(ct instanceof Array && ct.length!= 0 && result instanceof Array && result.length!= 0){
+//					
+//				}else if(ct instanceof Array && ct.length!= 0){
+//					
+//				}else{
+//					var _html = ''+
+//						'<div class="null">'+
+//					    '<div class="small_font">'+
+//					      '暂无相关内容~'+
+//					    '</div>'+
+//						'</div>';
+//					$api.html($api.dom('.msg_box'),_html);
+//				}
+				countMsg();
+			});
+			api.refreshHeaderLoadDone();
+		}
+		
+		apiready = function(){
+			getFirstMsg();
+			
+			//监听是否有Dom插入
+			$api.addEvt($api.dom('#main'),'DOMNodeInserted',function(e){
+			
+				if(e.target.nodeType === 1 && $api.hasCls(e.target,'im_list')){
+					touch.on(e.target,'hold',function(event){
+						var targetId = $api.attr(e.target,'targetId'),
+								nickname = $api.attr(e.target,'nickname'),
+								avatar = $api.attr(e.target,'avatar');
+						if(event.type == 'hold'){
+							Tool.actionSheet({
+								buttons:['删除该聊天'],
+								success:function(ret){
+									switch(ret){
+										case 1:
+											RongCloud2.clearMessages({
+												targetId: targetId,
+												success:function(){
+													RongCloud2.removeConversation({
+														targetId: targetId,
+														success:function(){
+															$api.remove(e.target);
+															RongCloud2.getTotalUnreadCount(function(num){
+																if(num == 0){
+																	api.sendEvent({
+																		name: 'clearMsgUnreadStatus',
+																		extra: {
+																			targetId: targetId
+																		}
+																	});
+																}
+															});
+														}
+													});
+												}
+											});
+										break;
+									}
+								}
+							});
+						}
+					});
+				}
+			});
+			
+			//获取以往消息
+			api.setRefreshHeaderInfo({
+				visible: true,
+				bgColor: 'rgba(0,0,0,0)',
+		    textColor: '#666',
+		    textDown: '下拉刷新...',
+		    textUp: '松开刷新...',
+		    showTime: true
+			},function(ret,err){
+				if('none' === api.connectionType){
+					api.toast({
+						msg: '网络无法连接，请检查网络设备是否正常',
+						location: 'bottom',
+						duration: 2000
+					});
+					api.refreshHeaderLoadDone();
+					return;
+				}
+				getFirstMsg();
+			});
+			
+			//监听 获取最新消息
+			api.addEventListener({
+				name: 'newMessage'
+			},function(ret,err){
+		
+				var value = ret.value.message,
+						targetIdDomAll = $api.domAll('[targetId]'),
+						targetIdDom = $api.dom('[targetId="' + value.targetId + '"]'),
+						CopyDom,msgNumDom,msgNum,msgDom,msg_badge;
+				if(targetIdDom){
+					msgNumDom = $api.dom(targetIdDom,'.im_num');
+					msg_badge = $api.dom(targetIdDom,'.msg_badge');
+					msgNum = parseInt($api.text(msgNumDom));
+					msgDom = $api.dom(targetIdDom,'.content');
+					switch(value.objectName){
+						case 'RC:TxtMsg':
+							$api.html(msgDom, h(strToJson(value.content.extra).content));
+						break;
+						case 'RC:VcMsg':
+							$api.html(msgDom, '[语音]');
+						break;
+						case 'RC:ImgMsg':
+							if(JSON.parse(value.content.extra).type == 'gift'){
+								$api.html(msgDom, '[礼物]');
+							}else{
+								$api.html(msgDom, '[图片]');
+							}
+						break;
+					}
+					$api.text($api.dom(targetIdDom,'.im_time'),D.t2(value.receivedTime));
+					if($api.hasCls(msgNumDom, 'hidden')){
+						$api.removeCls($api.html(msgNumDom, 1), 'hidden');
+						$api.removeCls(msg_badge,'hidden')
+					}else{
+						msgNum = parseInt(msgNum) + 1;
+						$api.html(msgNumDom, parseInt(msgNum));
+					}
+					var flag = targetIdDomAll[0] === targetIdDom;
+					if($api.domAll('.im_list').length > 1){
+						if(!flag){
+							CopyDom = targetIdDom.cloneNode(true);//复制当前会话节点
+							$api.remove(targetIdDom);//移除当前会话节点
+							$api.dom('.msg_box').insertBefore(CopyDom, targetIdDomAll[0]);//把复制节点插入到所有节点的首位
+						}
+					}
+				}else{
+					imList();
+				}
+			});
+			
+			//监听 标识为已读
+			api.addEventListener({
+				name: 'clearMsgUnreadStatus'
+			},function(ret,err){
+				if(ret && ret.value){
+					var targetIdDom = $api.dom('[targetid="'+ ret.value.targetId + '"]'),
+							msgNumDom, msgId, msgDom,msg_badge;
+					if(targetIdDom){
+						msgNumDom = $api.dom(targetIdDom,'.im_num');
+						msg_badge = $api.dom(targetIdDom,'.msg_badge');
+						if(!$api.hasCls(msgNumDom,'hidden')){
+							RongCloud2.clearMessagesUnreadStatus({
+								targetId: ret.value.targetId,
+								success:function(){
+									$api.text(msgNumDom, 0);
+									$api.addCls(msgNumDom,'hidden');
+									$api.addCls(msg_badge,'hidden');
+								}
+							});
+						}
+						msgDom = $api.dom(targetIdDom,'.content');
+						msgId = $api.attr(msgDom,'data-msgId');
+						RongCloud2.getConversation({
+							targetId: ret.value.targetId,
+							success:function(result){
+								if(msgId != result.latestMessageId){
+									$api.text($api.dom(targetIdDom,'.im_time'),D.t2(result.receivedTime));
+									switch(result.objectName){
+										case 'RC:TxtMsg':
+											$api.html(msgDom, h(strToJson(result.latestMessage.extra).content));
+										break;
+										case 'RC:VcMsg':
+											$api.html(msgDom, '[语音]');
+										break;
+										case 'RC:ImgMsg':
+											if(JSON.parse(result.latestMessage.extra).type == 'gift'){
+												$api.html(msgDom, '[礼物]');
+											}else{
+												$api.html(msgDom, '[图片]');
+											}
+										break;
+									}
+								}
+							}
+						});
+					}else{
+						imList();
+					}
+				}
+			});
+			
+			//当我发送消息时 把对方置顶
+			api.addEventListener({
+				name: 'setTop'
+			},function(ret){
+				if(ret && ret.value){
+					RongCloud2.getConversationList(function(result){
+						var targetIdDomAll = $api.domAll('[targetId]'),
+								targetIdDom = $api.dom('[targetId="'+ ret.value.targetId +'"]'),
+								CopyDom;
+						var flag = targetIdDomAll[0] === targetIdDom;
+						if($api.dom('.im_list')){
+							if(targetIdDom){
+								if(!flag){
+									CopyDom = targetIdDom.cloneNode(true);
+									$api.remove(targetIdDom);
+									$api.dom('.msg_box').insertBefore(CopyDom,targetIdDomAll[0]);
+								}
+							}
+						}
+					});
+				}
+			});
+			
+			
+			//监听系统消息 是否已阅读
+			api.addEventListener({
+				name: 'setReadMsg'
+			},function(){
+				countMsg();
+			})
+			//监听消息推送 添加红点
+			api.addEventListener({
+				name: 'refreshMsgRed'
+			},function(ret){
+				if(ret && ret.value.count > 0){
+					var count = $api.text($api.dom('.sysmsg_num')),
+							allcount = parseInt(ret.value.count) + parseInt(count);
+					$api.text($api.dom('.sysmsg_num'),allcount);
+					$api.removeCls($api.dom('.sys_list .msg_badge'),'hidden');
+				}
+			})
+		}
+	</script>
+</html>

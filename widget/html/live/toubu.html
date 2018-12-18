@@ -1,0 +1,130 @@
+﻿<!doctype html>
+<html>
+	<head design-width="750">
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<title>Demo</title>
+		<link rel="stylesheet" href="../../xiaowucss/style.css" />
+		<!--页面样式-->
+		<!--页面样式-->
+		<link rel="stylesheet" href="../../xiaowucss/common.css" />
+		<!--常用样式-->
+		<link rel="stylesheet" href="../../xiaowucss/animate.min.css" />
+		<!--CSS3动画库-->
+		<script src="../../xiaowucss/auto-size.js"></script><!--设置字体大小-->
+	</head>
+	<style>
+		html, body {
+			background-color: transparent !important;
+		}
+	</style>
+	<body>
+		<div class="focus" id="focus">
+			<h5><span> <i class="touxiangshiping" onclick="xiangqing()" tapmode><img src="../../css/im4.jpg" alt="" /></i> <em id="name"></em> <b  class='guanzhu' onclick="guanzhu()" tapmode>关注</b> </span><strong> <i><img onclick="guanbi()"  src="../../css/ic8.png" alt="" /></i> </strong></h5>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript" src="../../script/jquery.lazyload.min.js" ></script>
+	<script>
+	function xiangqing(){
+	//alert(api.pageParam.uid);
+	//openWin('win','xiangxi','用户详情','one','xiangxi',true,{memberid:api.pageParam.uid});
+	openProfile(api.pageParam.uid);
+	
+			
+	}
+		//关注
+		function guanzhu() {
+			//视频ID api.pageParam.id
+			
+				ajax.get({
+
+				ctrl : 'zhiboApp',
+				fn : 'shipinconcern',
+				data : {
+					values : {
+						id : $api.getStorage(CONFIG.memberId),
+						token : $api.getStorage(CONFIG.token),
+						memberid : api.pageParam.uid,
+						 dspid :api.pageParam.dspid,
+					}
+				},
+				showError : true,
+				hideLoading : true,
+				showProgress : false,
+				success : function(ct) {
+	if(ct.guanzhu==1){
+	$api.text($api.dom('.guanzhu'),'已关注');	
+	}else{
+	$api.text($api.dom('.guanzhu'),'关注');	
+	}
+				//Tool.toast('关注成功');
+				
+					return;
+				}
+			});
+			
+			
+			
+			
+			
+		}
+
+		function guanbi() {
+			//关闭当前的
+			var videoPlayer = api.require('videoPlayer');
+videoPlayer.close();
+			api.closeWin({
+				name : 'duanshiping'
+			});
+		}
+
+		apiready = function() {
+		//alert('toubu'+JSON.stringify(api.pageParam));
+			$api.text($api.dom('#name'), api.pageParam.name);
+			$api.html($api.dom('.touxiangshiping'), "<img width='18' height='18' src=" + api.pageParam.img + ">");
+				ajax.get({
+					
+				ctrl : 'zhiboApp',
+				fn : 'guanzhu',
+				data : {
+					values : {
+						id : $api.getStorage(CONFIG.memberId),
+						token : $api.getStorage(CONFIG.token),
+						memberid : api.pageParam.uid,
+						  dspid :api.pageParam.dspid,
+					}
+				},
+				showError : true,
+				hideLoading : true,
+				showProgress : false,
+				success : function(ct) {
+				if(ct.guanzhu==1){
+				
+				$api.text($api.dom('.guanzhu'),'已关注');	
+				
+				}else{
+				$api.text($api.dom('.guanzhu'),'关注');	
+				}
+				
+				if(ct.dianzan==1){
+				
+				
+				api.sendEvent({
+	                name:'dianzan'
+                });
+				}
+				
+				//Tool.toast('关注成功');
+				//$api.text($api.dom('.guanzhu'),'已关注');	
+					return;
+				}
+			});
+		}
+	</script>
+</html>

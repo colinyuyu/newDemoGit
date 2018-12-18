@@ -1,0 +1,128 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<title>Document</title>
+		<link rel="stylesheet" type="text/css" href="css/ct.css"/>
+		<style type="text/css">
+			#main > button:not(:first-child){
+				margin-top: 10px;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main" class="flex-box-v flex-v-ce flex-v-zhu">
+				<button class="btn btn-info btn-lg" onclick="authBack()" tapmode="">
+					后台管理账户授权
+				</button>
+				<button class="btn btn-info btn-lg" onclick="getRoomsLiveInfo()" tapmode="">
+					批量查询直播信息
+				</button>		
+				<button class="btn btn-info btn-lg" onclick="getLiveContext()" tapmode="">
+					查询直播上下文
+				</button>
+				<button class="btn btn-info btn-lg" onclick="getRooms()" tapmode="">
+					查询主播室列表
+				</button>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="script/common.js" ></script>
+	<script type="text/javascript">
+	 var accessToken;
+		function authBack(){
+			ajax.get({
+				url: 'https://livevip.com.cn/liveApi/AccessToken',
+				server: 'qinjia',
+				headers: {
+					"Content-Type": "application/json"
+				},
+				data: {
+					values: {
+						scope: 'app',
+						username: '623798099@qq.com',
+						password: '123456'
+					}
+				},
+				hideLoading: true,
+				success: function(ret){
+					accessToken = ret.accessToken;
+					console.log(JSON.stringify(ret, null, 2))
+				}
+			})
+		}
+		
+		function getRoomsLiveInfo(){
+			var arr = [];
+			arr.push(225759)
+			ajax.get({
+				url: 'https://livevip.com.cn/liveApi/GetRoomsLiveInfo',
+				server: 'qinjia',
+				method: 'post',
+				headers: {
+					"Content-Type": "application/json",
+					"Accept": "application/json",
+					"Authorization": accessToken
+				},
+				data: {
+					values: {
+						roomIds: [225759]
+					}
+				},
+				hideLoading: true,
+				success: function(ret){
+					console.log(JSON.stringify(ret, null, 2))
+				}
+			})
+		}
+		
+		function getLiveContext(){
+			ajax.get({
+				url: 'https://livevip.com.cn/liveApi/GetLiveContext',
+				server: 'qinjia',
+				headers: {
+					"Content-Type": "application/json",
+					"Accept": "application/json",
+					"Authorization": accessToken
+				},
+				data: {
+					values: {
+						roomId: 225759
+					}
+				},
+				hideLoading: true,
+				success: function(ret){
+					console.log(JSON.stringify(ret, null, 2))
+				}
+			})
+		}
+		
+		function getRooms(){
+			ajax.get({
+				url: 'https://livevip.com.cn/liveApi/GetRooms',
+				server: 'qinjia',
+				headers: {
+					"Content-Type": "application/json",
+					"Accept": "application/json",
+					"Authorization": accessToken
+				},
+				data: {
+					values: {
+						type: 0
+					}
+				},
+				hideLoading: true,
+				success: function(ret){
+					console.log(JSON.stringify(ret, null, 2))
+				}
+			})
+		}
+		
+		apiready = function(){
+			
+		}
+	</script>
+</html>

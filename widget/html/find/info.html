@@ -1,0 +1,174 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>Document</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			#main {
+				background-color: #FCFBF5;
+			}
+			div {
+				color: #909090;
+			}
+			/*个人信息开始*/
+			.info{
+				position: relative;
+				border-top: 1px solid #fff;
+				z-index: 998;
+			}
+			.switch_btn {
+				background-color: #fff;
+			}
+			.switch_btn > div{
+				padding: 15px 0;
+				color: #909090;
+				border-bottom: 1px solid #D9D9D9;
+			}
+			.switch_btn > div.active{
+				color: #FE5F99;
+				border-bottom: 1px solid #FE5F99;
+			}
+			.info .img-frm,
+			.info .img{
+				width: 40px;
+				height: 40px;
+			}
+			.list > div{
+				margin-bottom: 5px;
+			}
+			.charm{
+				background-color: #fff;
+				padding: 10px;
+			}
+			.text-right{
+				width: 35px;
+			}
+			.ct-icon-arrow-right{
+				color: #909090;
+				font-size: 20px;
+				display: inline-block;
+			  height: 100%;
+			  z-index: 997;
+			}
+			.info_list {
+				padding: 10px;
+				background-color: #fff;
+			}
+			.bottom_btn {
+				font-size: 14px;
+				background-color: #fff;
+			}
+			.bottom_btn > div{
+				padding: 10px 0;
+				color: #DD9C2A;
+			}
+			.bottom_btn > div > span {
+				font-size: 19px;
+				color: #DD9C2A;
+				padding-right: 8px;
+			}
+			.img-frm,
+			.img {
+				background-image: url(../../image/avatar.jpg);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				border-radius: 50%;
+				width: 40px;
+				height: 40px;
+			}
+			.img-frm{
+				background: #fff;
+			}
+			.img {
+				border: 2px solid #fff;
+				border-radius: 50%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+				<div class="list ">
+					<div class="charm_box">
+						<div class="charm  flex-box flex-h-ce" onclick="openWin('win','charm','魅力贡献榜','find','charm')" tapmode="">
+							<div class="flex-1">魅力贡献榜</div>
+							<div class="flex-box" style="min-height: 40px;">
+								<!--<div class="img-frm" style="z-index: 3;margin-right: -12px;">
+									<div class="img"></div>
+								</div>
+								<div class="img-frm" style="z-index: 2;margin-right: -12px;">
+									<div class="img"></div>
+								</div>
+								<div class="img-frm" style="z-index: 1;margin-right: -12px;">
+									<div class="img" ></div>
+								</div>-->
+							</div>
+							<div class="text-right">
+								<div class="ct-icon-arrow-right "></div>
+							</div>
+						</div>
+					</div>
+					<div>
+						<div class="info_list flex-box">
+							<div class="flex-1">年龄</div>
+							<div class="flex-1 age"></div>
+						</div>
+						<div class="info_list flex-box">
+							<div class="flex-1">城市</div>
+							<div class="flex-1 city"></div>
+						</div>
+						<div class="info_list flex-box">
+							<div class="flex-1">ID号码</div>
+							<div class="flex-1 id"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript" src="../../script/jquery.lazyload.min.js" ></script>
+	
+	<script type="text/template" template="main">
+		<div class="charm flex-box flex-h-ce" onclick="openWin('win','charm_list','魅力贡献榜','find','charm','',{mid: '{{= it.id}}'})" tapmode="">
+			<div class="flex-1">魅力贡献榜</div>
+			{{? it.charmlist instanceof Array && it.charmlist.length != 0}}
+			<div class="flex-box">
+				{{~ it.charmlist:value:index}}
+				<div class="img-frm" style="z-index: {{= -(index-3)}};background:'#fff';margin-right: -12px;">
+					<div class="img" data-original="{{= Tool.imageCompressByQiNiu(value.avatar, 0, 200, 200) }}"></div>
+				</div>
+				{{~}}
+			</div>
+			{{?}}
+			<div class="text-right">
+				<div class="ct-icon-arrow-right "></div>
+			</div>
+		</div>
+	</script>
+	
+	<script type="text/javascript">
+		apiready = function(){
+			var param = api.pageParam;
+			if(param.ct.age == '0'){
+				$api.text($api.dom('.age'),'你猜');
+			}else{
+				$api.text($api.dom('.age'),param.ct.age);
+			}
+			$api.text($api.dom('.city'),param.ct.city);
+			$api.text($api.dom('.id'),param.ct.id);
+			T.html('.charm_box','main',param.ct);
+			$('div.img').lazyload({
+	      effect : "fadeIn"
+	    });
+		}
+	</script>
+</html>
+

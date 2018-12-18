@@ -1,0 +1,4 @@
+<div class="list">
+	<span class="title">直播消息：</span>
+	<span class="blue">{{=it.notice}}</span>
+</div>

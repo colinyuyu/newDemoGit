@@ -1,0 +1,121 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>查看主播/粉丝详情</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			html,
+			body {
+				background-color: rgba(0,0,0,0);
+			}
+			
+			body {
+				transition: all 0.5s ease;
+			}
+			#main {
+				font-size: 14px;
+			}
+			.quit_box {
+				position: fixed;
+				width: 80%;
+				margin: 0 10%;
+				background-color: #fff;
+				border-radius: 5px;
+				opacity: 1;
+				z-index: -1;
+			}
+			.info{
+				padding: 30px;
+				color: #FE5F99;
+			}
+			.operate{
+				border-top: 1px solid #DDDDDD;
+			}
+			.operate>div{
+				padding: 15px 0;
+				text-align: center;
+			}
+			.operate>div:first-child{
+				border-right: 1px solid #DDDDDD;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main" class="">
+				<div class="quit_box">
+					<div class="info flex-box-v flex-h-ce">
+						确定结束直播？
+					</div>
+					<div class="operate flex-box">
+						<div class="flex-1" onclick="closeFrame()" tapmode>取消</div>
+						<div class="flex-1" onclick="Anchor.quitLive()" tapmode>确定</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/anchor.js" ></script>
+	<script type="text/javascript">
+		var values = {};
+		values.id = $api.getStorage(CONFIG.memberId);
+		values.token = $api.getStorage(CONFIG.token);
+		function closeFrame(){
+			api.closeFrame();
+		}
+		function isOk(){
+			ajax.get({
+//				ctrl: 'zhiboApp',
+				ctrl: 'zhiboApp',
+				fn: 'endlive',
+				data: {
+					values: values
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: true,
+				success: function(ct) {
+			
+					api.sendEvent({
+						name:'stopPublish'
+					});
+				}
+			});
+		}
+		apiready = function(){
+			var param = api.pageParam;
+			if(param){
+				values.roomid = param.roomid;
+			}
+			var box = $('.quit_box');
+			var body = $('body');
+			var bodyHeight = body.height();
+			var boxHeight = box.height();
+			box.css("top",(bodyHeight-boxHeight)/2-120+'px');
+			setTimeout(function(){
+				$api.css($api.dom('body'), 'background-color:rgba(0,0,0,0.3)');
+				box.animate({top:(bodyHeight-boxHeight)/2+'px',opacity:1},200);
+			},300)
+			api.addEventListener({
+				name:'quit_liver_saveSuccess'
+			},function(ret,err){
+				api.openFrame({
+					name: 'close_liver',
+					url: api.wgtRootDir + '/zhibo/html/component/close_liver.html',
+					bounces: false,
+					pageParam: param,
+					animation: {
+						type: 'none'
+					}
+				});
+			});
+		}
+	</script>
+</html>

@@ -1,0 +1,349 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>举报</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			#main {
+				background-color: #FBFBF5;
+				font-size: 14px;
+			}
+			input,
+			textarea {
+				width: 100%;
+				outline: none;
+				font-size: 12px;
+				line-height: inherit;
+			}
+			.pd20{
+				padding-top: 20px;
+			}
+			.content {
+				padding: 5px 15px;
+				background-color: #fff;
+				border-bottom: 1px solid #F5F5F5;
+				border-top: 1px solid #F5F5F5;
+			}
+			.content textarea[name=content]{
+				padding-top: 10px;
+				resize: none;
+				height: 100px;
+			}
+			.pd10 {
+				padding-top: 10px;
+			}
+			.send_btn > div{
+				padding: 12px 0;
+				border: 1px solid #FE5F99;
+				border-radius: 25px;
+				color: #FE5F99;
+				background-color: #fff;
+			}
+			.send_btn {
+				padding: 0 40px;
+			}
+			.pic {
+				padding-top: 10px;
+			}
+			.icon{
+				font-size: 30px;
+				color: #D9D9D9;
+			}
+			.add-img {
+				width: 40px;
+				height: 40px;
+				border: 2px solid #D9D9D9;
+				background-color: #FFF;
+				float: right;
+			}
+			.img-frm,
+			.img{
+				width: 40px;
+				height: 40px;
+				background-size: cover;
+				background-repeat: no-repeat;
+				background-position: center;
+			}
+			.img-frm{
+				background-image: url(../../image/avatar.jpg);
+			}
+			.close {
+				color: #FE5F99;
+				border: 1px solid #FE5F99;
+				border-radius: 50%;
+				position: absolute;
+				top: -4px;
+				right: -5px;
+				background-color: #fff;
+				font-size: 12px;
+				z-index: 1;
+			}
+			.col-3 {
+				margin: 15px 0 0 0;
+			}
+			.upload-status {
+				background-color: rgba(0,0,0,0.4);
+			}
+			.status {
+				color: #fff;
+				font-size: 11px;
+			}
+			.add_btn{
+				float: right;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+				<div class="pd20">
+					<div class="content">
+						<textarea name="content" type="text" placeholder="请输入举报理由，我们会尽快处理，谢谢您的支持"></textarea>
+						<div class="pic row ">
+							<!--<div class="col-3 pl flex-box flex-h-zhu">
+								<div class="img-frm"  style="position: relative;">
+									<span class="close ct-icon-close" style=""></span>
+									<div class="img"></div>
+									<div class="upload-status flex-box">
+										<div class="flex-1 status" onclick="">
+											正在上传
+										</div>
+									</div>
+								</div>
+							</div>-->
+							<div class=" flex-box flex-h-zhu col-3 add_btn"  onclick="addPic()" tapmode="">
+								<div class="add-img flex-box flex-h-zhu ">
+									<span class=" icon" >+</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="pd10">
+					<div class="content flex-box" style="padding: 15px;">
+						<div style="padding-right: 20px;">联系方式</div>
+						<div class="flex-1">
+							<input type="text" name="tel" placeholder="邮箱/手机号码，可不填"/>
+						</div>
+					</div>
+				</div>
+				<div class="pd10">
+					<div class="content flex-box" style="padding: 15px;">
+						<div style="padding-right: 20px;">违规主播ID</div>
+						<div class="flex-1">
+							<input type="text" name="mid" placeholder="必填"/>
+						</div>
+					</div>
+				</div>
+				<div class="pd20">
+					<div class="send_btn text-center">
+						<div onclick="report()" tapmode>发送</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/upload.js" ></script>
+	<script type="text/template" template="main">
+		<div class="col-3 pl flex-box flex-h-zhu" data-callbackEvent="{{= it.callbackEvent }}" data-status="ready" data-key="">
+			<div class="img-frm"  style="position: relative;">
+				<span class="close ct-icon-close" style="" onclick="delimg(this,event)" tapmode=""></span>
+				<div class="img" style="margin-top:0px;background-image: url({{= api.systemType == 'ios' ? it.thumbPath : it.path }}); "></div>
+				<div class="upload-status flex-box">
+					<div class="flex-1 status" onclick="">
+						正在上传
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+	<script type="text/javascript">
+		var isUpload = 'false';//是否正在上传图片
+		var files = [];//上传图片的数组
+		var uploadImgArr = [];//需要上传的网络地址
+		
+		//添加图片
+		function addPic() {
+			var picLen = $api.domAll('.pl').length;
+			Tool.getSomePic({
+				max : 1 - picLen,
+				success:function(args){
+					if(/^wifi$/i.test(api.connectionType)){
+						args.list.forEach(function(value,index,arr){
+							value.callbackEvent = new Date().getTime() + index;
+							var args = {
+								url : value.path,
+								callbackEvent: value.callbackEvent
+							};
+							files.push(args);
+							
+//							T.prepend('.add_btn','main',value);
+							
+							$api.before($api.dom('.pic .add_btn'), doT.template($api.html($api.dom('[template=main]')))(value));
+							if($api.domAll('.pl').length == 1){
+								$api.addCls($api.dom('.add_btn'),'hidden');
+							}
+						});
+						if(isUpload == 'false'){
+							Upload.init({
+							 	files: files,
+							 	callbackEvent: 'allUpload'
+							 });
+							isUpload = true;
+							files = [];//上传图片后重置图片数组
+						}
+					}else{
+						api.confirm({
+							title: '温馨提示',
+							msg: '建议在wifi网络下进行上传操作。您当前的网络环境是：' + api.connectionType,
+							buttons: ['取消', '继续上传']
+						},function(ret,err){
+							if(ret.buttonIndex == 2){
+								args.list.forEach(function(value,index,arr){
+									value.callbackEvent = new Date().getTime() + index;
+									var args = {
+										url: value.path,
+										callbackEvent: value.callbackEvent
+									};
+									files.push(args);
+//									T.prepend('.add_btn','main',value);
+									if($api.domAll('.pl').length == 1){
+										$api.addCls($api.dom('.add_btn'),'hidden');
+									}
+									$api.before($api.dom('.pic .add_btn'), doT.template($api.html($api.dom('[template=main]')))(value));
+								});
+								if(isUpload == 'false'){
+									Upload.init({
+									 	files: files,
+									 	callbackEvent: 'allUpload'
+									 });
+									isUpload = true;
+									files = [];
+								}
+							}
+						});
+					}
+				}
+			});
+		}
+		
+		//删除图片
+		function delimg(_this,event){
+			event.stopPropagation();
+			api.confirm({
+				title: '提示消息',
+				msg: '确定要删除图片吗？',
+				buttons: ['取消','确定']
+			},function(ret,err){
+				if(ret.buttonIndex == 2){
+					var parent;
+					parent = $api.closest(_this,'.pl');
+					$api.remove(parent);
+					var ul = $api.dom('.pic'),
+							li = $api.domAll(ul,'.pl');
+					if(li.length < 1){
+						$api.removeCls($api.dom('.add-img'),'hidden');
+					}
+				}
+			})
+		}
+	
+		//重新上传其中一张上传失败的图片
+		function UploadAgain(path, callbackEvent) {
+			var args = {
+				url: path,
+				callbackEvent: callbackEvent
+			};
+			files.push(args);
+			if(isUpload == 'false') {
+				Upload.init({
+					files: files,
+					callbackEvent: 'allUpload'
+				});
+				isUpload = true;
+				files = [];//上传图片后重置图片数组
+			}
+		}
+		
+		
+		//举报
+		function report(){
+			var content = $api.val($api.dom('[name=content]')),
+					email = $api.val($api.dom('[name=tel]')),
+					mid = $api.val($api.dom('[name=mid]')),
+					imgArr,
+					imgDom = $api.dom('.pl');
+			if($api.attr(imgDom,'data-key')){
+				imgArr = $api.attr(imgDom,'data-key');
+			}
+			if(!content){
+				Tool.toast('请填写您的举报理由~');
+				return;
+			}
+			if($api.dom('[data-status="ready"]') || $api.dom('[data-status="uploading"]') || $api.dom('[data-status="error"]')){
+				Tool.toast('存在上传中或者上传失败的图片，请等待上传完成或取消上传失败图片');
+				return;
+			}
+			var values = {
+				id: $api.getStorage(CONFIG.memberId),
+				token: $api.getStorage(CONFIG.token),
+				memberid: mid,
+				content: content,
+				img: imgArr,
+				email: email
+			}
+			//Tool.toast('已举报,感谢您的支持~');
+			//alert(JSON.stringify(values.img));
+			//console.log("ret: " +JSON.stringify(values.img));
+			
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'report',
+				data: {
+					values: values
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: {
+					title: '上传中...'
+				},
+				success: function(ct) {
+					Tool.toast('已举报,感谢您的支持~');
+					setTimeout(function(){
+						api.closeWin();
+					},700);
+				}
+			});
+			
+		}
+	
+		apiready = function(){
+			if(api.systemType == 'ios'){
+				$api.css($api.dom('.icon'),'margin-Top:-3px');
+			}
+			//监听添加的图片已经上传完
+			api.addEventListener({
+				name: 'allUpload'
+			}, function(ret, err) {
+				if(files && files.length != 0) {
+					isUpload = 'true';
+					Upload.init({
+						url: url,
+						files: files,
+						callbackEvent: 'allUpload'
+					});
+					files = [];//重置等待上传图片数组
+				}else {
+					isUpload = 'false';
+					files = [];
+				}
+			});
+		}
+	</script>
+</html>

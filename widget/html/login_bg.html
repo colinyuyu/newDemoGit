@@ -1,0 +1,92 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>选择登录方式</title>
+		<link rel="stylesheet" type="text/css" href="../css/ct.css"/>
+		<style type="text/css">
+			#main {
+				z-index: 1;
+				/*background-color: rgba(0,0,0,0.5);*/
+			}
+			.title {
+				letter-spacing: 3px;
+				color: #fff;
+			}
+			.tel > span {
+				color: #B9B8B5;
+				border-bottom: 1px solid #B9B8B5;
+			}
+			.other {
+				padding: 80px 0 40px 0;
+			}
+			.other > div {
+				color: #B9B8B5;
+			}
+			.ct-icon-wechat,
+			.ct-icon-qq,
+			.ct-icon-weibo{
+				font-size: 45px;
+				color: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main" class="flex-box-v flex-h-zhu" >
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../script/common.js" ></script>
+	<script type="text/javascript" src="../script/crypto-js.js" ></script>
+	<script type="text/javascript" src="../script/videoPlayer.js" ></script>
+	<script type="text/javascript">
+		//打开登录、注册页面
+		function openLogin(){
+			api.openWin({
+				name: "login",
+				url: api.wgtRootDir + '/zhibo/html/window/login_win.html',
+				pageParam:{
+					headerTitle: "登录",
+					frameName: "login",
+					frameUrl: api.wgtRootDir + '/zhibo/html/login.html'
+				}
+			})
+		}
+		
+		
+		function video(){
+			var videoPlayer = api.require('videoPlayer');
+			videoPlayer.open({
+				fixedOn: 'login_bg',
+				rect: {
+					x: 0,
+					y: 20,
+					h: api.frameHeight
+				},
+		    path: 'fs://res/moive_bg.mp4'
+			}, function(ret, err) {
+				api.openFrame({
+					name : 'login_type',
+					url : api.wgtRootDir + '/zhibo/html/login_type.html',
+					bounces : false
+				});
+//		    if (ret.status) {
+//		        alert(JSON.stringify(ret));
+//		    } else {
+//		        alert(JSON.stringify(err));
+//		    }
+			});
+		}
+		
+		
+		
+		apiready = function(){
+//			video();
+		}
+	</script>
+</html>

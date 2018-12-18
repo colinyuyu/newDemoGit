@@ -1,0 +1,327 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>最热列表</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<link href="../../css/style.css" rel="stylesheet" type="text/css">
+	</head>
+	<style>
+		h3 {
+			margin-top: 0px;
+		}
+		section {
+			padding-bottom: 60px;
+		}
+		.img-frm, .img {
+			background-image: url(../../image/avatar.jpg);
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			border-radius: 50%;
+		}
+		/*直播列表*/
+		.info {
+			background-color: #fff;
+			padding: 5px;
+		}
+		.info .img-frm, .info .img {
+			width: 35px;
+			height: 35px;
+		}
+		.name {
+			font-size: 12px;
+		}
+		.ct-icon-location {
+			padding-top: 3px;
+			font-size: 14px;
+			color: #909090;
+		}
+		.ct-icon-location > span {
+			font-size: 12px;
+			padding-left: 5px;
+			color: inherit;
+		}
+		.num {
+			position: relative;
+			top: 2px;
+			font-size: 18px;
+			padding-right: 2px;
+			color: #FE5F99;
+			
+		}
+		.text-right {
+			font-size: 11px;
+			padding-right: 5px;
+			color: #909090;
+		}
+		.cover {
+			height: 250px;
+			background-image: url(../../image/live.png);
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			position: relative;
+		}
+		.live {
+			position: absolute;
+			right: 10px;
+			top: 10px;
+			font-size: 12px;
+			padding: 5px 10px;
+			border-radius: 20px;
+			color: #fff;
+			background-color: rgba(0,0,0,0.2);
+		}
+		.live1 {
+			position: absolute;
+			right: 10px;
+			top: 40px;
+			font-size: 12px;
+			padding: 5px 10px;
+			border-radius: 20px;
+			color: #fff;
+			background-color: rgba(0,0,0,0.2);
+		}
+		.live2 {
+			position: absolute;
+			right: 10px;
+			top: 70px;
+			font-size: 12px;
+			padding: 5px 10px;
+			border-radius: 20px;
+			color: #fff;
+			background-color: rgba(0,0,0,0.2);
+		}
+		#footer {
+			position: fixed;
+			bottom: 0;
+		}
+		.null .null_img {
+			background-image: url(../../image/null_hot.png);
+			background-size: contain;
+			background-position: center;
+			background-repeat: no-repeat;
+			width: 100%;
+			height: 150px;
+			margin: 0 auto;
+		}
+	</style>
+	<body>
+		<div id="wrap">
+			<div id="main"></div>
+		</div>
+		
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/audience.js" ></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript" src="../../script/jquery.lazyload.min.js" ></script>
+	<script type="text/template" template="main">
+		<!--
+		<div class="live_list" roomid="111111">
+		<div class="info flex-box" onclick="openProfile('6469')" tapmode="">
+		<div class="img-frm">
+		<div class="img" data-original="{{= Tool.imageCompressByQiNiu('http://ojaewa2ze.bkt.clouddn.com/pckhmj1iadd0s017bi0m9f9oc4',0,200,200)}}"></div>
+		</div>
+		<div class="flex-1" style="padding-left: 8px;">
+		<div class="name">据说好名字有朋友</div>
+		<div class="flex-box">
+		<div class="ct-icon-location flex-box flex-h-ce">
+		<span>温州</span>
+		</div>
+		<div class="flex-1 text-right"><span class="num">3</span>人在看</div>
+		</div>
+		</div>
+		</div>
+		<div class="cover" style="background-image: url({{= Tool.imageCompressByQiNiu('http://ojaewa2ze.bkt.clouddn.com/pckhmj1iadd0s017bi0m9f9oc4',0,200,200)}});" onclick="Audience.openLive('281717','6469','222222','{{= Tool.imageCompressByQiNiu('http://ojaewa2ze.bkt.clouddn.com/pckhmj1iadd0s017bi0m9f9oc4',0,200,200)}}','0','1')" tapmode>
+		<div class="live">直播中</div>
+		</div>
+		</div>
+		-->
+		{{? it.roomlist instanceof Array && it.roomlist.length != 0}}
+		{{~ it.roomlist:value:index}}
+		<div class="live_list" roomid="{{= value.id}}">
+		<div class="info flex-box" onclick="openProfile('{{=value.memberid}}')" tapmode="">
+		<div class="img-frm">
+		<div class="img" data-original="{{= Tool.imageCompressByQiNiu(value.avatar,0,200,200)}}"></div>
+		</div>
+		<div class="flex-1" style="padding-left: 8px;">
+		<div class="name">{{= value.nickname }}</div>
+		<div class="flex-box">
+		<div class="ct-icon-location flex-box flex-h-ce">
+		<span>{{= value.cityname }}</span>
+		</div>
+		<div class="flex-1 text-right"><span class="num">{{= value.online}}</span>人在看</div>
+		</div>
+		</div>
+		</div>
+		<!--主播昵称写入 -->
+		{{? $api.setStorage('room'+value.memberid, value.nickname) }}
+		{{?}}
+		<div class="cover" style="background-image: url({{= Tool.imageCompressByQiNiu(value.avatar,0,600,600)}});" onclick="Audience.openLive('{{= value.id}}','{{= value.memberid }}','{{= it.password}}','{{= Tool.imageCompressByQiNiu(value.avatar,0,200,200)}}','{{= value.secretState}}','{{= value.iosreview}}','{{= value.videoURL}}')" tapmode>
+		{{? value.secretPassword !='0'||value.secretDiamond !='0' }}
+		<div class="live">私密收费:{{= value.secretDiamond }}钻石</div>
+		{{?}}
+		{{? value.timePrice !='0' }}
+		<div class="live1">时间收费:{{= value.timePrice }}钻石/分钟</div>
+		{{?}}
+		{{? value.needvip !='0' }}
+		<div class="live2">VIP房间</div>
+		{{?}}
+		</div>
+		</div>
+		{{~}}
+		{{??}}
+		<div class="null flex-box">
+		<div class="flex-1">
+		<div class="null_img"></div>
+		</div>
+		</div>
+		{{?}}
+	</script>
+	<script type="text/javascript">
+		var sex = 0, cityid = 0;
+		var args = {
+			//			ctrl: 'zhiboApp',
+			//			fn: 'hotlist',
+			ctrl : 'zhiboApp',
+			fn : 'hotlist',
+			countSelector : '#main > div',
+			values : {
+				id : $api.getStorage(CONFIG.memberId),
+				token : $api.getStorage(CONFIG.token),
+				sex : sex,
+				city : cityid
+			},
+			template : 'main',
+			success : function() {
+				$('div.img').lazyload({
+					effect : "fadeIn"
+				});
+			}
+		}
+		//判断 是否被主播拉黑
+		function isblack(rid, mid, pwd, avatar) {
+			ajax.get({
+				ctrl : 'zhiboApp',
+				fn : 'isblack',
+				data : {
+					values : {
+						id : $api.getStorage(CONFIG.memberId),
+						token : $api.getStorage(CONFIG.token),
+						memberid : mid
+					}
+				},
+				hideLoading : true,
+				showError : false,
+				showProgress : false,
+				success : function(ct) {
+					if (ct.status == 1) {
+						Tool.toast('您已被主播拉黑,不能进入TA的直播房间~');
+					} else {
+						openLive(rid, mid, pwd, avatar);
+					}
+				}
+			});
+		}
+
+		//获取最热列表
+		function hotList() {
+			ajax.get({
+				ctrl : 'zhiboApp',
+				fn : 'hotlist',
+				data : {
+					values : {
+						id : $api.getStorage(CONFIG.memberId),
+						token : $api.getStorage(CONFIG.token),
+						sex : sex,
+						city : cityid
+					}
+				},
+				hideLoading : false,
+				showError : false,
+				showProgress : false,
+				_403 : function() {
+				},
+				success : function(ct) {
+			
+					$api.setStorage('dmprice', ct.dmprice || 0);
+					$api.setStorage('notice', ct.notice || 0);
+					//写入弹幕价格缓存
+					T.html('#main', 'main', ct);
+					$('div.img').lazyload({
+						effect : "fadeIn"
+					});
+				}
+			});
+		}
+
+		
+
+		apiready = function() {
+			
+			openCircle();
+			api.bringFrameToFront({
+				from : 'circle'
+			});
+			hotList();
+//			api.addEventListener({
+//				name : 'closeLive'
+//			}, function() {
+//				api.refreshHeaderLoading();
+//				window.scrollTo(0, $api.dom('body').scrollHeight);
+//			}) 关闭直播自动到顶部了
+			Refresh.init(args);
+			LoadMore.init({
+				ctrl : 'zhiboApp',
+				fn : 'hotlist',
+				countSelector : '#main > div',
+				values : {
+					id : $api.getStorage(CONFIG.memberId),
+					token : $api.getStorage(CONFIG.token),
+					sex : sex,
+					city : cityid
+				},
+				template : 'main',
+			}, function(ct, page) {
+				$('div.img').slice((page - 1) * 10).lazyload({
+					effect : "fadeIn"
+				});
+			});
+			//监听筛选 最热列表
+			api.addEventListener({
+				name : 'screen'
+			}, function(ret) {
+				if (ret && ret.value) {
+					sex = ret.value.sex;
+					cityid = ret.value.cityid;
+					args.values.sex = ret.value.sex;
+					args.values.city = ret.value.cityid;
+					hotList();
+				}
+			});
+			//监听主播关闭 直播
+			api.addEventListener({
+				name : 'live_list_init'
+			}, function(ret) {
+				var roomidDomAll = $api.domAll('[roomid]'), roomidDom = $api.dom('[roomid="' + ret.value.roomid + '"]');
+				if (roomidDomAll.length > 1) {
+					$api.remove(roomidDom);
+				} else {
+					$api.remove(roomidDom);
+					api.refreshHeaderLoading();
+				}
+			});
+			api.addEventListener({
+				name : 'init_hot'
+			}, function() {
+				api.refreshHeaderLoading();
+			});
+		}
+	</script>
+</html>

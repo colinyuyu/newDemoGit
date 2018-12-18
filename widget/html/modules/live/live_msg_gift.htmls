@@ -1,0 +1,26 @@
+<div class="list" onclick="Anchor.getAudience({{= it.extra.memberid}})" tapmode="">
+	<span class="level" style="display: inline-block;background-image: url(../../image/level/rank_{{= it.extra.level}}.png);"></span>
+	<span class="title">{{= it.extra.nickname}}：</span>
+	<span class="blue pink">我送了主播({{= it.extra.shouid}})
+	
+	{{? it.extra.beishu>0}}}
+	{{= it.extra.shuliang}}
+	{{??}}
+	一
+	{{?}}
+	个{{= it.extra.name}}</spam>
+	{{? it.extra.beishu>0}}
+	
+	<span class="blue pink">中了</span>
+	<span class="blue pink" style="font-size: 1.2em;color:#d73879">{{= it.extra.beishu}}倍大奖</span>
+	<span class="blue pink">,共获得</span>
+	<span class="blue pink" style="font-size: 1.2em;color:#d73879">{{= it.extra.moneyyy}}钻石</span>
+	
+	
+	
+	
+	{{?}}
+	
+</div>
+
+<!--小吴 礼物  别人页！!-->

@@ -1,0 +1,24 @@
+
+<div class="gift_item flex-box flex-h-ce" id="gift{{= it.memberid}}_{{= it.giftid}}">
+{{? it.songuid!=$api.getStorage(CONFIG.memberInfo).id}}  <!--幸运礼物为了不多次显示自己-->
+	<div class="flex-box flex-h-ce">
+		<div class="img-frm">
+			<div class="img" style="background-image: url({{= Tool.imageCompressByQiNiu(it.avatar,0,200,200)}});"></div>
+		</div>
+		<div class="pd10">
+			<div class="name">{{= it.nickname}}</div>
+			<div class="content">送了主播({{= it.shouid}})一个{{= it.name}}</div>
+		</div>
+		<div class="gift_img flex-1">
+		<!--礼物图片缓存读礼物 数字相加-->
+			<div class="img " style="background-image: url({{= $api.getStorage('giftid'+it.giftid)||it.img}});background-size: contain;background-repeat: no-repeat;"></div>
+		</div>
+	</div>
+	<div class="num flex-box flex-h-ce"><span class="ct-icon-close"></span><span class="gift_num">{{? it.beishu>0}}
+	{{= it.shuliang}}
+	{{??}}
+	1
+	{{?}}</span></div>
+	{{?}}
+</div>
+

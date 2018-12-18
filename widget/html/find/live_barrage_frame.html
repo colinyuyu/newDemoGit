@@ -1,0 +1,1330 @@
+<!doctype html>
+<html >
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no">
+		<title>观看直播有弹幕</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/barrager.css" />
+		<style type="text/css">
+			html,
+			body,
+			#wrap,
+			#main{
+				background-color: transparent;
+			}
+			
+			#wrap {
+				position: relative;
+				background-color: transparent;
+			}
+			
+			#main {
+				/*background-color: rgba(0,0,0,0.25);*/
+				padding: 25px 10px;
+				font-size: 14px;
+			}
+			
+			.img-frm,
+			.img {
+				background-image: url(../../image/avatar.jpg);
+				background-size: cover;
+				background-position: center;
+				background-repeat: no-repeat;
+				border-radius: 50%;
+				width: 36px;
+				height: 36px;
+			}
+			.gift_img>.img{
+				background-size: cover;
+				background-position: center;
+				background-repeat: no-repeat;
+				border-radius: 0;
+				width: 36px;
+				height: 36px;
+			}
+			/* 头部 直播  */
+			
+			.zhubo {
+				min-width: 150px;
+				border-radius: 25px;
+				background-color: rgba(0, 0, 0, 0.2);
+				padding: 3px;
+			}
+			
+			.pd8 {
+				padding: 0 8px 0 10px;
+			}
+			
+			.pd8> div {
+				font-size: 12px;
+				color: #fff;
+			}
+			
+			.follow {
+				padding: 0 8px;
+			}
+			
+			.follow> span {
+				text-align: center;
+				width: 52px;
+				font-size: 12px;
+				padding: 5px 8px;
+				background-color: #FFDE3F;
+				border-radius: 20px;
+			}
+			
+			.fans_list {
+				overflow-x: auto;
+				padding-left: 10px;
+			}
+			
+			.fans {
+				padding-right: 5px;
+				min-width: 40px;
+			}
+			
+			.fans:last-child {
+				padding: 0;
+			}
+			
+			.charm {
+				padding-top: 10px;
+			}
+			
+			.charm> div {
+				/*font-size: 14px;*/
+				color: #fff;
+				padding: 8px 15px;
+				border-radius: 20px;
+				background-color: rgba(0, 0, 0, 0.2);
+				letter-spacing: 1px;
+			}
+			
+			.ct-icon-arrow-right {
+				font-size: 18px;
+				color: #fff;
+				padding-left: 5px;
+			}
+			/* 底部按钮 */
+			
+			.chat,
+			.msg,
+			.gift,
+			.share,
+			.close {
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				width: 45px;
+				height: 45px;
+			}
+			
+			.chat {
+				background-image: url(../../image/room-down-publicchat.png);
+			}
+			
+			.msg {
+				background-image: url(../../image/room-down-privatechat.png);
+			}
+			
+			.gift {
+				background-image: url(../../image/room-down-gift.png);
+			}
+			
+			.share {
+				background-image: url(../../image/room-down-share.png);
+			}
+			
+			.close {
+				background-image: url(../../image/room-down-close.png);
+			}
+			
+			.bottom_btn {
+				position: absolute;
+				bottom: 10px;
+				width: 100%;
+			}
+			/*弹幕*/
+			
+			.barrage_list_box {
+				position: relative;
+				margin-bottom: 56px;
+			}
+			
+			.live_gift {
+				position: absolute;
+				font-size: 12px;
+				max-width: 220px;
+				width: 220px;
+				bottom: 56px;
+				/*overflow: hidden;*/
+			}
+			
+			.gift_item {
+				position: relative;
+				border-radius: 20px;
+				padding: 3px;
+				background-color: rgba(0, 0, 0, 0.2);
+				margin-bottom: 10px;
+				z-index: 999;
+			}
+			
+			.gift_item:last-child {
+				margin-bottom: 0;
+			}
+			
+			.pd10 {
+				padding-left: 10px;
+			}
+			
+			.name {
+				color: #fff;
+			}
+			
+			.content {
+				padding-top: 3px;
+				color: #FFDE3F;
+			}
+			
+			.gift_img {
+				position: absolute;
+				right: 0;
+			}
+			
+			.num {
+				color: #FFDE3F;
+				font-size: 25px;
+				position: absolute;
+				right: -80px;
+				top: 3px;
+				width: 75px;
+			}
+			
+			.num .gift_num {
+				color: #FFDE3F;
+			}
+			/*底部消息*/
+			
+			.live_msg {
+				width: 250px;
+				position: relative;
+				bottom: 40px;
+				height: 120px;
+				overflow-y: auto;
+				text-shadow: 1px 1px 1px #9E918A;
+			}
+			
+			.live_msg> div> span {
+				display: inline;
+			}
+			
+			.live_msg .title {
+				color: #ffd942;
+			}
+			
+			.live_msg> div {
+				color: #ffd942;
+				padding-bottom: 5px;
+			}
+			
+			.live_msg> div:last-child {
+				padding: 0;
+			}
+			
+			.ct-icon-close {
+				font-size: 14px;
+				font-weight: bold;
+				color: #FFDE3F;
+			}
+			
+			.level {
+				width: 36px;
+				height: 16px;
+				min-width: 36px;
+				background-image: url(../../image/level/rank_1.png);
+				background-size: contain;
+				background-position: center;
+				background-repeat: no-repeat;
+				top: 3px;
+				position: relative;
+			}
+			/* 系统消息 */
+			
+			.blue {
+				color: #ffd942;
+				line-height: 20px;
+			}
+			/* 道具消息 */
+			
+			.pink {
+				color: #37d0b1;
+				line-height: 20px;
+			}
+			/* 用户消息 */
+			
+			.white {
+				color: #fff;
+				line-height: 20px;
+			}
+			/* 发送消息 */
+			
+			.msg-barrage-off,
+			.msg-barrage-on {
+				background-image: url(../../image/message-barrage-off.png);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				width: 55px;
+				height: 30px;
+			}
+			
+			.msg-barrage-on {
+				background-image: url(../../image/message-barrage-on.png);
+			}
+			/* 聊天 */
+			
+			.talk {
+				background-color: #fff;
+				padding: 10px;
+			}
+			
+			.talk input {
+				width: 100%;
+				font-size: 12px;
+			}
+			
+			.send {
+				padding-right: 10px;
+			}
+			
+			.send> div {
+				color: #FE5F99;
+			}
+			/* 礼物  */
+			
+			.swipe-wrap .img {
+				background-image: url(../../image/logo.png);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				width: 60px;
+				height: 60px;
+			}
+			
+			.gift_wrap {
+				background-color: rgba(0, 0, 0, 0.2);
+			}
+			
+			.gift_wrap> div {
+				padding: 10px 0;
+				border-right: 1px solid #909090;
+			}
+			
+			.gift_wrap> div:last-child {
+				border: 0;
+			}
+			
+			.gift_wrap .img {
+				background-image: url(../../image/logo.png);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: contain;
+				width: 40px;
+				height: 40px;
+				border-radius: 0;
+			}
+			
+			.price {
+				padding: 5px 0;
+			}
+			
+			.price> span {
+				color: #FE5F99;
+			}
+			
+			.diamond {
+				background-image: url(../../image/diamond.png);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				width: 13px;
+				height: 10px;
+				margin-left: 5px;
+			}
+			
+			.xp {
+				color: #D9D9D9;
+				font-size: 10px;
+			}
+			
+			.xp> span {
+				color: #D9D9D9;
+			}
+			/*.gift_wrap > div:not(:first-child){
+				border-top: 1px solid #DCDCDC;
+			}
+			.gift_wrap > div.border_bottom {
+				border-bottom: 1px solid #EDEDED;
+			}*/
+			
+			.recharge {
+				font-size: 14px;
+				padding: 10px;
+				background-color: rgba(0, 0, 0, 0.25);
+				position: relative;
+			}
+			
+			.recharge> div> div,
+			.recharge> div> div>span {
+				color: #FE5F99;
+			}
+			
+			.recharge .ct-icon-arrow-right {
+				color: #FE5F99;
+				font-size: 14px;
+				padding-left: 3px;
+			}
+			
+			.list {
+				position: relative;
+			}
+			
+			.recharge .send {
+				color: #313131;
+				background-color: #FFDE3F;
+				padding: 5px 15px;
+				border-radius: 20px;
+			}
+			
+			.ct-icon-select-yes {
+				position: absolute;
+				top: 5px;
+				right: 9px;
+			}
+			
+			.ct-icon-select-yes .path2::before {
+				color: rgba(0, 0, 0, 0.2);
+			}
+			/* 连送 */
+			
+			.recharge .liansong {
+				color: #313131;
+				background-color: #FFDE3F;
+				position: absolute;
+				right: -8px;
+				top: -13px;
+				border-radius: 50%;
+				width: 55px;
+				height: 55px;
+			}
+			
+			.liansong> div {
+				color: #313131;
+			}
+			
+			.gift_box {
+				overflow: hidden;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="wrap">
+			<div id="main" class="hidden flex-box-v">
+				<!-- 顶部 -->
+				<div class="live_top">
+					<div class="flex-box flex-h-ce">
+						<div class="zhubo flex-box flex-h-ce">
+							<div class="flex-box flex-h-ce" onclick="openFrame('anchor','component','anchor','','fade')" tapmode="">
+								<div class="img-frm">
+									<div class="img"></div>
+								</div>
+								<div class="flex-1 pd8">
+									<div>2直播</div>
+									<div>15611</div>
+								</div>
+							</div>
+							<div class="follow" onclick="follow(this)" tapmode=""><span>关注</span></div>
+						</div>
+						<div id="fans_list" class="fans_list flex-1 flex-box">
+							<div class="fans" onclick="openFrame('fans','component','anchor','','fade')" tapmode="">
+								<div class="img-frm">
+									<div class="img"></div>
+								</div>
+							</div>
+							<div class="fans">
+								<div class="img-frm">
+									<div class="img"></div>
+								</div>
+							</div>
+							<div class="fans">
+								<div class="img-frm">
+									<div class="img"></div>
+								</div>
+							</div>
+							<div class="fans">
+								<div class="img-frm">
+									<div class="img"></div>
+								</div>
+							</div>
+							<div class="fans">
+								<div class="img-frm">
+									<div class="img"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="charm flex-box ">
+						<div class="flex-h-ce flex-box" onclick="openWin('win','charm','魅力贡献榜','find','charm')" tapmode="">魅力: <span style="color: inherit;">0</span><span class="ct-icon-arrow-right"></span></div>
+					</div>
+				</div>
+				<!-- 道具栏 -->
+				<div class="barrage_list_box flex-1" id="barrage_list_box">
+					<div class="live_gift">
+						<div class="gift_item flex-box flex-h-ce">
+							<div class="img-frm">
+								<div class="img"></div>
+							</div>
+							<div class="pd10">
+								<div class="name">哈哈哈</div>
+								<div class="content">送了一个戒指</div>
+							</div>
+							<div class="gift_img flex-1">
+								<div class="img "></div>
+								<div class="num"><span class="ct-icon-close"></span>1000</div>
+							</div>
+						</div>
+						<div class="gift_item flex-box flex-h-ce">
+							<div class="img-frm">
+								<div class="img"></div>
+							</div>
+							<div class="pd10">
+								<div class="name">哈哈哈</div>
+								<div class="content">送了一个戒指</div>
+							</div>
+							<div class="gift_img flex-1">
+								<div class="img "></div>
+								<div class="num"><span class="ct-icon-close"></span>1000</div>
+							</div>
+						</div>
+						<div id="gift9_10" class="gift_item flex-box flex-h-ce">
+							<div class="img-frm">
+								<div class="img"></div>
+							</div>
+							<div class="pd10">
+								<div class="name">哈哈哈</div>
+								<div class="content">送了一个戒指</div>
+							</div>
+							<div class="gift_img flex-1">
+								<div class="img "></div>
+								<div class="num"><span class="ct-icon-close"></span><span class="gift_num">1</span></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 消息栏 -->
+				<div class="live_msg">
+					<div class="list">
+						<span class="title">直播消息：</span>
+						<span class="blue">我们提倡绿色直播，封面和直播内容含吸烟、低俗、引诱暴露</span>
+					</div>
+					<div class="list">
+						<span>
+							<span class="level" style="display: inline-block;"></span>
+						<span class="title">嘿嘿嘿：</span>
+						</span>
+						<span class="blue pink">我送了一个钻石戒指</span>
+					</div>
+					<div class="list">
+						<span class="level" style="display: inline-block;"></span>
+						<span class="title">嘿嘿嘿：</span>
+						<span class="blue pink">我送了一个钻石戒指</span>
+					</div>
+					<div class="list">
+						<span class="level" style="display: inline-block;"></span>
+						<span class="title">嘿嘿嘿：</span>
+						<span class="pink">我送了一个钻石戒指</span>
+					</div>
+					<div class="list">
+						<span class="level" style="display: inline-block;"></span>
+						<span class="title">嘿嘿嘿：</span>
+						<span class="white">我送了一个钻石戒指钻石戒指</span>
+					</div>
+				</div>
+			</div>
+			<!-- 底部按钮 -->
+			<div id="footer" class="bottom_btn hidden">
+				<div class="flex-box tools" style="padding: 0 10px;">
+					<div class="flex-1">
+						<div class="chat" onclick="chat()" tapmode=""></div>
+					</div>
+					<div class="flex-box flex-2">
+						<div class="flex-1">
+							<div class="msg" onclick="openWin('msg','msg','消息','msg','msg')" tapmode=""></div>
+						</div>
+						<div class="flex-1">
+							<div class="gift" onclick="gift()" tapmode=""></div>
+						</div>
+						<div class="flex-1">
+							<div class="share" onclick="share()" tapmode=""></div>
+						</div>
+						<div class="flex-1 ">
+							<div class="close" onclick="closeFrameGroup()" tapmode=""></div>
+						</div>
+					</div>
+				</div>
+
+				<!-- 弹幕 -->
+				<div class="flex-box flex-h-ce talk hidden">
+					<div class="msg-barrage-off"></div>
+					<div style="padding: 0 8px;">|</div>
+					<div class="flex-1">
+						<input placeholder="和大家说点什么" />
+					</div>
+					<div class="send">
+						<div>发送</div>
+					</div>
+				</div>
+
+				<!-- 礼物 充值 -->
+				<div class="gift_box hidden">
+					<!-- 礼物 -->
+					<div class="flex-box flex-h-ce gift_wrap ">
+						<div class="flex-1 flex-box-v flex-h-ce flex-h-zhu list" onclick="selectGift(this,event)" tapmode="">
+							<div class="img"></div>
+							<div class="price flex-box flex-h-ce">
+								<span>1</span>
+								<span class="diamond"></span>
+							</div>
+							<div class="xp">+<span>10</span>经验值</div>
+							<span class="ct-icon-select-yes hidden">
+             	 	<span class="path1"></span><span class="path2"></span>
+							</span>
+						</div>
+						<div class="flex-1 flex-box-v flex-h-ce flex-h-zhu list" onclick="selectGift(this,event)" tapmode="">
+							<div class="img"></div>
+							<div class="price flex-box flex-h-ce">
+								<span>1</span>
+								<span class="diamond"></span>
+							</div>
+							<div class="xp">+<span>10</span>经验值</div>
+							<span class="ct-icon-select-yes hidden">
+             	 	<span class="path1"></span><span class="path2"></span>
+							</span>
+						</div>
+						<div class="flex-1 flex-box-v flex-h-ce flex-h-zhu list" onclick="selectGift(this,event)" tapmode="">
+							<div class="img"></div>
+							<div class="price flex-box flex-h-ce">
+								<span>1</span>
+								<span class="diamond"></span>
+							</div>
+							<div class="xp">+<span>10</span>经验值</div>
+							<span class="ct-icon-select-yes hidden">
+             	 	<span class="path1"></span><span class="path2"></span>
+							</span>
+						</div>
+						<div class="flex-1 flex-box-v flex-h-ce flex-h-zhu list" onclick="selectGift(this,event)" tapmode="">
+							<div class="img"></div>
+							<div class="price flex-box flex-h-ce">
+								<span>1</span>
+								<span class="diamond"></span>
+							</div>
+							<div class="xp">+<span>10</span>经验值</div>
+							<span class="ct-icon-select-yes hidden">
+             	 	<span class="path1"></span><span class="path2"></span>
+							</span>
+						</div>
+					</div>
+					<!-- 充值 -->
+					<div class="flex-box flex-h-ce recharge ">
+						<div class="flex-1 flex-box flex-h-ce">
+							<div onclick="openWin('recharge','recharge','充值','mine','recharge')" tapmode="">
+								充值：<span>0</span>
+								<span class="diamond"></span>
+								<span class="ct-icon-arrow-right"></span>
+							</div>
+						</div>
+						<div class="send ">发送</div>
+						<div class="hidden liansong flex-box-v flex-h-ce flex-h-zhu">8
+							<div>连送</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery.lazyload.min.js"></script>
+	<script type="text/javascript" src="../../script/gotyeLive.Core.js"></script>
+	<script type="text/javascript" src="../../script/gotyeLive.Chat.js"></script>
+	<script type="text/javascript" src="../../script/gotyeLive.Player.js"></script>
+	<script type="text/javascript" src="../../script/velocity.js"></script>
+	<script type="text/javascript" src="../../script/jquery.barrager.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/touch.js"></script>
+
+	<script type="text/template" template="main">
+		<div id="main" class="flex-box-v">
+			<!-- 顶部 -->
+			<div class="live_top">
+				<div class="flex-box flex-h-ce">
+					<div class="zhubo flex-box flex-h-ce">
+						<div class="flex-box flex-h-ce" onclick="openAnchor('{{= it.roomid}}','{{= it.memberid}}')" tapmode="">
+							<div class="img-frm">
+								<div class="img" data-original="{{= Tool.imageCompressByQiNiu(it.avatar,0,200,200)}}"></div>
+							</div>
+							<div class="flex-1 pd8">
+								<div>33直播</div>
+								<div class="online_count"></div>
+							</div>
+						</div>
+						<div class="follow" onclick="concern(this,'{{= it.memberid}}')" tapmode=""><span>{{= it.attention == 1 ? '已关注': '关注'}}</span></div>
+					</div>
+					<div id="fans_list" class="fans_list flex-1 flex-box">
+					{{? it.readlist instanceof Array && it.readlist.length != 0}}
+						{{~ it.readlist :value:index}}
+						<div class="fans" id="fans{{= value.memberid}}" onclick="openAnchor('{{= it.roomid}}','{{= value.memberid }}')" tapmode="">
+							<div class="img-frm">
+								<div class="img" data-original="{{= Tool.imageCompressByQiNiu(value.avatar,0,200,200)}}"></div>
+							</div>
+						</div>
+						{{~}}
+					{{?}}
+					</div>
+				</div>
+				<div class="charm flex-box ">
+					<div class="flex-h-ce flex-box" onclick="openWin('win','live_charm','魅力贡献榜','find','charm','',{mid:'{{= it.memberid}}'})" tapmode="">魅力: <span class="live_charm" style="color: inherit;padding-left: 3px;">{{= it.charm }}</span><span class="ct-icon-arrow-right"></span></div>
+				</div>
+			</div>
+			<!-- 道具栏 -->
+			<div class="barrage_list_box flex-1" id="barrage_list_box">
+				<div class="live_gift">
+
+				</div>
+			</div>
+			<!-- 消息栏 -->
+			<div class="live_msg">
+				<div class="list">
+					<span class="title">直播消息：</span>
+					<span class="blue">{{= it.notice}}</span>
+				</div>
+			</div>
+		</div>
+		<!-- 底部按钮 -->
+		<div id="footer" class="bottom_btn">
+			<div class="flex-box tools" style="padding: 0 10px;">
+				<div class="flex-1">
+					<div class="chat" onclick="chat()" tapmode=""></div>
+				</div>
+				<div class="flex-box flex-2">
+					<div class="flex-1">
+						<div class="msg" onclick="openWin('msg','msg','消息','msg','msg')" tapmode=""></div>
+					</div>
+					<div class="flex-1">
+						<div class="gift" onclick="gift()" tapmode=""></div>
+					</div>
+					<div class="flex-1">
+						<div class="share" onclick="share('{{= it.pcurl}}','{{= it.roomname}}')" tapmode=""></div>
+					</div>
+					<div class="flex-1 ">
+						<div class="close" onclick="closeFrameGroup()" tapmode=""></div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 弹幕 -->
+			<div class="flex-box flex-h-ce talk hidden">
+				<div class="msg-barrage-off"></div>
+				<div style="padding: 0 8px;">|</div>
+				<div class="flex-1">
+					<input placeholder="和大家说点什么" />
+				</div>
+				<div class="send">
+					<div>发送</div>
+				</div>
+			</div>
+
+			<!-- 礼物 充值 -->
+			<div class="gift_box hidden">
+				<!-- 礼物 -->
+				<div class="flex-box flex-h-ce gift_wrap ">
+					<div class="flex-1 flex-box-v flex-h-ce flex-h-zhu list" onclick="selectGift(this,event)" tapmode="">
+						<div class="img"></div>
+						<div class="price flex-box flex-h-ce">
+							<span>1</span>
+							<span class="diamond"></span>
+						</div>
+						<div class="xp">+<span>10</span>经验值</div>
+						<span class="ct-icon-select-yes hidden">
+           	 	<span class="path1"></span><span class="path2"></span>
+						</span>
+					</div>
+					<div class="flex-1 flex-box-v flex-h-ce flex-h-zhu list" onclick="selectGift(this,event)" tapmode="">
+						<div class="img"></div>
+						<div class="price flex-box flex-h-ce">
+							<span>1</span>
+							<span class="diamond"></span>
+						</div>
+						<div class="xp">+<span>10</span>经验值</div>
+						<span class="ct-icon-select-yes hidden">
+           	 	<span class="path1"></span><span class="path2"></span>
+						</span>
+					</div>
+					<div class="flex-1 flex-box-v flex-h-ce flex-h-zhu list" onclick="selectGift(this,event)" tapmode="">
+						<div class="img"></div>
+						<div class="price flex-box flex-h-ce">
+							<span>1</span>
+							<span class="diamond"></span>
+						</div>
+						<div class="xp">+<span>10</span>经验值</div>
+						<span class="ct-icon-select-yes hidden">
+           	 	<span class="path1"></span><span class="path2"></span>
+						</span>
+					</div>
+					<div class="flex-1 flex-box-v flex-h-ce flex-h-zhu list" onclick="selectGift(this,event)" tapmode="">
+						<div class="img"></div>
+						<div class="price flex-box flex-h-ce">
+							<span>1</span>
+							<span class="diamond"></span>
+						</div>
+						<div class="xp">+<span>10</span>经验值</div>
+						<span class="ct-icon-select-yes hidden">
+           	 	<span class="path1"></span><span class="path2"></span>
+						</span>
+					</div>
+				</div>
+				<!-- 充值 -->
+				<div class="flex-box flex-h-ce recharge ">
+					<div class="flex-1 flex-box flex-h-ce">
+						<div onclick="openWin('recharge','recharge','充值','mine','recharge')" tapmode="">
+							充值：<span>0</span>
+							<span class="diamond"></span>
+							<span class="ct-icon-arrow-right"></span>
+						</div>
+					</div>
+					<div class="send ">发送</div>
+					<div class="hidden liansong flex-box-v flex-h-ce flex-h-zhu">8
+						<div>连送</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+
+	<script type="text/template" template="fans">
+		{{? it instanceof Array && it.length != 0}} {{~ it:value:index}}
+		<div class="fans" onclick="openAnchor('{{= it.roomid}}','{{= value.memberid }}')" tapmode="">
+			<div class="img-frm">
+				<div class="img" data-original="{{= Tool.imageCompressByQiNiu(value.avatar,0,200,200)}}"></div>
+			</div>
+		</div>
+		{{~}} {{?}}
+	</script>
+	<!--普通文字消息-->
+	<script type="text/template" template='live_msg_text'>
+		<div class="list">
+			<span onclick="openAnchor($api.getStorage('roomid'),'{{= it.extra.memberid }}')" tapmode="">
+				<span class="level" style="display: inline-block;background-image: url(../../image/level/rank_{{= it.extra.level}}.png);"></span>
+				<span class="title">{{= it.extra.nickname}}：</span>
+			</span>
+			<span class="blue white">{{=it.text}}</span>
+		</div>
+	</script>
+	<!--直播间公告-->
+	<script type="text/template" template='live_msg_notice'>
+		<div class="list">
+			<span class="title">直播消息：</span>
+			<span class="blue">{{=it.notice}}</span>
+		</div>
+	</script>
+	<!--禁言公告-->
+	<script type="text/template" template='live_msg_gag'>
+		<div class="list">
+			<span class="title">直播消息：</span>
+			<span class="blue"><span style="color: #fff;">{{=it.targetNickname}}</span> 被管理员 <span style="color: #fff;">{{= it.nickname}}</span> {{= it.type == 4 ? '解除' :''}}禁言,请珍惜发言机会，文明发言。</span>
+		</div>
+	</script>
+	<script type="text/template" template='live_msg_gift'>
+		<div class="list">
+			<span onclick="openAnchor('{{= it.extra.roomid}}','{{= it.extra.memberid }}')" tapmode="">
+				<span class="level" style="display: inline-block;background-image: url(../../image/level/rank_{{= it.extra.level}}.png);"></span>
+				<span class="title">{{= it.extra.nickname}}：</span>
+			</span>
+			<span class="blue pink">我送了一个{{= it.extra.name}}</span>
+		</div>
+	</script>
+	<!--礼物展示-->
+	<script type="text/template" template='live_gift'>
+		<div class="gift_item flex-box flex-h-ce" id="gift{{= it.memberid}}_{{= it.giftid}}">
+			<div class="img-frm">
+				<div class="img" style="background-image: url({{= Tool.imageCompressByQiNiu(it.avatar,0,200,200)}});"></div>
+			</div>
+			<div class="pd10">
+				<div class="name">{{= it.nickname}}</div>
+				<div class="content">送了一个{{= it.name}}</div>
+			</div>
+			<div class="gift_img flex-1">
+			<!--礼物图片缓存读取-->
+				<div class="img " style="background-image: url({{= $api.getStorage('giftid'+it.giftid)||it.img}});background-size: contain;background-repeat: no-repeat;"></div>
+				<div class="num"><span class="ct-icon-close"></span><span class="gift_num">1</span></div>
+			</div>
+		</div>
+	</script>
+	<!--观众模版-->
+	<script type="text/template" template='live_fans'>
+		<div class="fans" id="fans{{= it.memberid}}" onclick="openAnchor('{{= it.roomid}}','{{= it.memberid }}')" tapmode="">
+			<div class="img-frm">
+				<div class="img" style="background-image: url({{= Tool.imageCompressByQiNiu(it.avatar,0,200,200)}});"></div>
+			</div>
+		</div>
+	</script>
+	<script type="text/javascript">
+		var values = {};
+		values.id = $api.getStorage(CONFIG.memberId);
+		values.token = $api.getStorage(CONFIG.token);
+		var session = '';
+		var chatprice = 1; /*用于缓存弹幕价格*/
+		var chatstate = 0; /*用于缓存禁言状态*/
+		var giftArray = [];
+		//点击关注
+		function concern(_this, mid) {
+			var status_text = $api.text($api.dom(_this, 'span'));
+			if(status_text == '已关注') {
+				unfollow(_this, mid);
+			} else {
+				follow(_this, mid);
+			}
+		}
+
+		//取消关注
+		function unfollow(_this, aid) {
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'unfollow',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						aid: aid
+					}
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: false,
+				success: function(ct) {
+//					$api.text($api.dom(_this, 'span'), '关注');
+					api.sendEvent({
+						name: 'follow'
+					});
+				}
+			});
+		}
+
+		//关注
+		function follow(_this, mid) {
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'concern',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						memberid: mid
+					}
+				},
+				showProgress: true,
+				hideLoading: true,
+				showError: true,
+				success: function(ct) {
+//					$api.text($api.dom(_this, 'span'), '已关注');
+					api.sendEvent({
+						name: 'follow'
+					});
+				}
+			});
+		}
+
+		//获取观众列表
+		function getReadList(rid) {
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'readlist',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						roomid: rid
+					}
+				},
+				showProgress: true,
+				hideLoading: true,
+				showError: true,
+				success: function(ct) {
+					T.html('.fans_list', 'fans', ct);
+				}
+			});
+		}
+
+		//打开用户详情
+		function openAnchor(rid, mid) {
+			api.openFrame({
+				name: 'anchor',
+				url: api.wgtRootDir + '/zhibo/html/component/anchor.html',
+				pageParam: {
+					roomid: rid,
+					memberid: mid
+				},
+				animation: {
+					type: "fade",
+					subType: "from_right",
+					duration: 300
+				},
+				bgColor: 'rgba(0,0,0,0.7)'
+			})
+		}
+
+		//打开聊天
+		function chat() {
+			var main = $api.dom('#main');
+			mainPos = $api.offset(main);
+			api.openFrame({
+				name: 'talk',
+				url: api.wgtRootDir + '/zhibo/html/component/talk.html',
+				bgColor: 'transparent',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.frameHeight
+				},
+				pageParam: {
+					barragePrice: chatprice,
+					chatState: chatstate
+				}
+			})
+			$api.addCls($api.dom('.tools'), 'hidden');
+		}
+		//打开礼物
+		function gift() {
+			api.openFrame({
+				name: 'live_gift',
+				url: api.wgtRootDir + '/zhibo/html/component/live_gift.html',
+				bgColor: 'transparent',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.frameHeight
+				}
+			});
+			$api.addCls($api.dom('.tools'), 'hidden');
+			$api.css($api.dom('.live_msg'),'visibility:hidden');
+		}
+		//选择礼物
+		function selectGift(_this, event) {
+			event.stopPropagation();
+			var select_yes = $api.dom(_this, '.ct-icon-select-yes'),
+				check = $api.domAll('.check');
+			if(check.length != 0) {
+				$api.addCls(check[0], 'hidden');
+				$api.removeCls(check[0], 'check');
+			}
+			if($api.hasCls(select_yes), 'hidden') {
+				$api.removeCls(select_yes, 'hidden');
+				$api.addCls(select_yes, 'check');
+			}
+		}
+		//分享
+		function share(shareurl,roomname) {
+			api.openFrame({
+				name: 'share',
+				url: api.wgtRootDir + '/zhibo/html/component/share.html',
+				bgColor: 'transparent',
+				rect: {
+					x: 0,
+					y: 0,
+					w: 'auto',
+					h: api.frameHeight
+				},
+				pageParam:{
+					shareurl: shareurl,
+					roomname: roomname
+				}
+			});
+			$api.addCls($api.dom('.tools'), 'hidden');
+		}
+
+		//关闭直播
+		function closeFrameGroup() {
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'endlook',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						roomid: api.pageParam.roomid,
+						//						ip: param.ip
+					}
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: false,
+				success: function(ct) {
+					var memberinfo = $api.getStorage(CONFIG.memberInfo);
+					QJ.Chat.sendText({
+						text: '退出直播',
+						extra: {
+							type: 4,
+							extra: {
+								type: 2,
+								memberid: memberinfo.id,
+							}
+						}
+					});
+					api.sendEvent({
+						name: 'closeLive'
+					});
+					setTimeout(function(){
+						api.closeFrameGroup({
+							name: 'liveGroup'
+						});
+					},500);
+				}
+			});
+		}
+
+		function chatInit() {
+			QJ.Chat.init(session);
+			receiveMsgListener();
+			chatLogin();
+		}
+
+		function chatLogin() {
+			QJ.Chat.login({
+				success: function(ret) {
+					Tool.toast('登录聊天服务器成功~');
+					getRoomMemberCount();
+					var memberinfo = $api.getStorage(CONFIG.memberInfo);
+					QJ.Chat.sendText({
+						text: '观看直播',
+						extra: {
+							type: 4,
+							extra: {
+								type: 1,
+								memberid: values.id,
+								nickname: memberinfo.nickname,
+								avatar: memberinfo.avatar
+							}
+						}
+					})
+				},
+				error: function(err) {
+					Tool.toast('登录聊天服务器失败，正在尝试重连~');
+					chatLogin();
+				}
+			})
+		}
+		apiready = function() {
+			var param = api.pageParam;
+			values.roomid = param.roomid;
+			values.memberid = param.memberid;
+			$api.setStorage('roomid',param.roomid);
+			session = {
+				roomId: param.roomid,
+				password: param.pwd,
+				nickname: $api.getStorage(CONFIG.memberInfo).nickname
+			}
+			chatInit();
+			roomnews(function(ret){
+				if($api.dom('#fans_list')) {
+					touch.on($api.dom('#fans_list'), 'swipestart swiping swipeleft swipe drag dragstart touchstart touchmove', function(event) {
+						api.setFrameGroupAttr({
+					    name: 'liveGroup',
+					    scrollEnabled: false
+						});
+					});
+					touch.on($api.dom('#fans_list'), 'swipeend dragend touchend', function(event) {
+						api.setFrameGroupAttr({
+					    name: 'liveGroup',
+					    scrollEnabled: true
+						});
+					});
+				}
+			});
+			
+			//将底部工具栏显示
+			api.addEventListener({
+				name: 'bottom'
+			}, function(ret) {
+				$api.removeCls($api.dom('.tools'), 'hidden');
+				$api.css($api.dom('.live_msg'),'visibility:visible');
+			})
+
+			api.bringFrameToFront({
+				from: 'barrage',
+			});
+			api.addEventListener({
+				name: 'sendGiftOfLacal'
+			}, function(ret, err) {
+				sendGiftOfLacal(ret.value)
+			});
+			api.addEventListener({
+				name: 'pushGiftToServer'
+			}, function(ret, err) {
+				pushGiftToServer(ret.value)
+			});
+			talk_send_messageListener();
+			
+			api.addEventListener({
+				name: 'keyback'
+			},function(){
+				var memberinfo = $api.getStorage(CONFIG.memberInfo);
+				QJ.Chat.sendText({
+					text: '退出直播',
+					extra: {
+						type: 4,
+						extra: {
+							type: 2,
+							memberid: memberinfo.id,
+						}
+					}
+				});
+				QJ.Chat.logout();
+				api.sendEvent({
+					name: 'closeLive'
+				});
+				setTimeout(function(){
+					api.closeFrameGroup({
+						name: 'liveGroup'
+					});
+				},500);
+			});
+			
+			api.addEventListener({
+				name: 'quit_text'
+			},function(){
+				var memberinfo = $api.getStorage(CONFIG.memberInfo);
+				QJ.Chat.sendText({
+					text: '退出直播',
+					extra: {
+						type: 4,
+						extra: {
+							type: 2,
+							memberid: memberinfo.id,
+						}
+					}
+				});
+				QJ.Chat.logout();
+			});
+			
+			//监听 在 查看主播详情时 关注主播
+			api.addEventListener({
+				name: 'follow'
+			},function(){
+				if($api.text($api.dom('.follow > span')) == '关注'){
+					$api.text($api.dom('.follow > span'),'已关注');
+				}else{
+					$api.text($api.dom('.follow > span'),'关注');
+				}
+			})
+			
+		}
+		/*推上服务器并推送给其他客户端*/
+		function pushGiftToServer(gift){
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'sendgifts',
+				data: {
+					values: {
+						id: values.id,
+						token: values.token,
+						memberid: values.memberid,
+						roomid: values.roomid,
+						giftid: gift.giftid,
+						number: gift.number
+					}
+				},
+				showProgress: false,
+				hideLoading: true,
+				showError: true,
+				success: function(ct) {
+					var memberinfo = $api.getStorage(CONFIG.memberInfo);
+					memberinfo.diamonds = ct.diamonds;
+					$api.setStorage(CONFIG.memberInfo,memberinfo);
+					var liveCharm = $api.dom('.live_charm');
+					$api.text(liveCharm,parseInt($api.text(liveCharm))+parseInt(ct.charm));
+					
+					var extra = {
+						type: 2,
+						extra: {
+							type: 0,
+							avatar: gift.avatar,
+							nickname: gift.nickname,
+							level: memberinfo.level,
+							roomid: values.roomid,
+							name: gift.name,
+							img: $api.getStorage('giftid'+gift.id)||gift.img, //礼物图片缓存读取
+							number: gift.number,
+							charm: ct.charm,
+							memberid: gift.memberid,
+							giftid: gift.giftid
+						}
+					}
+					QJ.Chat.sendText({
+						text: '礼物',
+						extra: extra,
+						success:function(){
+						}
+					})
+				}
+			});
+		}
+		
+		/*处理本地送礼物*/
+		function sendGiftOfLacal(gift) {
+			if($api.dom('#gift' + gift.memberid + '_' + gift.giftid)) {
+				$api.text($api.dom('#gift' + gift.memberid + '_' + gift.giftid + ' .gift_num'), parseInt($api.text($api.dom('#gift' + gift.memberid + '_' + gift.giftid + ' .gift_num'))) + 1);
+				renderGiftMsg(gift);
+				clearTimeout(window['timeouter' + gift.memberid + '_' + gift.giftid]);
+				window['timeouter' + gift.memberid + '_' + gift.giftid] = setTimeout(rmGift, 5000);
+
+				function rmGift() {
+					var giftDoms = $api.domAll('.gift_item');
+					for(var i = 0; i < giftDoms.length; i++) {
+						if(giftDoms[i].id == 'gift' + gift.memberid + '_' + gift.giftid) {
+							giftArray.splice(i, 1);
+							break;
+						}
+					}
+					$api.remove($api.dom('#gift' + gift.memberid + '_' + gift.giftid));
+					if(giftArray.length > $api.domAll('.gift_item').length) {
+						showGift(1);
+					}
+				}
+			} else {
+				var flag = -1;
+				for(var i = 0; i < giftArray.length; i++) {
+					if(gift.memberid == giftArray[i].memberid && gift.giftid == giftArray[i].giftid) {
+						flag = i;
+						break;
+					}
+				}
+				if(flag != -1) {
+					renderGiftMsg(gift);
+					giftArray[flag].number += 1;
+				} else {
+					giftArray.push(gift);
+					showGift();
+				}
+			}
+		}
+		
+	</script>
+
+</html>

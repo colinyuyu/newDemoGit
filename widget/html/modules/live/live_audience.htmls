@@ -1,0 +1,51 @@
+<div class="audience">
+	<div class="flex-box" style="height: 38px;">
+		<div class="flex-1" ><span  class="report" onclick="Anchor.manage('{{= it.nickname}}')">管理</span></div>
+		<div style="padding: 10px;" onclick="Anchor.closeAudience()" tapmode="">
+			<div class="ct-icon-close" ></div>
+		</div>
+	</div>
+	<div class="info flex-box-v flex-h-ce">
+		<div class="flex-box" style="position: relative;">
+			{{? is_define(it.charmavatar)}}
+			<div class="fans_top_1">
+				<div class="img-frm">
+					<div class="img" style="background-image: url({{= Tool.imageCompressByQiNiu(it.charmavatar,0,200,200)}});" ></div>
+				</div>
+			</div>
+			{{?}}
+			<div class="img-frm">
+				<div class="img" style="background-image: url({{= Tool.imageCompressByQiNiu(it.avatar,0,200,200)}});" ></div>
+			</div>
+		</div>
+		<div class="flex-box profile">
+			<div>{{= it.nickname }}</div>
+			<div class="sex {{= it.sex == '1'? 'male' : 'female'}}"></div>
+			<div class="level" style="background-image: url(../../image/level/rank_{{=it.level}}.png);"></div>
+		</div>
+		<div class="pd10 flex-box flex-h-zhu">
+			<div>ID:{{= it.id }}</div>
+			{{? it.city }}<div class="ct-icon-location">{{= it.city }}</div>{{?}}
+		</div>
+		<div class="pd10">
+			{{= rmNull(it.signature) }}
+		</div>
+	</div>
+	<div class="follow text-center">
+		<div class="flex-box audience_fans">
+			<div class="flex-1 ">关注：<span class="follow_count">{{= parseWan(it.concernnum)}}</span></div>
+			<div>|</div>
+			<div class="flex-1 ">粉丝：<span class="fans_count">{{= parseWan(it.fansnum)}}</span></div>
+		</div>
+		<div class="flex-box audience_charm">
+			<div class="flex-1">送出：{{= parseWan(it.diamonds)}} <span class="diamond"></span></div>
+			<div style="color: #909090;">|</div>
+			<div class="flex-1">魅力：{{= parseWan(it.charm)}} </div>
+		</div>
+	</div>
+	<div class="audience_btn flex-box text-center">
+		<div class="flex-1 follow_text" onclick="Anchor.concern(this,'{{= it.id}}')" tapmode>{{= it.concernstatus == 0 ? '关注' :'已关注'}}</div>
+		<div class="flex-1" onclick="Anchor.isblack('{{= it.id}}','{{= it.nickname}}','{{= it.avatar}}','{{= it.username}}','{{= it.tidings}}','{{= it.concernstatus }}')">私信TA</div>
+		<div class="flex-1" onclick="Anchor.black(this,'{{= it.id}}')" tapmode>{{= it.black == 0 ? '拉黑' :'已拉黑'}}</div>
+	</div>
+</div>

@@ -1,0 +1,4 @@
+<div class="list">
+	<span class="title">直播消息：</span>
+	<span class="blue"><span style="color: #fff;">{{=it.targetNickname}}</span> 被管理员 <span style="color: #fff;">{{= it.nickname}}</span> {{= it.type == 4 ? '解除' :''}}禁言,请珍惜发言机会，文明发言。</span>
+</div>

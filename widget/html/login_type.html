@@ -1,0 +1,430 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>选择登录方式</title>
+		<link rel="stylesheet" type="text/css" href="../css/ct.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/video-js.css"/>
+		<style type="text/css">
+			html,
+			body,
+			#wrap,
+			#main {
+				/*background-color: transparent;*/
+				background-image: url(../image/login_pic2.gif);
+				background-size:cover;
+			}
+			#wrap,
+			.videobox{
+				width:100%;
+			}
+			#main {
+				padding-bottom: 125px;
+				/*z-index: 9;*/
+				/*background-color: rgba(0,0,0,0.2);*/
+				/*background-color: #fff;*/
+			}
+			.videobox {
+				/*background-color: rgba(0,0,0,1);*/
+			}
+			
+			video::-webkit-media-controls,
+			video::-webkit-media-controls-enclosure,
+    	.vjs-fullscreen-control {
+        display: none !important;
+    	}
+			.vjs-icon-play-circle,
+			.vjs-icon-pause {
+				position: absolute;
+				bottom: 200px;
+				left: 50%;
+				margin-left: -25px;
+				font-size: 50px;
+				color: #ccc;
+			}
+			.vjs-icon-pause {
+				margin-left: -27px;
+			}
+			.videobox {
+				position: absolute;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				right: 0;
+				z-index: 0;
+				width: 100%;
+				max-width: 100%;
+				height: 100%;
+				min-height: 100%;
+				overflow: hidden;
+			}
+			.video_play {
+				position: absolute;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				right: 0;
+				width: 100%;
+				/*width: 120%;*/
+				/*margin-left: -10%;*/
+				height: 100%;
+				display: block;
+			}
+			video {
+			}
+			
+			.logo {
+				width: 120px;
+				margin: 150px auto 0;
+				margin-top:230px
+			}
+			/**/
+			.bottom {
+				padding: 0 30px;
+				position: absolute;
+				width: 100%;
+				left: 0;
+				bottom: 55px;
+				height: 100px;
+			}
+			.bottom .top {
+				width: 100%;
+				padding-bottom: 0px;
+				margin-top:12px;
+				margin-bottom:12px;
+			}
+			.bottom .top div {
+				color: #9B9B9B;
+				font-size: 14px;
+				height: 9px;
+				border-bottom: 1px solid #ededed;
+				width: 100%;
+			}
+			.bottom .top div.tit {
+				text-align: center;
+				border-bottom: none;
+				padding: 0 8px;
+				min-width: 100px;
+			}
+			.bottom .login-btn .sicon {
+				margin: 0 auto;
+				width: 55px;
+				height: 55px;
+				background-size: cover;
+				background-repeat: no-repeat;
+				background-position: center;
+			}
+			.bottom .login-btn .wx {
+				background-image: url(../image/login-wechat.png);
+			}
+			.bottom .login-btn .qq {
+				background-image: url(../image/login-qq.png);
+			}
+			.bottom .login-btn .weibo {
+				background-image: url(../image/login-weibo.png);
+			}
+			.bottom .login-btn .tel {
+				background-image: url(../image/login-phone.png);
+			}
+			ul li > div {
+				font-size: 14px;
+				padding-top: 5px;
+				text-align: center;
+				color: #909090;
+			}
+			#footer {
+				height: 100px;
+			}
+			.bottom .text-center {
+				padding-top: 10px;
+				font-size: 14px;
+				color: #C1C1C1;
+				letter-spacing: 1px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap" class="">
+			<div id="main" class="">
+			
+				
+			</div>
+			<footer class="">
+				<div class="bottom">
+					
+					<div class="login-btn">
+						<!-- 由于ios审核条款4.2.3的限制，微信，qq,微博登录入口，必须在手机安装了微信客户端的前提下显示 -->
+						<ul class="flex-box flex-center-center">
+							<!--<li class="flex-1 wechat hidden" onclick="weChat()" tapmode>
+								<div class="sicon wx"></div>
+								<div>微信登录</div>
+							</li>-->
+						<!--	<li class="flex-1 tencent hidden" onclick="qq()" tapmode>
+								<div class="sicon qq"></div>
+								<div>QQ登录</div>
+							</li>-->
+							<!--<li class="flex-1 sina hidden" onclick="weibo()" tapmode>
+								<div class="sicon weibo"></div>
+								<div>微博登录</div>
+							</li>-->
+							!--<li class="flex-1" onclick="openLogin('登录')" tapmode>
+								<div class="sicon tel"></div>
+								<div>手机登录</div>
+							</li>
+						</ul>
+						<div class="top flex-box flex-h-ce">
+						<div class="flex-1">&nbsp;</div>
+						<div class="tit flex-1">选择登录方式</div>
+						<div class="flex-1">&nbsp;</div>
+					</div>
+						<div class="text-center" onclick="openWin('win','agreement','服务协议','component','agreement')" tapmode="">登录即代表你同意<span style="color: #909090;border-bottom: 1px solid #909090;">服务条款</span></div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../script/common.js" ></script>
+	<script type="text/javascript" src="../script/crypto-js.js" ></script>
+	<script type="text/javascript" src="../script/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../script/wx.js"></script>
+	<script type="text/javascript" src="../script/qq.js"></script>
+	<script type="text/javascript" src="../script/weibo.js"></script>
+	<script type="text/javascript">	
+		//打开登录、注册页面
+		function openLogin(title){
+			api.openWin({
+				name: "login",
+				url: api.wgtRootDir + '/zhibo/html/window/login_win.html',
+				pageParam:{
+					headerTitle: title,
+					frameName: "login",
+					frameUrl: api.wgtRootDir + '/zhibo/html/login.html'
+				}
+			})
+		}
+		
+//		//微信授权
+//		function weChat(){
+//			WX.isInstalled(function(){
+//				WX.auth('',function(ret){
+//					if(ret && ret.status && ret.code){
+//						var code = ret.code;
+//						WX.getToken({
+//							apiKey: '',
+//							apiSecret: '',
+//							code: code
+//						},function(ret){
+//							if(ret && ret.accessToken){
+//								var accessToken = ret.accessToken,
+//										dynamicToken = ret.dynamicToken,
+//										openId = ret.openId;
+//								WX.getUserInfo({
+//									accessToken: accessToken,
+//									openId: openId
+//								},function(ret){
+//									if(ret && ret.unionid){
+//										var wx = {
+//											nickname: ret.nickname,
+//											avatar: ret.headimgurl,
+//											unionid: ret.unionid,
+//											sex:ret.sex,
+//											city:ret.city
+//										}
+//										weChatLogin(wx);
+//									}
+//								})
+//							}
+//						})
+//					}
+//				})
+//			})
+//		}
+		
+		//微信登录
+//		function weChatLogin(wx){
+//			ajax.get({
+//				ctrl: 'zhiboApp',
+//				fn: 'threelogin',
+//				data: {
+//					values: {
+//						type: 1,
+//						onlyid: wx.unionid,
+//						nickname: wx.nickname,
+//						headimgurl:wx.avatar,
+//						sex:wx.sex,
+//						city:wx.city
+//					}
+//				},
+//				showError: true,
+//				hideLoading: true,
+//				showProgress: true,
+//				success: function(ct){
+//				
+//					$api.setStorage(CONFIG.memberId,ct.id);
+//					$api.setStorage(CONFIG.token,ct.token);
+//					memberInfo(function(ret){
+//						if(ret.username){
+//							$api.setStorage(CONFIG.userName,ret.username);
+//						}
+//						Tool.initApp();
+//					});
+//				}
+//			});
+//		}
+		
+		//qq授权
+//		function qq(){
+//
+//          QQ.login('',function(ret){
+//              if(ret && ret.status && ret.accessToken && ret.openId){
+//                  var openId = ret.openId;
+//                  QQ.getUserInfo(function(ret){
+//                      var qq = {
+//                          type: 2,
+//                          nickname: ret.nickname,
+//                          //headimgurl: ret.figureurl_qq_2,
+//                          city:ret.city,
+//                          onlyid: openId
+//                      };
+//                      if(ret.gender === '男'){
+//							qq.sex = 1;
+//                      } else if(ret.gender === '女') {
+//                          qq.sex = 2;
+//						} else {
+//                          qq.sex = 3; //未知
+//						}
+//                      qqLogin(qq);
+//                  });
+//              }
+//          })
+//
+//			/*QQ.installed(function(ret, err){
+//				QQ.login('',function(ret){
+//					if(ret && ret.status && ret.accessToken && ret.openId){
+//						var openId = ret.openId;
+//						QQ.getUserInfo(function(ret){
+//							var qq = {
+//								nickname: ret.nickname,
+//								openId: openId
+//							};
+//							qqLogin(qq);
+//						});
+//					}
+//				})
+//			})*/
+//		}
+		
+//		//qq登录
+//		function qqLogin(qq){
+//			ajax.get({
+//				ctrl: 'zhiboApp',
+//				fn: 'threelogin',
+//				data: {
+//					values: qq
+//				},
+//				showError: true,
+//				hideLoading: true,
+//				showProgress: true,
+//				success: function(ct){
+//				
+//					$api.setStorage(CONFIG.memberId,ct.id);
+//					$api.setStorage(CONFIG.token,ct.token);
+//					memberInfo(function(ret){
+//						if(ret.username){
+//							$api.setStorage(CONFIG.userName,ret.username);
+//						}
+//						Tool.initApp();
+//					});
+//				}
+//			});
+//		}
+		
+//		//微博授权
+//		function weibo(){
+//			Weibo.isInstalled(function(){
+//				Weibo.auth({
+//					apiKey: '',
+//					registUrl: ''
+//				},function(ret){
+//					if(ret && ret.status && ret.token && ret.userId){
+//						var token = ret.token,
+//								userId = ret.userId;
+//						Weibo.getUserInfo({
+//							token: token,
+//							userId: userId
+//						},function(info){
+//							var sina = {
+//								userId: userId,
+//								token: token,
+//								nickname: info.name
+//							}
+//							weiboLogin(sina);
+//						})
+//					}
+//				})
+//			});
+//		}
+		
+//		//微博登录
+//		function weiboLogin(sina){
+//			ajax.get({
+//				ctrl: 'zhiboApp',
+//				fn: 'threelogin',
+//				data: {
+//					values: {
+//						type: 3,
+//						onlyid: sina.userId,
+//						nickname: sina.nickname
+//					}
+//				},
+//				showError: true,
+//				hideLoading: true,
+//				showProgress: true,
+//				success: function(ct){
+//				
+//					$api.setStorage(CONFIG.memberId,ct.id);
+//					$api.setStorage(CONFIG.token,ct.token);
+//					memberInfo(function(ret){
+//						if(ret.username){
+//							$api.setStorage(CONFIG.userName,ret.username);
+//						}
+//						Tool.initApp();
+//					});
+//				}
+//			});
+//		}
+		apiready = function(){
+			//设置状态栏为黑色
+			api.setStatusBarStyle({
+		    style: 'dark'
+			});
+			//判断是否安装微信等客户端
+			/*
+			var weibo = api.require('weibo');
+			weibo.isInstalled(function(ret, err){
+				if(ret.status){
+					$api.removeCls($api.dom('.sina'),'hidden');
+				}
+			});
+			*/
+			var wx = api.require('wx');
+			wx.isInstalled(function(ret, err){
+				if(ret.installed){
+					$api.removeCls($api.dom('.wechat'),'hidden');
+				}
+			});
+
+			var qq = api.require('qq');
+			qq.installed(function(ret, err){
+				if(ret.status){
+					$api.removeCls($api.dom('.tencent'),'hidden');
+				}
+			});
+		}
+	</script>
+</html>
+	

@@ -1,0 +1,174 @@
+<style>		
+			.ct-icon-sys-message222 {
+				font-size: 30px;
+			margin-right: 20px;
+				
+				color: #fff;
+			}
+			.dbadge {
+				height: auto;
+				top: 0;
+				width: auto;
+				min-width: 12px;
+				border-radius: 5px;
+			}
+			.num {
+				padding: 2px 3px;
+				font-size: 9px;
+				color: #fff;
+				position: absolute;
+				/*top: 2px;*/
+				right: 0;
+				z-index: 2;
+				/*width: 12px;*/
+				height: 15px;
+				text-align: center;
+			}
+			
+			
+		</style>
+<div class="audience-bg" onclick="Audience.closeAnchor()" tapmode=''></div>
+<div class="audience-wrap"></div>
+<div class="share_bg" onclick="Audience.closeShare()" tapmode></div>
+<div class="share_wrap"></div>
+<div class="gift_bg" onclick="Audience.closeGift()" tapmode></div>
+<div class="gift_wrap"></div>
+<div id="slider" class="swipe">
+	<div class="swipe-wrap">
+		<div style="height: 100%;">
+			<!-- 底部按钮 -->
+			<input id="aaaa" value="bbbb" type="hidden">
+			<div id="footer" class="bottom_btn">
+				<div class="flex-box">
+					<div class="flex-1">
+						<div class="chat hidden"></div>
+					</div>
+					<div class="flex-box flex-2">
+						<div class="flex-1">
+							<div class="msg hidden"></div>
+						</div>
+						<div class="flex-1">
+							<div class="gift hidden"></div>
+						</div>
+						<div class="flex-1">
+							<div class="share hidden"></div>
+						</div>
+						<div class="flex-1 " onclick="Audience.quitLive()" tapmode="">
+							<div class="close" ></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div style="height: 100%;">
+			<div id="main" class="flex-box-v" onclick="aixin()" >
+				<!-- 顶部 -->
+				<div class="live_top">
+					<div class="flex-box flex-h-ce">
+						<div class="zhubo flex-box flex-h-ce">
+							<div class="flex-box flex-h-ce" onclick="Audience.getAnchor('{{= it.memberid}}')" tapmode="">
+								<div class="img-frm">
+									<div class="img" data-original="{{= Tool.imageCompressByQiNiu(it.avatar,0,200,200)}}"></div>
+								</div>
+								<div class="flex-1 pd8">
+									<div>直播</div>
+									<div class="online_count"></div>
+								</div>
+							</div>
+							<div class="follow {{= it.attention == 1 ? 'hidden' : ''}}" onclick="Audience.concern(this,'{{= it.memberid}}')" tapmode=""><span>{{= it.attention == 1 ? '已关注': '关注'}}</span></div>
+						</div>
+						<div id="fans_list" class="fans_list flex-1 flex-box">
+							{{? it.readlist instanceof Array && it.readlist.length != 0}} {{~ it.readlist :value:index}}
+							<div class="fans" id="fans{{= value.memberid}}" onclick="Audience.getAnchor('{{= value.memberid}}')" tapmode="">
+								<div class="img-frm">
+									<div class="img" data-original="{{= Tool.imageCompressByQiNiu(value.avatar,0,200,200)}}"></div>
+								</div>
+							</div>
+							{{~}} {{?}}
+						</div>
+					</div>
+					<div class="charm flex-box " style="display: block;">
+						<div id='loadingPicBlock' class="flex-h-ce flex-box" style="float:left" onclick="openWin('win','live_charm','魅力贡献榜','find','charm','',{mid:'{{= it.memberid}}'})" tapmode="">魅力: <span class="live_charm" style="color: inherit;padding-left: 3px;">{{= parseInt(it.charm) }}</span><span class="ct-icon-arrow-right"></span></div>
+						<div class="flex-h-ce flex-box" style="float:right">
+							ID：{{= it.memberid}}
+						</div>
+					</div>
+				</div>
+				<!-- 道具栏 -->
+				<div class="barrage_list_box flex-1" id="barrage_list_box">
+					<div class="live_gift">
+
+					</div>
+				</div>
+				<!-- 消息栏 -->
+				<div class="live_msg">
+					<div class="list">
+						<span class="title">直播消息：</span>
+						<span class="blue">{{= it.notice}}</span>
+					</div>
+				</div>
+				
+			</div>
+			<!-- 底部按钮 -->
+			<div id="footer" class="bottom_btn">
+				<div class="flex-box tools " style="padding: 0 10px;">
+					<div class="flex-1" onclick="Chat.openChatInput(event)" >
+						<div class="chat" ></div>
+					</div>
+					<div class="flex-box flex-2" >
+						<!-- 右上角消息直播页面 -->
+			<div class="flex-1 ct-icon-sys-message222 flex-center-center flex-box" onclick="openWin('msg','msg','消息','msg','msg')" tapmode="">
+							<div class="msg" ><span class=" dbadge num msg1">0</span></div>
+						</div>
+						<div class="flex-1" onclick="Audience.gift()" tapmode="">
+							<div class="gift" ></div>
+						</div>
+						<div class="flex-1" onclick="Audience.share('{{= it.pcurl}}','{{= it.roomname}}')" tapmode="">
+							<div class="share" ></div>
+						</div>
+						<div class="flex-1 " onclick="Audience.quitLive()" tapmode="">
+							<div class="close" ></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="talk_bg" onclick="Audience.closeTalk()" tapmode></div>
+<div id="talk_box">
+	<!-- 聊天输入框 -->
+	<div class="flex-box flex-h-ce talk ">
+		<div class="msg-barrage-off" onclick="Chat.switchBarrageBtn(this)" tapmode=""></div>
+		<div style="padding: 0 8px;color: #909090;">|</div>
+		<div class="flex-1">
+			<input id="talk" type="text" name="talk"  placeholder="和大家说点什么" />
+		</div>
+		<div class="send" onclick="Chat.sendTextEvent()" tapmode=''>
+			发送
+		</div>
+	</div>
+</div>
+<div id="share">
+	<div class="border_bottom">
+		<div class="text-center">分享</div>
+	</div>
+	<div class="share_btn flex-box text-center">
+		<div class="flex-1" onclick="Audience.shareWx()" tapmode>
+			<div class="ct-icon-wechat icon"></div>
+			微信
+		</div>
+		<div class="flex-1" onclick="Audience.shareWxFriend()" tapmode>
+			<div class="friend" style="margin-bottom: 10px;"></div>
+			朋友圈
+		</div>
+		<div class="flex-1" onclick="Audience.weibo()" tapmode>
+			<div class="ct-icon-weibo icon"></div>
+			微博
+		</div>
+		<div class="flex-1" onclick="Audience.shareQQ()" tapmode>
+			<div class="ct-icon-qq icon"></div>
+			QQ
+		</div>
+	</div>
+</div>

@@ -1,0 +1,280 @@
+﻿<!doctype html>
+<html>
+	<head design-width="750">
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<title>Demo</title>
+		<link rel="stylesheet" href="../../xiaowucss/style.css" />
+		<!--页面样式-->
+		<link rel="stylesheet" href="../../xiaowucss/common.css" />
+		<!--常用样式-->
+		<link rel="stylesheet" href="../../xiaowucss/animate.min.css" />
+		<!--CSS3动画库-->
+		<script src="../../xiaowucss/auto-size.js"></script><!--设置字体大小-->
+	</head>
+	<body>
+		<div class="mobile-wrap center">
+			
+			<div class="show-list">
+				<script type="text/template" template="shope">
+					<ul>{{~ it.list :value:index}}
+					<!--<li>
+					<h4><img src="../../imgnew/im6.jpg" alt="" /></h4>
+					<div class="slide-vip">
+					<h5><span>{{=value.id}}</span></h5>
+					<p>
+					<span>
+					<i></i>
+					</span>
+					<em>建议戴耳机进入</em>
+					</p>
+					</div>
+					</li>!-->
+					<li>
+					<h4><img src="{{=value.dspimg}}" alt=""  onclick='boduanship("{{= value.videourl}}")'/></h4>
+					<div class="slide-inf">
+					<span>
+					<img src="{{=value.img}}"  onclick ='xiugai("{{= value.id}}")' alt="" />
+					</span>
+					<em></em>
+					<strong>
+					<img src="../../css/ic6.jpg" alt="" />
+					<i>{{= value.zhangshu}}</i>
+					</strong>
+					</div>
+					
+					<div class="img-frm">
+							<div class="img relative" data-original="">
+								<div class="upload-status flex-box hidden" style="background-color: rgba(0,0,0,0.4);border-radius:50%;-webkit-border-radius:50%;font-size: 11px;">
+									<div class="flex-1" style="color: #fff;">
+										等待上传
+									</div>
+								</div>
+							</div>
+						</div>
+					
+					
+					
+					</li>
+					{{~}}
+				</script>
+				</ul>
+			</div>
+			
+		</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+			
+			<div class="item avatar flex-box flex-h-ce" imgUrl="" data-status="" data-key="" data-callbackEvent="uploadAvatar" tapmode>
+					
+					</div>
+			
+	
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+	
+		<script type="text/template" template="avatar">
+		<div class="close hidden"></div>
+		<div class="img relative" style="background-image: url({{= Tool.imageCompressByQiNiu(it, 0, 800, 800) }});background-size: cover;background-position: center;">
+		
+		</div>
+	</script> 
+		
+		
+		
+		
+		
+		
+		
+		
+	</body>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript" src="../../script/jquery.lazyload.min.js" ></script>
+	
+	<script type="text/javascript" src="../../script/upload.js" ></script>
+	<script>
+	
+	function  xiugai(id){
+	$api.setStorage('duanshipid',id);
+		Tool.actionSheet({
+				buttons:['拍照上传封面'],
+				success:function(buttonIndex){
+					if(buttonIndex < 3){
+						Tool.getOnePic({
+							sourceType: 'camera',
+                                                    mediaValue: 'picture',
+                                                    videoQuality:'high',
+                                                    saveToPhotoAlbum: true,
+							success:function(ret){
+							
+								avatar = ret.data;
+									if('ios' == api.systemType){
+									T.html('.img-frm', 'avatar', ret.data);
+									Upload.init({
+										file: {
+											url: ret.data,
+											callbackEvent: 'uploadAvatar'
+										}
+									});
+								}else{
+									/*若为android系统，则使用screenClip模块进行截图*/
+									if(ret.data){
+										api.openWin({
+											name: 'imageClip',
+											url: api.wgtRootDir + '/zhibo/html/window/image_clip.html',
+											pageParam: {
+												imgSrc: ret.data,
+												callbackEvent: 'getAvatarClipImage'
+											}
+										});	
+									}
+								}
+								
+							}
+						});
+					}
+				}
+			})
+	
+	}
+		function boduanship(videourl) {
+			var videoPlayer = api.require('videoPlayer');
+			videoPlayer.play({
+				texts : {
+					head : {
+						title : '短视频'
+					}
+				},
+				styles : {
+					head : {
+						bg : 'rgba(0.5,0.5,0.5,0.7)',
+						height : 44,
+						titleSize : 16,
+						titleColor : '#fff',
+						backSize : 20,
+						backImg : 'widget://image/back.png',
+						setSize : 20,
+						setImg : 'widget://image/set.png'
+					},
+				},
+				path : videourl,
+				autoPlay : true
+			}, function(ret, err) {
+				
+			});
+		}
+
+		apiready = function() {
+	
+		//上传 视频
+			api.addEventListener({
+				name: 'uploadAvatar'
+			}, function(ret, err) {
+				var key = $api.attr($api.dom('.avatar'), 'data-key');
+			
+				if(key) {
+					ajax.get({
+						ctrl: 'ZhiboApp',
+						fn: 'duanshipingxiugai',
+						data: {
+							values: {
+								uid: $api.getStorage(CONFIG.memberId),
+								token: $api.getStorage(CONFIG.token),
+								img: key,
+								id:$api.getStorage('duanshipid')
+							}
+						},
+						hideLoading: true,
+						showError: true,
+						showProgress: true,
+						success: function() {
+						 $api.setStorage('duanshipid',0);
+							Tool.toast('修改封面成功');
+							//刷新我的头像
+							api.showProgress();
+							api.sendEvent({
+								name: 'shipingliebiao',
+								extra: {
+									videourl: avatar
+								}
+							});
+							api.hideProgress();
+						}
+					});
+				}else {
+					Tool.toast('修改封面失败,请重新上传~');
+				}
+			});
+		
+			ajax.get({
+				//				ctrl: 'zhiboApp',
+				ctrl : 'ZhiboApp',
+				fn : 'duanshichakan',
+				data : {
+					values : {
+						id : $api.getStorage(CONFIG.memberId),
+						token : $api.getStorage(CONFIG.token),
+					}
+				},
+				showError : true,
+				hideLoading : true,
+				showProgress : true,
+				success : function(ct) {
+				
+				if(ct.list<=0){
+			Tool.toast('没有更多了哦~');
+			return;
+			}else{
+			
+			T.html('.show-list', 'shope', ct);
+			}
+					
+					//downslide(".banne",".banne .cirl","","","");
+				}
+			});
+			
+			//监听头像截图
+			api.addEventListener({
+				name: 'getAvatarClipImage'
+			},function(ret,err){
+			
+			
+			
+			
+			
+		
+				T.html('.img-frm', 'avatar', ret.value.url);
+				avatar = ret.value.url;
+				Upload.init({
+					file: {
+						url: ret.value.url,
+						callbackEvent: 'uploadAvatar'
+					}
+				});
+			});
+		}
+	</script>
+</html>

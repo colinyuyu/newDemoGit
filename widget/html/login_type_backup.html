@@ -1,0 +1,393 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>选择登录方式</title>
+		<link rel="stylesheet" type="text/css" href="../css/ct.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/video-js.css"/>
+		<style type="text/css">
+			html,
+			body,
+			#wrap,
+			#main {
+				background-color: transparent;
+			}
+			#wrap,
+			.videobox{
+				width:100%;
+			}
+			#main {
+				z-index: 9;
+				/*background-color: rgba(0,0,0,0.2);*/
+			}
+			.videobox {
+				background-color: rgba(0,0,0,1);
+			}
+			.title {
+				padding-bottom: 80px;
+				letter-spacing: 3px;
+				color: #fff;
+			}
+			.tel > span {
+				color: #B9B8B5;
+				border-bottom: 1px solid #B9B8B5;
+			}
+			.other {
+				padding: 0 0 40px 0;
+			}
+			.other > div {
+				color: #B9B8B5;
+			}
+			.ct-icon-wechat,
+			.ct-icon-qq,
+			.ct-icon-weibo{
+				font-size: 45px;
+				color: #fff;
+			}
+			
+			video::-webkit-media-controls,
+			video::-webkit-media-controls-enclosure,
+    	.vjs-fullscreen-control {
+        display: none !important;
+    	}
+			.vjs-icon-play-circle,
+			.vjs-icon-pause {
+				position: absolute;
+				bottom: 30px;
+				left: 50%;
+				margin-left: -25px;
+				font-size: 50px;
+				color: #ccc;
+			}
+			.vjs-icon-pause {
+				margin-left: -27px;
+			}
+			.videobox {
+				position: absolute;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				right: 0;
+				z-index: 0;
+				width: 100%;
+				max-width: 100%;
+				height: 100%;
+				min-height: 100%;
+				overflow: hidden;
+			}
+			.video_play {
+				position: absolute;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				right: 0;
+				width: 100%;
+				/*width: 120%;*/
+				/*margin-left: -10%;*/
+				height: 100%;
+				display: block;
+			}
+			video {
+			}
+		</style>
+	</head>
+	<body>
+		<!--<video id="my-video" class="video-js" controls preload="auto" data-setup="{}">
+	    <source src="../res/moive_bg.mp4" type='video/mp4'>
+	  </video>-->
+	  <div class="videobox " style="background-image: url();background-size: cover;background-position: center;background-repeat: no-repeat;">
+		  
+		</div>
+		
+		<div id="wrap" class="">
+			<div id="main" class="flex-box-v flex-h-zhu ">
+				<div class="text-center title">
+					用直播与世界对话
+				</div>
+				<div class="other">
+					<div class="text-center">使用以下方式登录</div>
+					<div class="flex-box" style="padding-top: 25px;">
+						<div class="flex-1 text-center" onclick="weChat()" tapmode>
+							<span class="ct-icon-wechat "></span>
+						</div>
+						<div class="flex-1 text-center" onclick="qq()" tapmode>
+							<span class="ct-icon-qq"></span>
+						</div>
+						<div class="flex-1 text-center" onclick="weibo()" tapmode>
+							<span class="ct-icon-weibo "></span>
+						</div>
+					</div>
+				</div>
+				<div class="text-center tel">
+					<span onclick="openLogin('登录')" tapmode="">手机号登录/注册</span>
+				</div>
+				
+				<div class="vjs-icon-play-circle play hidden" onclick="playVideo(true)" tapmode></div>
+			</div>
+		</div>
+	</body>
+	<script type="text/template" template="video">
+		{{? api.systemType == 'ios'}}
+			<video style="object-fit: fill;" id="example_video1" x-webkit-airplay="true" preload="auto" playsinline webkit-playsinline="true" autoplay="autoplay" loop="loop" class="video_play">
+			  <source src="../res/1809.mp4" type="video/mp4">
+			</video>
+		{{??}}
+			<video style="object-fit: fill;" id="example_video1" x-webkit-airplay="true" poster="http://www.apicloud.com/start_page/3b/de/3bdec6af7cf5f2eb296673a7de28ae92.309x548.png" webkit-playsinline="true" preload="false" loop="loop" class=" flex-box flex-center-center video_play video-js">
+			  <source src="../res/1809.mp4" type="video/mp4">
+			</video>
+		{{?}}
+	</script>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../script/common.js" ></script>
+	<script type="text/javascript" src="../script/crypto-js.js" ></script>
+	<script type="text/javascript" src="../script/video.js"></script>
+	<script type="text/javascript" src="../script/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../script/wx.js"></script>
+	<script type="text/javascript" src="../script/qq.js"></script>
+	<script type="text/javascript" src="../script/weibo.js"></script>
+	<script type="text/javascript">	
+		var myPlayer;
+		
+		//打开登录、注册页面
+		function openLogin(title){
+			stopVideo();
+			
+			api.openWin({
+				name: "login",
+				url: api.wgtRootDir + '/zhibo/html/window/login_win.html',
+				pageParam:{
+					headerTitle: title,
+					frameName: "login",
+					frameUrl: api.wgtRootDir + '/zhibo/html/login.html'
+				}
+			})
+		}
+		//打开绑定页面
+		function openBind(title,frameParam){
+			stopVideo();
+			api.openWin({
+				name: "bind",
+				url: api.wgtRootDir + '/zhibo/html/window/login_win.html',
+				pageParam:{
+					headerTitle: title,
+					frameName: "bind",
+					frameUrl: api.wgtRootDir + '/zhibo/html/bind.html',
+					frameParam: frameParam || {}
+				}
+			});
+		}
+		
+		//微信授权
+		function weChat(){
+			WX.isInstalled(function(){
+				WX.auth('',function(ret){
+					Debug.alt(1)
+					if(ret && ret.status && ret.code){
+						var code = ret.code;
+						WX.getToken({
+							apiKey: '',
+							apiSecret: '',
+							code: code
+						},function(ret){
+							if(ret && ret.accessToken){
+								var accessToken = ret.accessToken,
+										dynamicToken = ret.dynamicToken,
+										openId = ret.openId;
+								WX.getUserInfo({
+									accessToken: accessToken,
+									openId: openId
+								},function(ret){
+									if(ret && ret.unionid){
+										var wx = {
+											nickname: ret.nickname,
+											avatar: ret.headimgurl,
+											unionid: ret.unionid
+										}
+										weChatLogin(wx);
+									}
+								})
+							}
+						})
+					}
+				})
+			})
+		}
+		
+		//微信登录
+		function weChatLogin(wx){
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'threelogin',
+				data: {
+					values: {
+						type: 1,
+						onlyid: wx.unionid,
+						headimgurl:wx.headimgurl
+					}
+				},
+				showError: true,
+				hideLoading: true,
+				showProgress: true,
+				_404:function(){
+					openBind('绑定手机号',{type: 1,onlyid:wx.unionid});
+				},
+				success: function(ct){
+					$api.setStorage(CONFIG.memberId,ct.id);
+					$api.setStorage(CONFIG.token,ct.token);
+					memberInfo(function(ret){
+						$api.setStorage(CONFIG.userName,ret.username);
+						if(ret.weixin){
+							Tool.initApp();
+						}else{
+							openBind('绑定手机号',{type: 1,onlyid:wx.unionid});
+						}
+					})
+				}
+			});
+		}
+		
+		//qq授权
+		function qq(){
+			QQ.installed(function(){
+				QQ.login('',function(ret){
+					if(ret && ret.status && ret.accessToken && ret.openId){
+						var openId = ret.openId;
+						QQ.getUserInfo(function(ret){
+							var qq = {
+								nickname: ret.nickname,
+								openId: openId
+							}
+							qqLogin(qq);
+						});
+					}
+				})
+			})
+		}
+		
+		//qq登录
+		function qqLogin(qq){
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'threelogin',
+				data: {
+					values: {
+						type: 2,
+						onlyid: qq.openId
+					}
+				},
+				showError: true,
+				hideLoading: true,
+				showProgress: true,
+				_404:function(){
+					openBind('绑定手机号',{type: 2,onlyid:qq.openId});
+				},
+				success: function(ct){
+					$api.setStorage(CONFIG.memberId,ct.id);
+					$api.setStorage(CONFIG.token,ct.token);
+					memberInfo(function(ret){
+						$api.setStorage(CONFIG.userName,ret.username);
+						if(ret.qq){
+							Tool.initApp();
+						}else{
+							openBind('绑定手机号',{type: 2,onlyid:qq.openId});
+						}
+					});
+				}
+			});
+		}
+		
+		//微博授权
+		function weibo(){
+			Weibo.isInstalled(function(){
+				Weibo.auth({
+					apiKey: '',
+					registUrl: ''
+				},function(ret){
+					if(ret && ret.status && ret.token && ret.userId){
+						var token = ret.token,
+								userId = ret.userId;
+						Weibo.getUserInfo({
+							token: token,
+							userId: userId
+						},function(ret){
+							Debug.alt(JSON.stringify(ret,null,2))
+							var sina = {
+								userId: userId,
+								token: token
+							}
+//							weiboLogin(sina);
+						})
+					}
+				})
+			});
+		}
+		
+		//微博登录
+		function weiboLogin(sina){
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'threelogin',
+				data: {
+					values: {
+						type: 3,
+						onlyid: sina.userId
+					}
+				},
+				showError: true,
+				hideLoading: true,
+				showProgress: true,
+				_404:function(){
+					openBind('绑定手机号',{type: 3,onlyid:sina.userId});
+				},
+				success: function(ct){
+					$api.setStorage(CONFIG.memberId,ct.id);
+					$api.setStorage(CONFIG.token,ct.token);
+					memberInfo(function(ret){
+						$api.setStorage(CONFIG.userName,ret.username);
+						if(ret.weibo){
+							Tool.initApp();
+						}else{
+							openBind('绑定手机号',{type: 3,onlyid:sina.userId});
+						}
+					});
+				}
+			});
+		}
+		
+		function video(){
+			var videoPlayer = api.require('videoPlayer');
+			videoPlayer.open({
+				fixedOn: 'login_type',
+				rect: {
+					x: 0,
+					y: 20,
+					h: api.frameHeight
+				},
+		    path: 'fs://res/movie_bg.mp4'
+			}, function(ret, err) {
+		    if (ret.status) {
+		        alert(JSON.stringify(ret));
+		    } else {
+		        alert(JSON.stringify(err));
+		    }
+			});
+		}
+		
+		//开始播放
+		function playVideo(test) {
+			if(api.systemType != 'ios') {
+				var playDom = $api.dom('.play'),
+						videoClsDom = $api.dom('.video_play');
+				if(!myPlayer) return;
+				myPlayer.play();
+				
+				if(test || api.systemType == 'ios') {
+					$api.addCls(playDom, 'hidden');
+					videoClsDom.style.width = '120%';
+					videoClsDom.style.marginLeft = '-10%';
+				}
+			}else {
+				var

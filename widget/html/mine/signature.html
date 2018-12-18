@@ -1,0 +1,185 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>个性签名</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			textarea{
+				height: 180px;
+				width: 100%;
+				outline: none;
+				resize: none;
+				line-height: 1.5em;
+				font-size: 14px;
+			}
+			.tip{
+				position: absolute;
+				right: 12px;
+				font-size: 13px;
+				color: #A5A5A5;
+			}
+			.tip span {
+				color: #A5A5A5;
+			}
+			.btn{
+				margin: 32px 0;
+				width: 65%;
+				border-radius: 50px;
+				padding: 12px 0;
+				border: 1px solid #FE5F99;
+				background-color: #fff;
+				color: #FE5F99;
+			}
+			.text {
+				/*border: 1px solid ;*/
+				margin: 15px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+				<div class="text">
+					<textarea disabled="" name="sign" maxlength="32" oninput="surplus()" autofocus></textarea>
+				</div>
+				<div class="relative">
+					<div class="tip">
+						还能输入
+						<span class="tips">32</span>
+						字符
+					</div>
+				</div>
+				<div class="flex-box flex-h-zhu">
+					<div class="btn" onclick="confirm()" tapmode>保存</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript">
+		var sing = '';
+		//剩余可输入字数
+		function surplus(){
+			var surplus = $api.val($api.dom('[name=sign]'));
+			if(surplus.length > 32){
+				return;
+			}else{
+				var nums = 32 - surplus.length;
+				$api.text($api.dom('.tips'),nums);
+			}
+		}
+		//点击保存
+		function confirm(){
+//			var sign = $api.val($api.dom('[name=sign]'));
+			
+			var UIInput = api.require('UIInput');
+			UIInput.value(function(ret, err) {
+		    if(ret && ret.msg && ret.msg.length != 0) {
+		    	var values = {
+								id: $api.getStorage(CONFIG.memberId),
+								token: $api.getStorage(CONFIG.token),
+								signature: ret.msg
+							}
+		     	ajax.get({
+						ctrl: 'zhiboApp',
+						fn: 'signature',
+						data: {
+							values: values
+						},
+						hideLoading: true,
+						showError: true,
+						showProgress: false,
+						success: function(ct) {
+							api.sendEvent({
+						    name: 'signature',
+						    extra: {
+					        signature: ret.msg
+						    }
+							});
+							UIInput.closeKeyboard();
+							api.alert({
+								title: '温馨提示',
+								msg: '保存签名成功~'
+							}, function(ret, err) {
+								api.closeWin();
+							});
+//							Tool.toast('保存签名成功~');
+//							setTimeout(function(){
+//								api.closeWin();
+//							},600);
+						}
+					});
+		    }else if(ret && !ret.msg) {
+		    	Tool.toast('请输入您的签名~');
+					return;
+		    }
+			});
+			
+//			if(!sign){
+//				Tool.toast('请输入您的签名~');
+//				return;
+//			}
+			
+		}
+		
+		apiready = function(){
+			var memberinfo = $api.getStorage(CONFIG.memberInfo);
+			if(memberinfo && is_define(memberinfo.signature)){
+				sign = memberinfo.signature;
+//				$api.val($api.dom('[name=sign]'),memberinfo.signature);
+				if(is_define(memberinfo.signature.length) > 0) {
+					var nums = 32 - memberinfo.signature.length;
+					$api.text($api.dom('.tips'),nums);
+				}
+			}else{
+				sign = '';
+			}
+			
+			var serPos = $api.offset($api.dom('[name=sign]'));
+			var UIInput = api.require('UIInput');
+			UIInput.open({
+		    rect: {
+					x: serPos.l,
+					y: serPos.t - 2,
+					w: serPos.w,
+					h: serPos.h
+		    },
+		    styles: {
+	        bgColor: 'rgba(0,0,0,0)',
+	        size: 13
+	    	},
+	    	maxRows: 3,
+	    	autoFocus: true,
+	    	fixedOn: 'signature',
+	    	placeholder: ''
+			}, function(ret, err) {
+				if(ret && ret.eventType == 'change') {
+					UIInput.value(function(ret, err) {
+				    if(ret && ret.msg && ret.msg.length != 0) {
+				      if(ret.msg.length > 32){
+				      	UIInput.value({
+							    msg: ret.msg.slice(0, 32)
+								});
+								return;
+							}else{
+								var nums = 32 - ret.msg.length;
+								$api.text($api.dom('.tips'),nums);
+							}
+				    }else if(ret && !ret.msg) {
+				    	$api.text($api.dom('.tips'),32);
+				    }
+					});
+				}
+			});
+			UIInput.value({
+		    msg: sign
+			});
+		}
+	</script>
+</html>

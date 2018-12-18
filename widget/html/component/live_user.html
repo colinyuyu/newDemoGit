@@ -1,0 +1,612 @@
+<!doctype html>
+<html >
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no">
+		<title>查看主播/粉丝详情</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css" />
+		<style type="text/css">
+			html,
+			body,
+			#wrap {
+				background-color: transparent;
+			}
+			
+			#main {
+			}
+			
+			.audience {
+				padding: 5px 15px 15px 15px;
+				margin: 0 30px;
+				font-size: 14px;
+				background-color: #fff;
+				border-radius: 3px;
+			}
+			
+			.report {
+				color: #FE5F99;
+				margin: 10px;
+			}
+			
+			.ct-icon-close {
+				color: #909090;
+				font-size: 18px;
+			}
+			
+			.img,
+			.img-frm {
+				background-image: url(../../image/avatar.jpg);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				width: 70px;
+				height: 70px;
+				border-radius: 50%;
+			}
+			
+			.info,
+			.profile {
+				padding-top: 20px;
+			}
+			
+			.profile> div,
+			.pd10> div {
+				color: #909090;
+			}
+			
+			.level {
+				width: 36px;
+				height: 16px;
+				min-width: 36px;
+				background-image: url(../../image/level/rank_1.png);
+				background-size: contain;
+				background-position: center;
+				background-repeat: no-repeat;
+			}
+			
+			.sex {
+				margin: 0 5px;
+				width: 16px;
+				height: 16px;
+				min-width: 16px;
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+			}
+			
+			.female {
+				background-image: url(../../image/sex-female.png);
+			}
+			
+			.male {
+				background-image: url(../../image/sex-male.png);
+			}
+			
+			.pd10 {
+				padding-top: 10px;
+				color: #909090;
+			}
+			
+			.ct-icon-location {
+				padding-left: 20px;
+			}
+			
+			.diamond {
+				background-image: url(../../image/diamond.png);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				width: 16px;
+				height: 13px;
+			}
+			
+			.follow {
+				padding: 15px 0;
+			}
+			
+			.follow> div {
+				padding: 10px 0;
+			}
+			
+			.follow> div:last-child {
+				padding-top: 0;
+			}
+			
+			.audience_fans> div {
+				/*width: 120px;*/
+				color: #909090;
+			}
+			.audience_fans> div >span{
+				/*width: 120px;*/
+				color: #909090;
+			}
+			.audience_fans> div:last-child,
+			.audience_charm> div:last-child {
+				/*padding-left: 20px;*/
+			}
+			
+			.audience_charm> div {
+				color: #FE5F99;
+			}
+			
+			.audience_btn {
+				padding: 15px 0 5px 0;
+				border-top: 1px solid #D9D9D9;
+			}
+			
+			.audience_btn> div {
+				color: #909090;
+			}
+			
+			.fans_top_1 {
+				position: absolute;
+				left: -65px;
+				top: 10px;
+			}
+			
+			.fans_top_1 .img,
+			.fans_top_1 .img-frm {
+				width: 50px;
+				height: 50px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="wrap">
+			<div id="main" class="">
+				<div class="audience ">
+					<div class="flex-box" style="height: 38px;">
+						<div class="flex-1" ><span  class="report" onclick="manage()">管理</span></div>
+						<div style="padding: 10px;" onclick="api.closeFrame()" tapmode="">
+							<div class="ct-icon-close" ></div>
+						</div>
+					</div>
+					<div class="info flex-box-v flex-h-ce">
+						<div class="flex-box" style="position: relative;">
+							<div class="fans_top_1">
+								<div class="img-frm">
+									<div class="img"></div>
+								</div>
+							</div>
+							<div class="img-frm">
+								<div class="img"></div>
+							</div>
+						</div>
+						<div class="flex-box profile">
+							<div>姓名啊姓名仨</div>
+							<div class="sex female"></div>
+							<div class="level"></div>
+						</div>
+						<div class="pd10 flex-box flex-h-zhu">
+							<div>ID:2909209</div>
+							<div class="ct-icon-location">东莞市</div>
+						</div>
+						<div class="pd10">
+							有人疼痛 我端口到觉得叫就
+						</div>
+					</div>
+					<div class="follow text-center">
+						<div class="flex-box audience_fans">
+							<div class="flex-1">关注：42</div>
+							<div>|</div>
+							<div class="flex-1 ">粉丝：8.4万</div>
+						</div>
+						<div class="flex-box audience_charm">
+							<div class="flex-1">送出：12.5万 <span class="diamond"></span></div>
+							<div style="color: #909090;">|</div>
+							<div class="flex-1">魅力：19.8万</div>
+						</div>
+					</div>
+					<div class="audience_btn flex-box text-center">
+						<div class="flex-1 follow_text" onclick="follow(this)">关注</div>
+						<div class="flex-1" onclick="openTalk()" tapmode="">私信TA</div>
+						<div class="flex-1" onclick="" tapmode="">拉黑</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/template" template='main'>
+		<div class="audience">
+			<div class="flex-box">
+				<div class="flex-1"><span class="report" onclick="manage('{{= it.nickname}}')">管理</span></div>
+				<div class="ct-icon-close" onclick="api.closeFrame()" tapmode=""></div>
+			</div>
+			<div class="info flex-box-v flex-h-ce">
+				<div class="flex-box" style="position: relative;">
+					{{? is_define(it.charmavatar)}}
+					<div class="fans_top_1">
+						<div class="img-frm">
+							<div class="img" data-original="{{= Tool.imageCompressByQiNiu(it.charmavatar,0,200,200)}}"></div>
+						</div>
+					</div>
+					{{?}}
+					<div class="img-frm">
+						<div class="img" data-original="{{= Tool.imageCompressByQiNiu(it.avatar,0,200,200)}}"></div>
+					</div>
+				</div>
+				<div class="flex-box profile">
+					<div>{{= it.nickname }}</div>
+					<div class="sex {{= it.sex == '1'? 'male' : 'female'}}"></div>
+					<div class="level" style="background-image: url(../../image/level/rank_{{=it.level}}.png);"></div>
+				</div>
+				<div class="pd10 flex-box flex-h-zhu">
+					<div>ID:{{= it.id }}</div>
+					{{? it.city }}<div class="ct-icon-location">{{= it.city }}</div>{{?}}
+				</div>
+				<div class="pd10">
+					{{= rmNull(it.signature) }}
+				</div>
+			</div>
+			<div class="follow text-center">
+				<div class="flex-box audience_fans">
+					<div class="flex-1 ">关注：<span class="follow_count">{{= parseWan(it.concernnum)}}</span></div>
+					<div>|</div>
+					<div class="flex-1 ">粉丝：<span class="fans_count">{{= parseWan(it.fansnum)}}</span></div>
+				</div>
+				<div class="flex-box audience_charm">
+					<div class="flex-1">送出：{{= parseWan(it.diamonds)}} <span class="diamond"></span></div>
+					<div style="color: #909090;">|</div>
+					<div class="flex-1">魅力：{{= parseWan(it.charm)}} </div>
+				</div>
+			</div>
+			<div class="audience_btn flex-box text-center">
+				<div class="flex-1 follow_text" onclick="concern(this,'{{= it.id}}')" tapmode>{{= it.concernstatus == 0 ? '关注' :'已关注'}}</div>
+				<div class="flex-1" onclick="isblack('{{= it.id}}','{{= it.nickname}}','{{= it.avatar}}','{{= it.username}}','{{= it.tidings}}','{{= it.concernstatus }}')">私信TA</div>
+				<div class="flex-1" onclick="black(this,'{{= it.id}}')" tapmode>{{= it.black == 0 ? '拉黑' :'已拉黑'}}</div>
+			</div>
+		</div>
+	</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript" src="../../script/jquery.lazyload.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript">
+		var values = {};
+		values.id = $api.getStorage(CONFIG.memberId);
+		values.token = $api.getStorage(CONFIG.token);
+		var isGag = 0,
+				isManager = 2;
+
+		function parseWan(num) {
+			num = parseInt(num);
+			var result = 0;
+			if(isNaN(num)) {
+				return result;
+			}
+			if(num > 9999) {
+				result = (num / 10000).toFixed(1) + '万';
+			} else {
+				result = num;
+			}
+			return result;
+		}
+
+		function manage(nickname) {
+			var buttons =[];
+			if(isManager == 1){
+				buttons.push('解除管理');
+			}else{
+				buttons.push('设为管理');
+			}
+			buttons.push('管理员列表');
+			buttons.push('禁言列表');
+			Tool.actionSheet({
+				buttons: buttons,
+				destructiveTitle: isGag == 1 ? '解除禁言' : '禁言',
+				success: function(index) {
+					switch(index){
+						case 1:
+							setGag(nickname);
+							break ;
+						case 2:
+							setManager();
+							break ;
+						case 3:
+							openWin('manager_list_win', 'manager_list', '管理员列表', 'live', 'manager_list',true,{roomid:values.roomid});
+							break ;
+						case 4:
+							openWin('manager_list_win', 'gag_list', '禁言列表', 'live', 'gag_list',true,{roomid:values.roomid});
+							break ;
+						default:
+							return ;
+					}
+				}
+			})
+		}
+		//点击关注
+		function concern(_this, mid) {
+			var status_text = $api.text(_this);
+			if(status_text == '已关注') {
+				unfollow(_this, mid);
+			} else {
+				follow(_this, mid);
+			}
+		}
+
+		//取消关注
+		function unfollow(_this, aid) {
+			ajax.get({
+//				ctrl: 'zhiboApp',
+				ctrl: 'zhiboApp',
+				fn: 'unfollow',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						aid: aid
+					}
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: false,
+				success: function(ct) {
+					$api.text(_this, '关注');
+					var fans_count = $api.dom('.fans_count');
+					$api.text(fans_count,parseInt($api.text(fans_count))-1);
+					api.sendEvent({
+						name: 'follow'
+					});
+				}
+			});
+		}
+
+		//关注
+		function follow(_this, mid) {
+			ajax.get({
+//				ctrl: 'zhiboApp',
+				ctrl: 'zhiboApp',
+				fn: 'concern',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						memberid: mid
+					}
+				},
+				showProgress: true,
+				hideLoading: true,
+				showError: true,
+				success: function(ct) {
+					$api.text(_this, '已关注');
+					var fans_count = $api.dom('.fans_count');
+					$api.text(fans_count,parseInt($api.text(fans_count))+1);
+					api.sendEvent({
+						name: 'follow'
+					});
+				}
+			});
+		}
+		//拉黑
+		function black(_this,mid){
+			var ctrl = '',
+				fn = '',
+				msg = '';
+			var status_text = $api.text(_this);
+			if(status_text == '已拉黑') {
+				ctrl = 'zhiboApp';
+				fn = 'removebalck';
+				msg = '取消拉黑？';
+			} else {
+				ctrl = 'zhiboApp';
+				fn = 'blacks';
+				msg = '确定拉黑对方？';
+			}
+			api.confirm({
+				title:'提示信息',
+				msg:msg,
+				bottons:['取消','确定']
+			},function(ret,err){
+				if(ret.buttonIndex == 2){
+					ajax.get({
+						ctrl: ctrl,
+						fn: fn,
+						data: {
+							values: {
+								id: values.id,
+								token: values.token,
+								memberid: mid,
+								bid:mid
+							}
+						},
+						showProgress: true,
+						hideLoading: true,
+						showError: true,
+						success: function(ct) {
+							if(fn == 'blacks'){
+								Tool.toast('拉黑成功~');
+								$api.text(_this,'已拉黑');
+							}else{
+								Tool.toast('取消拉黑成功~');
+								$api.text(_this,'拉黑');
+							}
+						}
+					});
+				}
+			})
+		}
+
+		//判断 是否被主播拉黑
+		function isblack(mid, nickname,avatar,username,tidings,concernstatus) {
+			ajax.get({
+//				ctrl: 'zhiboApp',
+				ctrl: 'zhiboApp',
+				fn: 'isblack',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						memberid: mid
+					}
+				},
+				hideLoading: true,
+				showError: false,
+				showProgress: false,
+				success: function(ct) {
+					if(ct.status == 1) {
+						Tool.toast('您已被对方拉黑,不能进入与TA私聊~');
+					} else {
+						openTalkWith(mid,nickname,avatar,username,tidings,concernstatus);
+					}
+				}
+			});
+		}
+
+		//打开私聊
+		function openTalkWith(mid,nickname,avatar,username,tidings,concernstatus) {
+			if(mid == $api.getStorage(CONFIG.memberInfo).id ){
+				Tool.toast('自己不能与自己聊天~');
+			}else{
+				if(tidings == '0' || tidings == '1' && concernstatus == '1'){
+					api.openWin({
+						name:　'talk_with',
+						url:  api.wgtRootDir + '/zhibo/html/window/talk_with.html',
+						pageParam: {
+							headerTitle: nickname,
+							frameName: 'talk_with',
+							frameUrl: api.wgtRootDir + '/zhibo/html/component/talk_with.html',
+							frameParam: {
+								username: username,
+								memberid: mid,
+								avatar: avatar,
+								nickname: nickname
+							}
+						},
+						slidBackEnabled: false
+					});
+				}else{
+					Tool.toast('TA不接收陌生人私信~');
+				}
+			}
+		}
+
+		//设置 /解除 禁言
+		function setGag(nickname) {
+			var ctrl = 'zhiboApp',
+				fn = '';
+			var mid = [];
+			if(isGag == 0) {
+				fn = 'gag';
+			} else {
+				fn = 'notgag';
+				mid.push(parseInt(values.memberid));
+			}
+			ajax.get({
+				ctrl: ctrl,
+				fn: fn,
+				data: {
+					values: {
+						id:	values.id,
+						token: values.token,
+						roomid: values.roomid,
+						memberid:fn == 'notgag' ? mid :values.memberid
+					}
+				},
+				showProgress: true,
+				hideLoading: true,
+				showError: true,
+				success: function(ct) {
+					if(fn == 'gag'){
+						Tool.toast('禁言成功~');
+						isGag = 1;
+					}else{
+						Tool.toast('取消禁言成功~');
+						isGag = 0;
+					}
+					/**
+					 * 禁言时候发送事件通知 live/live_barrage_frame.html发送禁言命令
+					 * isGag  1 禁言  ，0 解除禁言
+					 */
+					api.sendEvent({
+						name: 'sendGagOrder',
+						extra: {
+							isGag: isGag,
+							memberid: values.id,
+							nickname: $api.getStorage(CONFIG.memberInfo).nickname,
+							targetId: values.memberid,
+							targetNickname: nickname
+						}
+					})
+				}
+			});
+		}
+		
+		//设置 /解除 管理员
+		function setManager() {
+			var ctrl = 'zhiboApp',
+				fn = '';
+			if(isManager == 2) {
+				fn = 'setmanager';
+			} else {
+				fn = 'delmanager';
+			}
+			ajax.get({
+				ctrl: ctrl,
+				fn: fn,
+				data: {
+					values: {
+						id: values.id,
+						token: values.token,
+						roomid: values.roomid,
+						mid: values.memberid
+					}
+				},
+				showProgress: true,
+				hideLoading: true,
+				showError: true,
+				success: function(ct) {
+					if(fn == 'setmanager'){
+						Tool.toast('设置管理员成功~');
+						isManager = 1;
+					}else{
+						Tool.toast('解除管理员成功~');
+						isManager = 2;
+					}
+				}
+			});
+		}
+
+		// 获取用户基础信息
+		function getNews() {
+			ajax.get({
+//				ctrl: 'zhiboApp',
+				ctrl: 'zhiboApp',
+				fn: 'audience',
+				data: {
+					values: values
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: false,
+				success: function(ct) {
+					ct.roomid = values.roomid;
+					ct.memberid = values.memberid;
+					isGag = ct.gag;
+					isManager = ct.manager;
+					T.html('#main', 'main', ct);
+					$('div.img').lazyload({
+						effect: "fadeIn"
+					});
+				}
+			});
+		}
+		apiready = function() {
+			var param = api.pageParam;
+			if(param) {
+				values.memberid = param.memberid;
+				values.roomid = param.roomid;
+				getNews();
+			}
+			api.addEventListener({
+				name:'live_user_init'
+			},function(ret,err){
+				getNews();
+			});
+		}
+	</script>
+
+</html>

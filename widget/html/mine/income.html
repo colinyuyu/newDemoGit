@@ -1,0 +1,216 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>Document</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			html,body,#main {
+				font-size: 14px;
+				background-color: #fff;
+			}
+			.top{
+				margin: 60px auto;
+				text-align: center;
+			}
+			.top .black{
+				font-size: 16px;
+				color: #000;
+			}
+			.orange{
+				font-size: 30px;
+				color: #FE5F99;
+			}
+			.orange1{
+				font-size: 30px;
+				color: #FE5F99;
+			}
+			.withdraw{
+				margin-top: 20px;
+			}
+			.btn{
+				margin-bottom: 16px;
+				width: 65%;
+				background-color: #FE5F99;
+				padding: 13px 0;
+				border-radius: 50px;
+				color:#FFFFFF
+			}
+			.btn_record{
+				padding: 12px 0;
+				border: 1px solid #FE5F99;
+				background-color: #fcdfea;
+				color: #FE5F99;
+			}
+			.tips{
+				margin-top: 10px;
+				color: #919191;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+				<div class="top">
+					<div>
+						<span class="orange">0</span><span class="black">&nbsp;&nbsp;魅力值</span>
+					</div>
+					<div>
+						<span class="orange1">0</span><span class="black">&nbsp;&nbsp;可提现魅力值</span>
+					</div>
+					<div class="withdraw">
+						<span class="black">可提现:￥<span>0</span></span>
+					</div>
+				</div>
+				<div class="center flex-box-v flex-v-ce">
+					<div class="btn" onclick="openWithdraws()" tapmode>提现到支付宝</div>
+					<div class="btn btn_record"  onclick="openWin('win','withdraw_record','提现记录','mine','withdraw_record')" tapmode>我的提现记录</div>
+					<div class="tips" onclick="openWin('win','faq','提现常见问题','mine','faq')" tapmode>魅力提现常见问题</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript">
+		var withdraw,cash,memberinfo,withdraw_status;
+		//获取提现服务费
+		function getwithdrawals(){
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'getwithdrawals',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token)
+					}
+				},
+				showError: true,
+				hideLoading: true,
+				showProgress: true,
+				success: function(ct){
+					withdraw = ct.withdraw;
+					withdraw_status = ct.withdraw_sw;  
+					cash = ct.ratio_cp2cashus;
+					memberinfo = $api.getStorage(CONFIG.memberInfo);
+					$api.html($api.dom('.orange'),parseInt(memberinfo.charm || 0));
+					$api.html($api.dom('.orange1'),parseInt(memberinfo.charm1 || 0)); //可提现魅力大斌
+				//	var price = parseInt(memberinfo.charm) / parseFloat(cash).toFixed(2);
+				var price = parseInt(memberinfo.charm1) / parseFloat(cash).toFixed(2); //可提现魅力大斌
+					//var price = parseInt(memberinfo.charm) * parseFloat(cash).toFixed(2);
+					$api.html($api.dom('.black > span'), parseFloat(price || 0).toFixed(2));
+				}
+			});
+		}
+		
+		//打开提现到支付宝
+		function openWithdraws(){
+			memberinfo = $api.getStorage(CONFIG.memberInfo);
+			if(memberinfo.realname){
+				api.openWin({
+					name: 'withdraws',
+					url: api.wgtRootDir + '/zhibo/html/window/win.html',
+					pageParam:{
+						headerTitle: '提现到支付宝',
+						frameName: 'withdraws',
+						frameUrl: api.wgtRootDir + '/zhibo/html/mine/withdrawals.html',
+						frameParam:{
+							withdraw: parseInt(withdraw),
+							cash: parseFloat(cash),
+							withdraw_status: withdraw_status
+						}
+					}
+				})
+			}else{
+				api.alert({
+					title: '提示消息',
+					msg: '您还未实名认证，请先实名认证',
+					buttons:['确定']
+				},function(ret){
+					if(ret.buttonIndex == 1){
+						api.openWin({
+							name: 'certification',
+							url: api.wgtRootDir + '/zhibo/html/window/win.html',
+							pageParam:{
+								headerTitle: '实名认证',
+								frameName: 'certification',
+								frameUrl: api.wgtRootDir + '/zhibo/html/mine/certification.html'
+							}
+						});
+					}
+				})
+			}
+		}
+		
+		apiready = function(){
+			memberInfo();
+			//监听 提现成功
+			api.addEventListener({
+				name: 'withdrawals_success'
+			},function(ret){
+				if(ret && ret.value){
+					memberInfo(function(ct){
+						$api.html($api.dom('.orange'),parseInt(ct.charm || 0));
+						$api.html($api.dom('.orange1'),parseInt(ct.charm1 || 0)); //可提现魅力大斌
+						//var price = parseInt(ct.charm) / parseFloat(cash).toFixed(2); //可提现魅力大斌
+						
+						var price = parseInt(ct.charm1) / parseFloat(cash).toFixed(2); 
+						$api.html($api.dom('.black > span'), parseFloat(price || 0).toFixed(2));
+					});
+				}
+			});
+			
+			//后台拒绝提现 刷更改 魅力值
+			api.addEventListener({
+				name: 'charm'
+			},function(){
+				memberInfo(function(ret){
+					$api.html($api.dom('.orange'),parseInt(ret.charm || 0));
+					$api.html($api.dom('.orange1'),parseInt(ret.charm1 || 0)); //可提现魅力大斌
+					//var price = parseInt(ret.charm) / parseFloat(cash).toFixed(2); //可提现魅力大斌
+					
+					var price = parseInt(ret.charm1) / parseFloat(cash).toFixed(2); 
+					$api.html($api.dom('.black > span'), parseFloat(price || 0).toFixed(2));
+				});
+			});
+			
+		}
+		
+		function memberInfo(){
+			ajax.get({
+//				ctrl: 'zhiboApp',
+//				fn: 'memberinfo',
+				
+				ctrl: 'zhiboApp',
+				fn: 'memberinfo',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token)
+					}
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: true,
+				success: function(ct) {
+					$api.setStorage(CONFIG.memberInfo, ct);
+					if(withdraw){
+				memberinfo = $api.getStorage(CONFIG.memberInfo);
+				$api.html($api.dom('.orange'),parseInt(memberinfo.charm || 0));
+				 $api.html($api.dom('.orange1'),parseInt(memberinfo.charm1 || 0)); //可提现魅力大斌
+				//var price = parseInt(memberinfo.charm) / parseFloat(cash).toFixed(2); //可提现魅力大斌
+				var price = parseInt(memberinfo.charm1) / parseFloat(cash).toFixed(2);
+				$api.html($api.dom('.black > span'), parseFloat(price || 0).toFixed(2));
+			}else{
+				getwithdrawals();
+			}
+					
+							
+				}
+			});
+		}
+	</script>
+</html>

@@ -1,0 +1,288 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>Document</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			.list {
+				font-size: 13px;
+				padding: 6px 10px;
+			}
+			.addr select {
+				height: 35px;
+				margin: auto 0;
+				background-color: #fff;
+				outline: none;
+				width: 100%;
+				border-radius: 0;
+				border: 1px solid #FE5F99;
+				border-radius: 5px;
+			}
+			.addr .list {
+				border-bottom: 0; 
+			}
+			.login_btn {
+				padding: 0 25px;
+				padding-top: 30px;
+			}
+			.login_btn > div {
+				border: 1px solid #FE5F99;
+				background-color: #FFFFFF;
+				padding: 10px 0;
+				color: #FE5F99;
+				border-radius: 20px;
+			}
+			
+			.shade {
+				background-color: #000;
+				position: absolute;
+				width: 100%;
+				height: 35px;
+				opacity: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+				<div class="list addr">
+					<div>
+						<div class="list flex-box flex-h-ce">
+							<div class="field">省：</div>
+							<div class="flex-1 relative">
+								<div class="relative">
+									<div class="shade" style="" onclick="getAreaList()"></div>
+									<select name="province" onchange="getProvince(this)">
+										<option value="">--选择省份--</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="list flex-box flex-h-ce">
+							<div class="field">市：</div>
+							<div class="flex-1">
+								<div class="">
+									<select name="city" onchange="getCity(this)">
+										<option value=""></option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="login_btn">
+					<div class="text-center" onclick="confirm()" tapmode="">确定</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	
+	
+		<script type="text/template" template="province">
+		<option value="">--选择省份--</option>
+		{{? it instanceof Array }}
+			{{~it :value:index}}
+				<option value="{{= value.id }}">{{= value.name }}</option>
+			{{~}}
+		{{??}}
+			{{~it.areaList :value:index}}
+				{{? value.id == it.province }}
+					<option value="{{= value.id }}" selected="selected">{{= value.name }}</option>
+				{{??}}
+					<option value="{{= value.id }}">{{= value.name }}</option>
+				{{?}}
+			{{~}}
+		{{?}}
+	</script>
+	<script type="text/template" template="city">
+		<option value="">--选择城市--</option>
+		{{? it instanceof Array }}
+			{{~it :value:index}}
+				<option value="{{= value.parentid }}|{{= value.id }}|{{=value.name}}">{{= value.name }}</option>
+			{{~}}
+		{{??}}
+			{{~it.citys :value:index}}
+				{{? value.id == it.cityId }}
+					<option value="{{= value.parentid }}|{{= value.id }}|{{=value.name}}" selected="selected">{{= value.name }}</option>
+				{{??}}
+					<option value="{{= value.parentid }}|{{= value.id }}|{{=value.name}}">{{= value.name }}</option>
+				{{?}}
+			{{~}}
+		{{?}}
+	</script>
+
+	
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript">
+		/*预定义地区列表*/
+		var areaList,
+				pid,
+				cid,
+				pname,
+				cname;
+		function getProvince(_this){
+			var provinceId = $api.val(_this);
+			if(provinceId){
+				pid = provinceId;
+				for(var i=0;i<areaList.length;i++){
+					if(areaList[i].id==provinceId){
+						pname = areaList[i].name;
+						$api.html($api.dom('select[name=city]'), doT.template($api.html($api.dom('[template=city]')))(areaList[i].child));
+						break;
+					}
+				}
+				cid = '';
+			}else{
+				$api.html($api.dom('select[name=city]'), '');
+			}
+		}
+		
+		function getCity(_this){
+			var val = $api.val(_this);
+			if(val){
+				var provinceId = val.split('|')[0],
+						cityId = val.split('|')[1],
+						cityName = val.split('|')[2];
+						
+				cid = cityId;
+				cname = cityName;
+				
+				for(var i=0;i<areaList.length;i++){
+					if(areaList[i].id == provinceId){
+						var citys = areaList[i].child;
+						break;
+					}
+				}
+			}
+		}
+		
+		function editInit(data, areaList){
+			var temp = {};
+			var data = {};
+			data.areaList = areaList;
+			$api.html($api.dom('select[name=province]'), doT.template($api.html($api.dom('[template=province]')))(data));
+			$api.addCls($api.dom('.shade'), 'hidden');
+			for(var i=0;i<areaList.length, p=areaList[i];i++){
+				if(p.id == data.province){
+					temp.citys = p.child;
+					temp.cityId = data.city;
+					$api.html($api.dom('select[name=city]'), doT.template($api.html($api.dom('[template=city]')))(temp));
+					break;
+				}
+			}	
+		}
+		
+		//保存城市
+		function confirm(){
+			if(!pid || !cid){
+				Tool.toast('请选择城市~');
+				return;
+			}
+			ajax.get({
+//				ctrl: 'zhiboApp',
+				ctrl: 'zhiboApp',
+				fn: 'city',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						city: pid +','+ cid
+					}
+				},
+				hideLoading: true,
+				showError: false,
+				showProgress: false,
+				success: function(ct) {
+					Tool.toast('保存成功~');
+					api.sendEvent({
+						name: 'city',
+						extra:{
+							cityname: cname,
+							pid: pid,
+							cid: cid,
+							pname: pname,
+							cname: cname
+						}
+					});
+					setTimeout(function(){
+						api.closeWin();
+					},500);
+				}
+			});
+		}
+		
+		
+		//获取城市列表
+		function getAreaList(data){
+			areaList = $api.getStorage('areaList');
+			if(areaList && areaList != 'undefined'){
+				editInit(data, areaList);
+			}else{
+				ajax.get({
+				    /*
+					ctrl: 'zhiboApp',
+					fn: 'getAreaList',
+					*/
+					ctrl: 'zhiboApp',
+					fn: 'getAreaList',
+					data: {
+						values: {
+							id: $api.getStorage(CONFIG.memberId),
+							token: $api.getStorage(CONFIG.token)
+						}
+					},
+					hideLoading: true,
+					showError: true,
+					showProgress: false,
+					success: function(ct) {
+						areaList = ct;//全局变量
+						$api.setStorage('areaList',areaList);
+						editInit(data, areaList);
+					}
+				});
+			}
+		}
+		
+		
+		//获取公司地址
+		function init(ct) {
+			var str = '';
+			for(var i=0;i<ct.area.length;i++) {
+				if(!is_define(ct.area[i].id)) {
+					continue;
+				}
+				str += ct.area[i].id + ',';
+			}
+			str = str.slice(0, -1);
+			var province = str.split(',')[0],
+					city = str.split(',')[1];
+			pid = province;		
+			cid = city;		
+			var data = {};
+			data.province = province;
+			data.city = city;
+			
+//			console.log(JSON.stringify(data))
+			
+			//getAreaList(data); 大斌取消城市定位
+		}
+	
+		apiready = function(){
+			var memberInfo = $api.getStorage(CONFIG.memberInfo);
+			if(memberInfo && memberInfo.area) {
+				init(memberInfo);
+			}else {
+				memberInfo(function(ct) {
+					if(ct && ct.area) {
+						init(ct);
+					}
+				});
+			}
+		}
+	</script>
+</html>

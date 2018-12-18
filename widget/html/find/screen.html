@@ -1,0 +1,275 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>最热-筛选</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			html,
+			body,
+			#wrap {
+				background-color: transparent;
+			}
+			#main {
+				background-color: rgba(0,0,0,0.15);
+				padding: 83px 10px 0 10px;
+			}
+			.screen {
+				padding: 15px 10px;
+				background-color: #fff;
+				border-radius: 3px;
+				position: relative;
+			}
+			.selec_sex {
+				padding: 20px 0;
+			}
+			.circle {
+				font-size: 28px;
+				width: 60px;
+				height: 60px;
+				border-radius: 50%;
+				background-color: #F9F9F9;
+				border: 1px solid #D9D9D9;
+				margin: 0 auto;
+				color: #D9D9D9;
+			}
+			.active .circle {
+				background-color: #FFDE3F;
+				border: 1px solid #FFDE3F;
+				color: #dd9c2a;
+			}
+			.active .see{
+				color: #FE5F99;
+			}
+			.see {
+				color: #909090;
+				font-size: 12px;
+				text-align: center;
+				padding-top: 15px;
+			}
+			.square {
+				border-bottom: 10px solid #fff;
+				border-left: 10px solid #fff;
+				border-top: 10px solid transparent;
+				border-right: 10px solid transparent;
+				position: absolute;
+				left: 50%;
+				top: -9px; 
+				margin-left: -7px;
+				width: 0;
+				height: 0;
+				transform: rotate(135deg);
+				-moz-transform: rotate(135deg);
+				-webkit-transform: rotate(135deg);
+				-o-transform: rotate(135deg);
+			}
+			.badge {
+				/*position: absolute;
+				top: 2px;
+				right: 3px;*/
+				min-width: 8px;
+				height: 8px;
+				width: 8px; 
+				border-radius: 50%;
+				background-color: #fff;
+				text-align: center;
+				z-index: 1;
+				margin-right: 15px;
+			}
+			.list {
+				position: relative;
+				padding: 20px 0;
+				font-size: 16px;
+			}
+			.list.active > div {
+				color: #FE5F99;
+			}
+			.list.active .badge {
+				background-color: #DD9C2A;
+			}
+			.list > div {
+				color: #909090;
+			}
+			.bottom_btn {
+				padding: 15px 10px 0 10px;
+			}
+			.bottom_btn > div{
+				color: #FE5F99;
+				border-radius: 20px;
+				border: 1px solid #FE5F99;
+				background-color: #fff;
+				padding: 10px 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main" onclick="api.closeFrame()" tapmode="">
+				<div class="screen hidden">
+					<div class="square"></div>
+					<div class="flex-box selec_sex">
+						<div class="flex-1">
+							<div class="circle flex-box flex-h-ce flex-v-zhu female" onclick="switchBtn(this,event)" tapmode="">
+								<i class="ct-icon-sex-female"></i>
+							</div>
+							<div class="see">只看女</div>
+						</div>
+						<div class="flex-1 active">
+							<div class="circle  flex-box flex-h-ce flex-v-zhu all" onclick="switchBtn(this,event)" tapmode="">
+								<i class="ct-icon-sex-all"></i>
+							</div>
+							<div class="see">看全部</div>
+						</div>
+						<div class="flex-1 ">
+							<div class="circle flex-box flex-h-ce flex-v-zhu male" onclick="switchBtn(this,event)" tapmode="">
+								<i class="ct-icon-sex-male"></i>
+							</div>
+							<div class="see">只看男</div>
+						</div>
+					</div>
+					<div class="city">
+						<div class="list active flex-box flex-h-ce" onclick="switchCity(this,event,'0')" tapmode="">
+							<div class="flex-1">热门</div>
+							<span class="badge"></span>
+							<div>123</div>
+						</div>
+						<div class="list  flex-box flex-h-ce" onclick="switchCity(this,event,'0')" tapmode="">
+							<div class="flex-1">北京</div>
+							<span class="badge"></span>
+							<div>123</div>
+						</div>
+					</div>
+					<div class="bottom_btn">
+						<div class="text-center" onclick="confirm()" tapmode>完成</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/template" template="main">
+		<div class="screen">
+			<div class="square"></div>
+			<div class="flex-box selec_sex">
+				<div class="flex-1">
+					<div class="circle flex-box flex-h-ce flex-v-zhu female" onclick="switchBtn(this,event)" tapmode="">
+						<i class="ct-icon-sex-female"></i>
+					</div>
+					<div class="see">只看女</div>
+				</div>
+				<div class="flex-1 active">
+					<div class="circle  flex-box flex-h-ce flex-v-zhu all" onclick="switchBtn(this,event)" tapmode="">
+						<i class="ct-icon-sex-all"></i>
+					</div>
+					<div class="see">看全部</div>
+				</div>
+				<div class="flex-1">
+					<div class="circle flex-box flex-h-ce flex-v-zhu male" onclick="switchBtn(this,event)" tapmode="">
+						<i class="ct-icon-sex-male"></i>
+					</div>
+					<div class="see">只看男</div>
+				</div>
+			</div>
+			<div class="city">
+				<div class="list active flex-box flex-h-ce" onclick="switchCity(this,event,'0')" tapmode="">
+					<div class="flex-1">热门</div>
+					<span class="badge"></span>
+					<div>{{= it.all}}</div>
+				</div>
+				{{? it.arealist instanceof Array && it.arealist.length != 0}}
+					{{~ it.arealist:value:index}}
+					<div class="list flex-box flex-h-ce" onclick="switchCity(this,event,{{= value.id}})" tapmode="">
+						<div class="flex-1">{{= value.name}}</div>
+						<span class="badge "></span>
+						<div>{{= value.num}}</div>
+					</div>
+					{{~}}
+				{{?}}
+			</div>
+			<div class="bottom_btn">
+				<div class="text-center" onclick="confirm()" tapmode>完成</div>
+			</div>
+		</div>
+	</script>
+	<script type="text/javascript">
+		var sex = 0,
+				cityid = 0;
+		function switchBtn(_this,event){
+			event.stopPropagation();
+			var activeDom = $api.domAll('.selec_sex .active'),
+					sececDom = $api.closest(_this,'.flex-1');
+			if(activeDom.length != 0){
+				$api.removeCls(activeDom[0],'active');
+			}
+			$api.addCls(sececDom,'active');
+			if($api.hasCls(_this,'female')){
+				sex = 2;
+			}else if($api.hasCls(_this,'.all')){
+				sex = 0;
+			}else{
+				sex = 1;
+			}
+		}
+		function switchCity(_this,event,cid){
+			event.stopPropagation();
+			var activeDom = $api.domAll('.city .active');
+			if(activeDom.length != 0){
+				$api.removeCls(activeDom[0],'active');
+			}
+			$api.addCls(_this,'active');
+			cityid = cid;
+		}
+		
+		//点击完成 
+		function confirm(){
+			api.sendEvent({
+				name: 'screen',
+				extra: {
+					sex: sex,
+					cityid: cityid
+				}
+			});
+			setTimeout(function(){
+				api.closeFrame();
+			},500);
+		}
+		
+		//获取 地区列表
+		function init(){
+			var ctrl = 'zhiboApp',
+					fn = 'condition';
+			ajax.get({
+				ctrl: ctrl,
+				fn: fn,
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token)
+					}
+				},
+				cache:{
+					key: ctrl + '_' + fn,
+					getCache: function(cache){
+						T.html('#main','main',JSON.parse(cache));
+					}
+				},
+				hideLoading: true,
+				showError: false,
+				showProgress: false,
+				success: function(ct,cache) {
+					if(cache != JSON.stringify(ct)){
+						T.html('#main','main',ct);
+					}
+				}
+			});
+		}
+		
+		apiready = function(){
+			init();
+		}
+	</script>
+</html>

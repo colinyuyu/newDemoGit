@@ -1,0 +1,340 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>回放直播列表</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			#main {
+				font-size: 14px;
+				background-color: #FCFBF5;
+			}
+			.top {
+				padding: 15px 10px;
+				border-bottom: 1px solid #F3F3F3;
+				background-color: #fff;
+				position: fixed;
+				width: 100%;
+			}
+			.top > div,
+			.top > div > span >span{
+				color: #909090;
+			}
+			.top > div > span{
+				padding: 0 5px;
+			}
+			.top > div > span > span.active {
+				color: #FE5F99;
+			}
+			.live {
+				padding-top: 47px;
+				padding-left: 10px;
+				background-color: #fff;
+			}
+			.img-frm,
+			.img {
+				background-image: url(../../image/avatar.jpg);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				border-radius: 50%;
+				width: 40px;
+				height: 40px;
+			}
+			.content {
+				padding: 10px 0;
+				margin-left: 15px;
+				border-bottom: 1px solid #F5F5F5;
+			}
+			p {
+				padding-top: 8px;
+				color: #D9D9D9;
+			}
+			.num {
+				font-size: 16px;
+				color: #FE5F99;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+				<div class="flex-box top">
+					<div class="flex-1"><span class="video" style="color: inherit;">0</span>个精彩回放</div>
+					<div class="flex-1 text-right">
+						<span onclick="switchBtn(this)" tapmode="">
+							<span class="active">最新</span>
+						</span>
+						<span onclick="switchBtn(this)" tapmode="">
+							<span class="hot">最热</span>
+						</span>
+					</div>
+				</div>
+				<div class="live ">
+					<div class="list flex-box flex-h-ce hidden">
+						<div class="img-frm">
+							<div class="img"></div>
+						</div>
+						<div class="content flex-box flex-1">
+							<div class="title flex-1 flex-box flex-h-ce">标题党标题党标题党</div>
+							<div class="text-right" style="padding-right: 10px;">
+								<div class="num">1555</div>
+								<p>1小时前</p>
+							</div>
+						</div>
+					</div>
+					<div class="list flex-box flex-h-ce hidden">
+						<div class="img-frm">
+							<div class="img"></div>
+						</div>
+						<div class="content flex-box flex-1">
+							<div class="title flex-1 flex-box flex-h-ce">标题党标题党标题党</div>
+							<div class="text-right" style="padding-right: 10px;">
+								<div class="num">1555</div>
+								<p>3天前</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript" src="../../script/jquery.lazyload.min.js" ></script>
+	
+	<script type="text/template" template="main">
+		{{? it.video instanceof Array && it.video.length != 0}}
+			{{~ it.video:value:index}}
+			<div class="list flex-box flex-h-ce" onclick="getLive('{{= value.recordingid}}','{{= value.id}}')" tapmode>
+				<div class="img-frm">
+					<div class="img" data-original="{{= Tool.imageCompressByQiNiu(value.avatar,0,200,200)}}"></div>
+				</div>
+				<div class="content flex-box flex-1">
+					<div class="title flex-1 flex-box flex-h-ce">{{= value.name}}</div>
+					<div class="text-right" style="padding-right: 10px;">
+						<div class="num">{{= value.readnum}}</div>
+						<p>{{= D.t2(value.createdtime)}}</p>
+					</div>
+				</div>
+			</div>
+			{{~}}
+		{{??}}
+			<div class="small_font text-center" style="padding-top: 50px;font-size: 12px;">暂无相关内容~</div>
+		{{?}}
+	</script>
+	<script type="text/template" template="list">
+		{{~ it :value:index}}
+		<div class="list flex-box flex-h-ce" onclick="getLive('{{= value.recordingid}}','{{= value.id}}')" tapmode>
+			<div class="img-frm">
+				<div class="img" data-original="{{= Tool.imageCompressByQiNiu(value.avatar,0,200,200)}}"></div>
+			</div>
+			<div class="content flex-box flex-1">
+				<div class="title flex-1 flex-box flex-h-ce">{{= value.name}}</div>
+				<div class="text-right" style="padding-right: 10px;">
+					<div class="num">{{= value.readnum}}</div>
+					<p>{{= D.t2(value.createdtime)}}</p>
+				</div>
+			</div>
+		</div>
+		{{~}}
+	</script>
+	<script type="text/javascript">
+		var type = 1,
+				param = '';
+		var args = {
+			ctrl: 'zhiboApp',
+			fn: 'anthorVideo',
+			values: {
+				id: $api.getStorage(CONFIG.memberId),
+				token: $api.getStorage(CONFIG.token),
+				type: type,
+				page:1
+			},
+			template: 'main',
+			container: '.live',
+			countSelector: '.live > div',
+			wrapper: '.live',
+			success:function(){
+				$('div.img').lazyload({
+		      effect : "fadeIn"
+		    });
+			}
+		}
+		//切换 最新 最热
+		function switchBtn(_this){
+			var swtich_btn = $api.closest(_this,'div'),
+					active = $api.domAll('.active');
+			if(active.length != 0){
+				$api.removeCls(active[0],'active');
+			}
+			$api.addCls($api.dom(_this,'span'),'active');
+			if($api.hasCls($api.dom(_this,'span'),'hot')){
+				type = 2;
+				args.values.type = type;
+				video(param);
+			}else{
+				type = 1;
+				args.values.type = type;
+				video(param);
+			}
+		}
+		
+		//获取直播回放
+		function video(param){
+			var values = {
+				id: $api.getStorage(CONFIG.memberId),
+				token: $api.getStorage(CONFIG.token),
+				memberid: param.ct.id,
+				type: type
+			}
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'anthorVideo',
+				data: {
+					values: values
+				},
+				hideLoading: true,
+				showError: false,
+				showProgress: false,
+				success: function(ct) {
+					$api.html($api.dom('.video'),parseInt(ct.allnum));
+					T.html('.live','main',ct);
+					$('div.img').lazyload({
+			      effect : "fadeIn"
+			    });
+				}
+			});
+		}
+		
+		//获取直播回放地址
+		function getLive(recordingid,vid){
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'video_dl',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						recordingid: recordingid
+					}
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: false,
+				success: function(ct) {
+					if(ct.downUrl){
+						playback(ct.downUrl,vid);
+					}else{
+						Tool.toast('视频合成中~');
+					}
+				}
+			});
+		}
+		
+		//记录观看人数
+		function playbackadd(downUrl,vid){
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'playbackadd',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						vid: vid
+					}
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: false,
+				success: function(ct) {
+					videoPlay(downUrl);
+				}
+			});
+		}
+		
+		//打开播放视频
+		function videoPlay(downUrl){
+			var videoPlayer = api.require('videoPlayer');
+			videoPlayer.play({
+		    path: downUrl,
+//		    autorotation: false,
+		    fixed: true,
+		    autoPlay: true,
+	     	styles: {
+	        head: {
+            height: 44,
+            backSize: 35,
+            setSize: 30,
+	        },
+	        foot: {
+            height: 44,
+            playSize: 30,
+            nextSize: 0,
+            timeSize: 14,
+            timeColor: '#fff',
+            progressColor: '#FFF',
+            progressSelected: '#FE5F99'
+	        }
+		    },
+			}, function(ret, err) {
+					//打开 回放 交互层
+					//openPlayBack();
+			});
+//			setTimeout(function(){
+//				videoPlayer.cancelFullScreen();
+//			},500)
+		}
+		
+		//打开回放视频
+		function playback(downUrl,vid){
+//			api.openWin({
+//				name: 'playback',
+//				url: api.wgtRootDir + '/zhibo/html/find/playback.html',
+//				bgColor: 'transparent',
+//				bounces: false,
+//				rect:{
+//					x: 0,
+//					y: 0,
+//					w: api.winWidth,
+//					h: api.winHeight
+//				},
+//				pageParam:{
+//					url: downUrl
+//				},
+//				slidBackEnabled: false
+//			});
+			playbackadd(downUrl,vid);
+		}
+		
+		apiready = function(){
+			param = api.pageParam;
+			args.values.memberid = param.ct.id;
+			video(param);
+			
+			Refresh.init(args);
+			LoadMore.init({
+				ctrl: 'zhiboApp',
+				fn: 'anthorVideo',
+				values: {
+					id: $api.getStorage(CONFIG.memberId),
+					token: $api.getStorage(CONFIG.token),
+					type: args.values.type,
+					memberid: param.ct.id
+				},
+				template: 'list',
+				countSelector: '.live > div',
+				wrapper: '.live',
+				field: 'video',
+			},function(ct, page){
+				$('div.img').slice((page - 1) * 10).lazyload({
+		      effect : "fadeIn"
+		    });
+			});
+		}
+	</script>
+</html>

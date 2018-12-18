@@ -1,0 +1,144 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>观看直播无弹幕</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			html,
+			body,
+			#wrap,
+			#main{
+				background-color: transparent;
+			}
+			#wrap {
+				position: relative;
+			}
+			#main {
+				/*background-color: rgba(0,0,0,0.25);*/
+				padding: 10px;
+				font-size: 14px;
+			}
+			/* 底部按钮 */
+			.chat,
+			.msg,
+			.gift,
+			.share,
+			.close {
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				width: 45px;
+				height: 45px;
+			}
+			.chat{
+				/*background-image: url(../../image/room-down-publicchat.png);*/
+			}
+			.msg{
+				/*background-image: url(../../image/room-down-privatechat.png);*/
+			}
+			.gift{
+				/*background-image: url(../../image/room-down-gift.png);*/
+			}
+			.share {
+				/*background-image: url(../../image/room-down-share.png);*/
+			}
+			.close {
+				background-image: url(../../image/room-down-close.png);
+			}
+			.bottom_btn {
+				position: absolute;
+				bottom: 10px;
+				width: 100%;
+				padding: 0 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+				
+			</div>
+			<div id="footer" class="bottom_btn">
+				<div class="flex-box">
+					<div class="flex-1">
+						<div class="chat"></div>
+					</div>
+					<div class="flex-box flex-2">
+						<div class="flex-1">
+							<div class="msg"></div>
+						</div>
+						<div class="flex-1">
+							<div class="gift"></div>
+						</div>
+						<div class="flex-1">
+							<div class="share"></div>
+						</div>
+						<div class="flex-1 ">
+							<div class="close" onclick="closeFrame()" tapmode=""></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript">
+		//关闭直播 /记录关闭直播
+		function closeFrame(){
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'endlook',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						roomid: api.pageParam.roomid,
+//						ip: param.ip
+					}
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: false,
+				success: function(ct) {
+					api.sendEvent({
+						name: 'quit_text'
+					});
+					
+					api.sendEvent({
+						name: 'closeLive'
+					});
+					setTimeout(function(){
+						api.closeFrameGroup({
+							name: 'liveGroup'
+						});
+					},500)
+				}
+			});
+		}
+		
+		
+		apiready = function(){
+			api.bringFrameToFront({
+		    from: 'nobarrage',
+			});
+			
+			
+			api.addEventListener({
+				name: 'keyback'
+			},function(){
+				api.sendEvent({
+					name: 'quit_text'
+				});
+				
+				api.sendEvent({
+					name: 'closeLive'
+				});
+			});
+		}
+	</script>
+</html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<title>win</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			#header {
+				background-color: transparent;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="header" class="header">
+			</div>
+			<div id="main">
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript">
+		
+		
+		apiready = function(){
+			var header = $api.byId('header');
+			$api.fixIos7Bar(header);
+			var main = $api.byId('main'),
+					headerPos = $api.offset(header),
+					winParam = api.pageParam,
+					mainPos = $api.offset(main);
+			
+			api.addEventListener({
+				name: 'keyback'
+			}, function(ret, err){
+				
+			});
+			
+			
+			if(typeof winParam.frameParam != "undefined"){
+				api.openFrame({
+					name: winParam.frameName,
+					url: winParam.frameUrl,
+					bounces: winParam.bounces||false,
+					pageParam: winParam.frameParam,
+					rect: {
+						x: 0,
+						y: 0,
+						w: 'auto',
+						h: mainPos.h + headerPos.h
+					},
+					reload: true,
+					allowEdit: true
+				});
+			}else{
+				api.openFrame({
+					name: winParam.frameName,
+					url: winParam.frameUrl,
+					bounces: winParam.bounces||false,
+					rect: {
+						x: 0,
+						y: 0,
+						w: 'auto',
+						//h: mainPos.h + headerPos.h   //因输入法占用空间后形成白色改用下面高度
+						h: api.winHeight
+					},
+					reload:true,
+					allowEdit: true
+				});
+			}
+		}
+	</script>
+</html>

@@ -1,0 +1,525 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>Document</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			/* 礼物  */
+			html,
+			body,
+			#wrap{
+				background-color: transparent;
+			}
+			#main {
+				position: relative;
+				background-color: transparent;
+			}
+			.swipe-wrap .img {
+				background-image: url(../../image/logo.png);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				width: 60px;
+				height: 60px;
+			}
+			.row > div {
+				padding: 6px 0 10px 0;
+			}
+			.row .img{
+				background-image: url(../../image/ring.png);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: contain;
+				width: 35px;
+				height: 35px;
+				border-radius: 0;
+				margin-top: 10px;
+			}
+			.price {
+				padding: 5px 0;
+			}
+			.price > span {
+				color: #FE5F99;
+			}
+			.diamond {
+				background-image: url(../../image/diamond.png);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				width: 13px;
+				height: 10px;
+				margin-left: 5px;
+			}
+			.xp {
+				color: #D9D9D9;
+				font-size: 10px;
+			}
+			.xp > span {
+				color: #D9D9D9;
+			}
+			/*.gift_wrap > div:not(:first-child){
+				border-top: 1px solid #DCDCDC;
+			}
+			.gift_wrap > div.border_bottom {
+				border-bottom: 1px solid #EDEDED;
+			}*/
+			.recharge {
+				height: 46px;
+				font-size: 14px;
+				padding: 10px;
+				background-color: rgba(0,0,0,0.35);
+				position: relative;
+			}
+			.recharge > div > div,
+			.recharge > div > div > span{
+				color: #FE5F99;
+			}
+			.recharge .ct-icon-arrow-right {
+				color: #FE5F99;
+				font-size: 14px;
+				padding-left: 3px;
+			}
+			.list {
+				padding: 0 15px;
+				position: relative;
+			}
+			.recharge .send {
+				color: #313131;
+				background-color: #FFDE3F;
+				padding: 5px 15px;
+				border-radius: 20px;
+			}
+			.ct-icon-select-yes {
+				position: absolute;
+				top: 5px;
+				right: 9px;
+			}
+			.ct-icon-select-yes .path2::before{
+				color: rgba(0,0,0,0.2);
+			}
+			/* 连送 */
+			.recharge .liansong {
+				color: #000000;
+				background-color: #FFDE3F;
+				position: absolute;
+				right: -9px;
+				bottom: -6px;
+				border-radius: 50%;
+				width: 55px;
+				height: 55px;
+			}
+			.recharge .liansong > div {
+				color: #000000;
+			}
+			.gift_box {
+				overflow: hidden;
+				position: absolute;
+				width: 100%;
+				bottom: 0;
+				height: 0;
+				transition: height linear 0.2s;
+				-webkit-transition: height linear 0.2s;
+				-moz-transition: height linear 0.2s;
+			}
+			.swipe-wrap {
+				background-color: rgba(0,0,0,0.3);
+			}
+			#pointer{
+				padding: 0;
+			}
+			.odd{
+				background-color: rgba(0,0,0,0.25);
+			}
+			.even{
+				background-color: rgba(0,0,0,0.2);
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+				
+
+			</div>
+			<div id="footer">
+				<!-- 礼物 充值 -->
+				<div class="gift_box hidden">
+					<!-- 礼物 -->
+					<div id="slider" class="swipe hidden">
+						<div class="swipe-wrap">
+							<div class="row">
+								<div class="list odd col-3 flex-box-v flex-h-ce flex-h-zhu" onclick="selectGift(this,event)" tapmode="">
+									<div class="img" ></div>
+									<div class="price flex-box flex-h-ce">
+										<span></span>
+										<span class="diamond"></span>
+									</div>
+									<div class="xp text-overflow">+<span>1</span>经验值</div>
+									<span class="ct-icon-select-yes hidden">
+		             	 	<span class="path1"></span><span class="path2"></span>
+		              </span>
+								</div>
+								<div class="list even col-3 flex-box-v flex-h-ce flex-h-zhu" onclick="selectGift(this,event)" tapmode="">
+									<div class="img" ></div>
+									<div class="price flex-box flex-h-ce">
+										<span></span>
+										<span class="diamond"></span>
+									</div>
+									<div class="xp text-overflow">+<span>1</span>经验值</div>
+									<span class="ct-icon-select-yes hidden">
+		             	 	<span class="path1"></span><span class="path2"></span>
+		              </span>
+								</div>
+								<div class="list odd col-3 flex-box-v flex-h-ce flex-h-zhu" onclick="selectGift(this,event)" tapmode="">
+									<div class="img" ></div>
+									<div class="price flex-box flex-h-ce">
+										<span></span>
+										<span class="diamond"></span>
+									</div>
+									<div class="xp text-overflow">+<span>1</span>经验值</div>
+									<span class="ct-icon-select-yes hidden">
+		             	 	<span class="path1"></span><span class="path2"></span>
+		              </span>
+								</div>
+								<div class="list even col-3 flex-box-v flex-h-ce flex-h-zhu" onclick="selectGift(this,event)" tapmode="">
+									<div class="img" ></div>
+									<div class="price flex-box flex-h-ce">
+										<span></span>
+										<span class="diamond"></span>
+									</div>
+									<div class="xp text-overflow">+<span>1</span>经验值</div>
+									<span class="ct-icon-select-yes hidden">
+		             	 	<span class="path1"></span><span class="path2"></span>
+		              </span>
+								</div>
+								<div class="list even col-3 flex-box-v flex-h-ce flex-h-zhu" onclick="selectGift(this,event)" tapmode="">
+									<div class="img" ></div>
+									<div class="price flex-box flex-h-ce">
+										<span></span>
+										<span class="diamond"></span>
+									</div>
+									<div class="xp text-overflow">+<span>1</span>经验值</div>
+									<span class="ct-icon-select-yes hidden">
+		             	 	<span class="path1"></span><span class="path2"></span>
+		              </span>
+								</div>
+								<div class="list odd col-3 flex-box-v flex-h-ce flex-h-zhu" onclick="selectGift(this,event)" tapmode="">
+									<div class="img" ></div>
+									<div class="price flex-box flex-h-ce">
+										<span></span>
+										<span class="diamond"></span>
+									</div>
+									<div class="xp text-overflow">+<span>1</span>经验值</div>
+									<span class="ct-icon-select-yes hidden">
+		             	 	<span class="path1"></span><span class="path2"></span>
+		              </span>
+								</div>
+							</div>
+						</div>
+						<div id="pointer">
+							<a id="p0" class="point active"></a>
+							<a id="p1" class="point"></a>
+							<a id="p2" class="point"></a>
+						</div>
+					</div>
+					<!-- 充值 -->
+					<div class="flex-box flex-h-ce recharge ">
+						<div class="flex-1 flex-box flex-h-ce">
+							<div onclick="openWin('recharge','recharge','充值','mine','recharge')" tapmode="">
+								充值：<span>0</span>
+								<span class="diamond"></span>
+								<span class="ct-icon-arrow-right"></span>
+							</div>
+						</div>
+						<div class="send hidden">发送</div>
+						<div class=" liansong flex-box-v flex-h-ce flex-h-zhu"><span>8</span><div>连送</div></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/swipe.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript" src="../../script/jquery.ellipsis.js" ></script>
+	<script type="text/template" template="main">
+		<!-- 礼物 充值 -->
+		<div class="gift_box ">
+			<!-- 礼物 -->
+			<div id="slider" class="swipe">
+				<div class="swipe-wrap">
+					{{? it instanceof Array && it.length != 0}}
+					<!--<div class="gift_wrap">-->
+						
+						{{ for(var i=0;i< getPage(it.length);i++) { }}
+						<div class="row">
+							{{ for(var j=(i*8);j<getP(i, it.length);j++) { }}
+								<div class="list odd {{? j >=4}}{{? j%2 == 0}}even {{?}} {{??}}{{? j%2 != 0}}even {{?}} {{?}}col-3 flex-box-v flex-h-ce flex-h-zhu" gift = {{= JSON.stringify(it[j])}} onclick="selectGift(this,event)" tapmode="">
+									<div class="img" style="background-image: url({{= it[j].img}});"></div>
+									<div class="price flex-box flex-h-ce">
+										<span>{{= it[j].price }}</span>
+										<span class="diamond"></span>
+									</div>
+									<div class="xp text-overflow">+<span>{{= it[j].exp}}</span>经验值</div>
+									<span class="ct-icon-select-yes hidden">
+		             	 	<span class="path1"></span><span class="path2"></span>
+		              </span>
+								</div>
+							{{ } }}
+						</div>
+						{{ } }}
+					
+					{{?}}
+				</div>
+				<!--</div>-->
+				<div id="pointer" class="">
+					{{ for(var i=0;i< getPage(it.length);i++) { }}
+						<a id="p{{=i}}" class="point{{? i==0}} active{{?}}"></a>
+					{{ } }}
+				</div>
+			</div>
+			<!-- 充值 -->
+			<div class="flex-box flex-h-ce recharge ">
+				<div class="flex-1 flex-box flex-h-ce">
+					<div onclick="openWin('recharge','recharge','充值','mine','recharge')" tapmode="">
+						充值：<span class="diamond_num">{{= $api.getStorage(CONFIG.memberInfo).diamonds}}</span>
+						<span class="diamond"></span>
+						<span class="ct-icon-arrow-right"></span>
+					</div>
+				</div>
+				<div class="send " onclick="sendGiftOfLacal()" tapmode=''>发送</div>
+				<div class="hidden liansong flex-box-v flex-h-ce flex-h-zhu" onclick="sendGiftOfLacal(1)" tapmode=''><span>5</span><div>连送</div></div>
+			</div>
+		</div>
+	</script>
+	
+	<script type="text/javascript">
+		var values = {};
+		var memberinfo;
+		var liansongTimeout = true;
+		values.id = $api.getStorage(CONFIG.memberId);
+		values.token = $api.getStorage(CONFIG.token);
+		var giftInfo={
+			giftid: 0,
+			number: 0,
+			img: '',
+			name: '',
+			price: '',
+			memberid: values.id,
+			avatar: $api.getStorage(CONFIG.memberInfo) && $api.getStorage(CONFIG.memberInfo).avatar,
+			nickname: $api.getStorage(CONFIG.memberInfo) && $api.getStorage(CONFIG.memberInfo).nickname,
+			level: $api.getStorage(CONFIG.memberInfo) && $api.getStorage(CONFIG.memberInfo).level
+		};
+		var timer = '';
+		function getN(j) {
+			// console.log(j)
+			return ct[j];
+		}
+	
+		function getP(i, it) {
+			var page = 0;
+			page = parseInt(it/8);
+			if(it%8!= 0) {
+				page += 1;
+			}
+			var more = it%8;
+			if(i == parseInt(page -1)) {
+				if(more == 0) {
+					more = 8;
+				}
+				return parseInt(8*(i) + more);
+			}
+			return parseInt(8*(i+1));
+		}
+	
+		function getPage(page) {
+			var len = 0;
+			len = parseInt(page/8);
+			if(page%8!= 0) {
+				len += 1;
+			}
+			// console.log(len)
+			return len;
+		}
+	
+	
+		function selectGift(_this,event){
+			event.stopPropagation();
+			var select_yes = $api.dom(_this,'.ct-icon-select-yes'),
+					check = $api.domAll('.check');
+			// 处理 送出礼物
+			if(giftInfo.giftid != 0 && giftInfo.number > 0){
+				pushGiftToServer(1,giftInfo);
+				giftInfo.number = 0;
+			}
+			var gift = JSON.parse($api.attr(_this,'gift'));
+			
+			giftInfo.giftid = gift.id;
+			giftInfo.number = 0;
+			giftInfo.price = gift.price;
+			giftInfo.img = $api.getStorage('giftid'+gift.id)||gift.img; //礼物图片缓存读取
+			giftInfo.name = gift.name;
+			if(check.length != 0){
+				$api.addCls(check[0],'hidden');
+				$api.removeCls(check[0],'check');
+			}
+			if($api.hasCls(select_yes),'hidden'){
+				$api.removeCls(select_yes,'hidden');
+				$api.addCls(select_yes,'check');
+			}
+		}
+			
+		//轮播
+		function picSwipe() {
+		window.mySwipe = new Swipe(document.getElementById('slider'), {
+			startSlide: 0,
+			auto: 0,
+			speed: 400,
+			continuous: true,
+			disableScroll: false,
+			stopPropagation: false,
+			callback: function(index, elem) {
+				try {
+					var pointer = $api.byId('pointer');
+					var p = $api.domAll(pointer, '.point');
+					if (index == p.length) {
+						for (var i = 0; i < p.length; i++) {
+							$api.removeCls(p[i], 'active');
+						}
+						$api.addCls($api.byId('p0'), 'active');
+					} else if (index - p.length == 1) {
+						for (var i = 0; i < p.length; i++) {
+							$api.removeCls(p[i], 'active');
+						}
+						$api.addCls($api.byId('p1'), 'active');
+					} else {
+						for (var i = 0; i < p.length; i++) {
+							$api.removeCls(p[i], 'active');
+						}
+						$api.addCls($api.byId('p' + index), 'active');
+					}
+				} catch (e) {}
+			},
+			transitionEnd: function(index, elem) {}
+		});
+	}
+		// 送礼物
+		function sendGiftOfLacal(liansong){
+			if(liansongTimeout){
+				liansongTimeout = false;
+				setTimeout(function(){
+					liansongTimeout=true;
+				},200);
+			}else{
+				return ;
+			}
+			if(giftInfo.giftid == 0){
+				Tool.toast('请选择要送给主播的礼物~');
+				return ;
+			}
+			if(parseInt($api.text($api.dom('.diamond_num'))) < parseInt(giftInfo.price)){
+				Tool.toast('钻石余额不足，请充值~');
+				return ;
+			}else{
+				$api.text($api.dom('.diamond_num'),parseInt($api.text($api.dom('.diamond_num')))-parseInt(giftInfo.price));
+			}
+			giftInfo.number += 1;
+			if(timer != ''){
+				clearInterval(timer);
+			}
+			$api.text($api.dom('.liansong > span'),5);
+			if(!liansong){
+				$api.addCls($api.dom('.send'),'hidden');
+				$api.removeCls($api.dom('.liansong'),'hidden')
+			}
+			api.sendEvent({
+				name: 'sendGiftOfLacal',
+				extra: giftInfo
+			})
+			var time = 5;
+			function timeInterval(){
+				time -= 1;
+				if(time == 0){
+					pushGiftToServer(1,giftInfo);
+					giftInfo.number = 0;
+				}else{
+					$api.text($api.dom('.liansong > span'),time);
+				}
+			}
+			timer = setInterval(timeInterval,1000);
+		}
+		
+		function pushGiftToServer(notclose,ginfo){
+			if(timer != ''){
+				clearInterval(timer);
+			}
+			if(notclose){
+				$api.removeCls($api.dom('.send'),'hidden')
+				$api.addCls($api.dom('.liansong'),'hidden');
+				$api.text($api.dom('.liansong > span'),5);
+			}
+			api.sendEvent({
+				name: 'pushGiftToServer',
+				extra: ginfo
+			})
+		}
+		
+		function init(){
+			ajax.get({
+//				ctrl: 'zhiboApp',
+				ctrl: 'zhiboApp',
+				fn: 'gift',
+				data: {
+					values: values
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: false,
+				success: function(ct) {
+					T.html('#footer','main',ct);
+					$api.css($api.dom('.gift_box'),'height:0');
+					var boxheight = $api.dom('.swipe').offsetHeight + $api.dom('.recharge').offsetHeight;
+					setTimeout(function(){
+						$api.css($api.dom('.gift_box'),'height:'+boxheight+'px');
+					})
+					ellipsisOne();
+					picSwipe();
+				}
+			});
+		}
+		apiready = function(){
+			init();
+			$api.addEvt($api.dom('#main'),'click',function(){
+				// 处理 送出礼物
+				if(giftInfo.giftid != 0 && giftInfo.number > 0){
+					pushGiftToServer(null,giftInfo);
+					giftInfo.number = 0;
+				}
+				api.sendEvent({
+					name: 'bottom'
+				});
+				setTimeout(function(){
+					api.closeFrame();
+				},10);
+			});
+			
+			//监听充值成功
+			api.addEventListener({
+				name: 'diamonds'
+			},function(ret){
+				if(ret && ret.value){
+					var diamonds = ret.value.diamonds;
+					memberinfo = $api.getStorage(CONFIG.memberInfo);
+					memberinfo.diamonds = parseInt(diamonds);
+					$api.html($api.dom('.diamond_num'),parseInt(diamonds));
+					$api.setStorage(CONFIG.memberInfo, memberinfo);
+				}
+			});
+		}
+	</script>
+</html>

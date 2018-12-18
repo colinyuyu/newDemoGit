@@ -1,0 +1,108 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta name="format-detection" content="telephone=no">
+		<title>观看直播</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css" />
+		<style type="text/css">
+			html, body, #wrap, #main {
+				background-color: transparent;
+			}
+			.img {
+				width: 100%;
+				/*height: inherit;*/
+				/*background-image: url(../../image/avatar.jpg);*/
+				background-size: cover;
+				background-repeat: no-repeat;
+				background-position: center;
+			}
+			.filter_img {
+				-webkit-filter: blur(5px);
+				-moz-filter: blur(5px);
+				-ms-filter: blur(5px);
+				filter: blur(5px);
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main" class="flex-box">
+				<div class="img flex-1"></div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/gotyeLive.Core.js"></script>
+	<script type="text/javascript" src="../../script/gotyeLive.Chat.js"></script>
+	<script type="text/javascript" src="../../script/gotyeLive.Player.js"></script>
+	<script type="text/javascript" src="../../script/gotyeLive.Publisher.js"></script>
+	<script type="text/javascript" src="../../script/gotyeLiveSmall.Core.js"></script>
+	<script type="text/javascript" src="../../script/gotyeLiveSmall.Chat.js"></script>
+	<script type="text/javascript" src="../../script/gotyeLiveSmall.Player.js"></script>
+	<script type="text/javascript" src="../../script/gotyeLiveSmall.Publisher.js"></script>
+	<script type="text/javascript" src="../../script/audience.js" ></script>
+	<script type="text/javascript" src="../../script/rongCloud.js" ></script>
+	<script type="text/javascript" src="../../script/audienceSmall.js" ></script>
+	<script type="text/javascript" src="../../script/rongCloud2.js" ></script>
+	<script type="text/javascript">
+		apiready = function() {
+			sendTime(); //查询时间收费2次了吗
+			Audience.init();
+	
+			//Audience.smallinit();
+		}
+		function sendTime() {
+		api.ajax({
+    url: window.DOMAIN+'/zhiboApp/chaxun',
+    method: 'post',
+    async : false, //或false,是否异步
+    data: {
+        values: {
+           id : api.pageParam.memberid, //当前用户改为主播id$api.getStorage(CONFIG.memberId),
+					 token : $api.getStorage(CONFIG.token),
+					 roomid : api.pageParam.roomid,
+					 uid : $api.getStorage(CONFIG.memberId)
+        }
+    }
+}, function(data, err) {
+
+     if (data.content.timePrice != 0&&data.content.timePrice > 0) {
+					var memberInfo= $api.getStorage('memberInfo');
+					//if(memberInfo.diamonds<=0||data.res<=0){
+					//alert('余额不足!');
+							//Audience.quitLive(); //关闭
+					
+					 // }
+					  charging(); //调用common踢人优化更改 这个本身就是按时间收费了
+						// window.setInterval(charging, 60000);
+						
+						 } else {
+						 return;
+						 }
+});
+
+
+
+		}
+
+		
+
+		function quit() {
+		
+			api.sendEvent({
+				name : 'closeLive'
+			});
+			
+				api.closeFrameGroup({
+					name : 'liveGroup'
+				});
+				api.closeWin(); //关闭当前窗口
+			
+		}
+	</script>
+</html>

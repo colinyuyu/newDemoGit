@@ -1,0 +1,431 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>回放直播列表</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			#main {
+				font-size: 14px;
+				background-color: #FCFBF5;
+			}
+			.top {
+				padding: 15px 10px;
+				border-bottom: 1px solid #F3F3F3;
+				background-color: #fff;
+			}
+			.top > div,
+			.top > div > span >span{
+				color: #909090;
+			}
+			.top > div > span{
+				padding: 0 5px;
+			}
+			.top > div > span > span.active {
+				color: #FE5F99;
+			}
+			.live {
+				padding-left: 10px;
+				background-color: #fff;
+			}
+			.img-frm,
+			.img {
+				background-image: url(../../image/avatar.jpg);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				border-radius: 50%;
+				width: 40px;
+				height: 40px;
+			}
+			.content {
+				min-height: 65px;
+				padding: 10px 0;
+				margin-left: 15px;
+				border-bottom: 1px solid #F5F5F5;
+			}
+			p {
+				color: #D9D9D9;
+				padding-top: 8px;
+			}
+			.num {
+				font-size: 16px;
+				color: #FE5F99;
+			}
+			.ct-icon-del{
+				padding: 5px;
+				font-size: 24px;
+				color: #AAAAAA;
+			}
+			.null_img{
+				background-image: url(../../image/null_live.png);
+				background-size: contain;
+				background-position: center;
+				background-repeat: no-repeat;
+				width: 100%;
+				height: 150px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main" class="flex-box-v">
+				<div class="flex-box top">
+					<div class="flex-1 record"><span style="color: inherit;">0</span>个精彩回放</div>
+					<div class="flex-1 text-right">
+						<span onclick="switchBtn(this)" tapmode="">
+							<span class="active">最新</span>
+						</span>
+						<span onclick="switchBtn(this)" tapmode="">
+							<span class="hot">最热</span>
+						</span>
+					</div>
+				</div>
+				<div class="live_box flex-1 flex-box-v">
+					<div class="live ">
+						<div class="list flex-box flex-h-ce hidden">
+							<div class="img-frm">
+								<div class="img"></div>
+							</div>
+							<div class="content flex-box flex-1 flex-h-ce">
+								<div class="title flex-1 flex-box flex-h-ce">标题党标题党标题党</div>
+								<div class="text-right info " style="padding-right: 10px;">
+									<div class="num">1555</div>
+									<p>1小时前</p>
+								</div>
+								<div class="text-right del hidden" style="padding-right: 10px;">
+									<div class="ct-icon-del"></div>
+								</div>
+							</div>
+						</div>
+						<div class="list flex-box flex-h-ce hidden">
+							<div class="img-frm">
+								<div class="img"></div>
+							</div>
+							<div class="content flex-box flex-1">
+								<div class="title flex-1 flex-box flex-h-ce">标题党标题党标题党</div>
+								<div class="text-right info" style="padding-right: 10px;">
+									<div class="num">1555</div>
+									<p>3天前</p>
+								</div>
+								<div class="text-right del hidden" style="padding-right: 10px;">
+									<div class="ct-icon-del"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript" src="../../script/jquery.lazyload.min.js" ></script>
+	<script type="text/template" template="main">
+		{{? it instanceof Array &&　it.length != 0}}
+			<div class="live">
+				{{~ it:value:index}}
+				<div class="list flex-box flex-h-ce" onclick="getLive('{{= value.recordingid}}','{{= value.id}}')" tapmode>
+					<div class="img-frm">
+						<div class="img" data-original="{{= Tool.imageCompressByQiNiu(value.avatar,0,200,200)}}"></div>
+					</div>
+					<div class="content flex-box flex-1 flex-h-ce">
+						<div class="title flex-1 flex-box flex-h-ce">{{= value.name}}</div>
+						<div class="text-right info " style="padding-right: 10px;">
+							<div class="num">{{= value.readnum}}</div>
+							<p>{{= D.t2(value.createdtime)}}</p>
+						</div>
+						<div class="text-right del hidden" style="padding-right: 10px;">
+							<div class="ct-icon-del" onclick="del(this, event, '{{= value.id}}')" tapmode></div>
+						</div>
+					</div>
+				</div>
+				{{~}}
+			</div>
+		{{??}}
+			<div class="flex-box-v flex-1">
+				<div class="flex-1  flex-box flex-h-ce">
+					<div class="null_img"></div>
+				</div>
+			</div>
+		{{?}}
+	</script>
+	<script type="text/template" template="list">
+		{{? it instanceof Array &&　it.length != 0}}
+			{{~ it:value:index}}
+			<div class="list flex-box flex-h-ce" onclick="getLive('{{= value.recordingid}}','{{= value.id}}')" tapmode>
+				<div class="img-frm">
+					<div class="img" data-original="{{= Tool.imageCompressByQiNiu(value.avatar,0,200,200)}}"></div>
+				</div>
+				<div class="content flex-box flex-1 flex-h-ce">
+					<div class="title flex-1 flex-box flex-h-ce">{{= value.name}}</div>
+					<div class="text-right info " style="padding-right: 10px;">
+						<div class="num">{{= value.readnum}}</div>
+						<p>{{= D.t2(value.createdtime)}}</p>
+					</div>
+					<div class="text-right del hidden" style="padding-right: 10px;">
+						<div class="ct-icon-del" onclick="del(this, event, '{{= value.id}}')" tapmode></div>
+					</div>
+				</div>
+			</div>
+			{{~}}
+		</div>
+		{{?}}
+	</script>
+	<script type="text/javascript">
+		var hot = 0;
+		var args = {
+			ctrl: 'zhiboApp',
+			fn: 'video',
+			values: {
+				id: $api.getStorage(CONFIG.memberId),
+				token: $api.getStorage(CONFIG.token),
+				hot: 0
+			},
+			container: '.live_box',
+			countSelector: '.live > div',
+			template: 'main',
+			success:function(){
+				$('div.img').lazyload({
+		      effect : "fadeIn"
+		    });
+			}
+		};
+		var memberinfo;
+		//切换 最新 最热
+		function switchBtn(_this){
+			var swtich_btn = $api.closest(_this,'div'),
+					active = $api.domAll('.active');
+			if(active.length != 0){
+				$api.removeCls(active[0],'active');
+			}
+			$api.addCls($api.dom(_this,'span'),'active');
+			if($api.hasCls($api.dom(_this,'span'),'hot')){
+				hot = 1;
+				args.values.hot = hot;
+			}else{
+				hot = 0;
+				args.values.hot = hot;
+			}
+			video();
+		}
+		//管理
+		function manage(type){
+			if(type == 1){
+				$api.addCls($api.dom('.top .text-right'),'hidden');
+				var infos = $api.domAll('.info');
+				var dels = $api.domAll('.del');
+				for(var i = 0; i < infos.length; i++){
+					$api.addCls(infos[i],'hidden');
+					$api.removeCls(dels[i],'hidden');
+				}
+				api.setFrameAttr({
+					name: 'my_live_list',
+					bounces:false
+				})
+			}else if(type == 2){
+				$api.removeCls($api.dom('.top .text-right'),'hidden');
+				var infos = $api.domAll('.info');
+				var dels = $api.domAll('.del');
+				for(var i = 0; i < infos.length; i++){
+					$api.removeCls(infos[i],'hidden');
+					$api.addCls(dels[i],'hidden');
+				}
+				api.setFrameAttr({
+					name: 'my_live_list',
+					bounces: true
+				})
+			}
+		}
+		
+		//删除回放视频
+		function del(_this,event, vid){
+			event.stopPropagation();
+			var live = $api.closest(_this,'.list');
+			api.confirm({
+				title: '提示消息',
+				msg: '确定要删除该回放视频吗？',
+				buttons: ['确定','取消']
+			},function(ret){
+				if(ret.buttonIndex == 1){
+					ajax.get({
+						ctrl: 'zhiboApp',
+						fn: 'delvideo',
+						data: {
+							values: {
+								id: $api.getStorage(CONFIG.memberId),
+								token: $api.getStorage(CONFIG.token),
+								vid: vid
+							}
+						},
+						hideLoading: true,
+						showError: true,
+						showProgress: false,
+						success: function(ct) {
+							$api.remove(live);
+							memberinfo = $api.getStorage(CONFIG.memberInfo);
+							if(parseInt(memberinfo.video) == 1){
+								$api.text($api.dom('.record > span'), 0);
+							}else{
+								$api.text($api.dom('.record > span'), parseInt(memberinfo.video) - 1);
+							}
+						}
+					});
+				}
+			})
+		}
+		
+		//获取 直播视频 
+		function video(){
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'video',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						hot: hot
+					}
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: false,
+				success: function(ct) {
+					T.html('.live_box','main',ct);
+					$('div.img').lazyload({
+			      effect : "fadeIn"
+			    });
+				}
+			});
+		}
+		
+		//获取视频观看地址
+		function getLive(recordingid,vid){
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'video_dl',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						recordingid: recordingid
+					}
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: false,
+				success: function(ct) {
+					if(ct.downUrl){
+						playback(ct.downUrl,vid);
+					}else{
+						Tool.toast('视频合成中~');
+					}
+				}
+			});
+		}
+		
+		//记录观看人数
+		function playbackadd(downUrl,vid){
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'playbackadd',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						vid: vid
+					}
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: false,
+				success: function(ct) {
+					videoPlay(downUrl);
+				}
+			});
+		}
+		
+		//打开播放视频
+		function videoPlay(downUrl){
+			var videoPlayer = api.require('videoPlayer');
+			videoPlayer.play({
+		    path: downUrl,
+//		    autorotation: false,
+		    fixed: true,
+		    autoPlay: true,
+	     	styles: {
+	        head: {
+            height: 44,
+            backSize: 35,
+            setSize: 30,
+	        },
+	        foot: {
+            height: 44,
+            playSize: 30,
+            nextSize: 0,
+            timeSize: 14,
+            timeColor: '#fff',
+            progressColor: '#FFF',
+            progressSelected: '#FE5F99'
+	        }
+		    },
+			}, function(ret, err) {
+					//打开 回放 交互层
+					//openPlayBack();
+			});
+//			setTimeout(function(){
+//				videoPlayer.cancelFullScreen();
+//			},500)
+		}
+		
+		//回放视频
+		function playback(downUrl,vid){
+//			api.openWin({
+//				name: 'playback',
+//				url: api.wgtRootDir + '/zhibo/html/find/playback.html',
+//				bgColor: 'transparent',
+//				bounces: false,
+//				rect:{
+//					x: 0,
+//					y: 0,
+//					w: api.winWidth,
+//					h: api.winHeight
+//				},
+//				pageParam:{
+//					url: downUrl
+//				},
+//				slidBackEnabled: false
+//			});
+			playbackadd(downUrl,vid);
+		}
+		
+		apiready = function(){
+			memberinfo = $api.getStorage(CONFIG.memberInfo);
+			$api.html($api.dom('.record > span'),memberinfo.video);
+			video();
+			Refresh.init(args);
+			LoadMore.init({
+				ctrl: 'zhiboApp',
+				fn: 'video',
+				values: {
+					id: $api.getStorage(CONFIG.memberId),
+					token: $api.getStorage(CONFIG.token),
+					hot: args.values.hot
+				},
+				wrapper: '.live',
+				countSelector: '.live > div',
+				template: 'list',
+			},function(ct, page){
+				$('div.img').slice((page - 1) * 10).lazyload({
+		      effect : "fadeIn"
+		    });
+			});
+		}
+	</script>
+</html>

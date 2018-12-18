@@ -1,0 +1,497 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>Document</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			/* 礼物  */
+			html,
+			body,
+			#wrap{
+				background-color: transparent;
+			}
+			#main {
+				position: relative;
+				background-color: transparent;
+			}
+			.swipe-wrap .img {
+				background-image: url(../../image/logo.png);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				width: 60px;
+				height: 60px;
+			}
+			.gift_wrap {
+				background-color: rgba(0,0,0,0.3);
+			}
+			.gift_wrap > div {
+				padding: 6px 0;
+				border-right: 1px solid #909090;
+			}
+			.gift_wrap > div:last-child{
+				border: 0;
+			}
+			.row .img{
+				background-image: url(../../image/ring.png);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: contain;
+				width: 35px;
+				height: 35px;
+				border-radius: 0;
+				margin-top: 10px;
+			}
+			.price {
+				padding: 5px 0;
+			}
+			.price > span {
+				color: #FE5F99;
+			}
+			.diamond {
+				background-image: url(../../image/diamond.png);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				width: 13px;
+				height: 10px;
+				margin-left: 5px;
+			}
+			.xp {
+				color: #D9D9D9;
+				font-size: 10px;
+			}
+			.xp > span {
+				color: #D9D9D9;
+			}
+			/*.gift_wrap > div:not(:first-child){
+				border-top: 1px solid #DCDCDC;
+			}
+			.gift_wrap > div.border_bottom {
+				border-bottom: 1px solid #EDEDED;
+			}*/
+			.recharge {
+				font-size: 14px;
+				padding: 10px;
+				background-color: rgba(0,0,0,0.35);
+				position: relative;
+			}
+			.recharge > div > div,
+			.recharge > div > div > span{
+				color: #FE5F99;
+			}
+			.recharge .ct-icon-arrow-right {
+				color: #FE5F99;
+				font-size: 14px;
+				padding-left: 3px;
+			}
+			.list {
+				padding: 0 15px;
+				position: relative;
+			}
+			.recharge .send {
+				color: #313131;
+				background-color: #FFDE3F;
+				padding: 5px 15px;
+				border-radius: 20px;
+			}
+			.ct-icon-select-yes {
+				position: absolute;
+				top: 5px;
+				right: 9px;
+			}
+			.ct-icon-select-yes .path2::before{
+				color: rgba(0,0,0,0.2);
+			}
+			/* 连送 */
+			.recharge .liansong {
+				color: #313131;
+				background-color: #FFDE3F;
+				position: absolute;
+				right: -8px;
+				top: -13px;
+				border-radius: 50%;
+				width: 55px;
+				height: 55px;
+			}
+			.liansong > div {
+				color: #313131;
+			}
+			.gift_box {
+				overflow: hidden;
+				position: absolute;
+				width: 100%;
+				bottom: 0;
+			}
+			.swipe-wrap {
+				background-color: rgba(0,0,0,0.3);
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+				
+
+			</div>
+			<div id="footer">
+				<!-- 礼物 充值 -->
+				<div class="gift_box ">
+					<!-- 礼物 -->
+					<div class="gift_wrap">
+						<div class="row">
+							<div class="list col-3 flex-box-v flex-h-ce flex-h-zhu">
+								<div class="img"></div>
+								<div class="price flex-box flex-h-ce">
+									<span>1</span>
+									<span class="diamond"></span>
+								</div>
+								<div class="xp">+<span>10</span>经验值</div>
+								<span class="ct-icon-select-yes hidden">
+	             	 	<span class="path1"></span><span class="path2"></span>
+	              </span>
+							</div>
+							<div class="list col-3 flex-box-v flex-h-ce flex-h-zhu">
+								<div class="img"></div>
+								<div class="price flex-box flex-h-ce">
+									<span>1</span>
+									<span class="diamond"></span>
+								</div>
+								<div class="xp">+<span>10</span>经验值</div>
+								<span class="ct-icon-select-yes hidden">
+	             	 	<span class="path1"></span><span class="path2"></span>
+	              </span>
+							</div>
+							<div class="list col-3 flex-box-v flex-h-ce flex-h-zhu">
+								<div class="img"></div>
+								<div class="price flex-box flex-h-ce">
+									<span>1</span>
+									<span class="diamond"></span>
+								</div>
+								<div class="xp">+<span>10</span>经验值</div>
+								<span class="ct-icon-select-yes hidden">
+	             	 	<span class="path1"></span><span class="path2"></span>
+	              </span>
+							</div>
+							<div class="list col-3 flex-box-v flex-h-ce flex-h-zhu">
+								<div class="img"></div>
+								<div class="price flex-box flex-h-ce">
+									<span>1</span>
+									<span class="diamond"></span>
+								</div>
+								<div class="xp">+<span>10</span>经验值</div>
+								<span class="ct-icon-select-yes hidden">
+	             	 	<span class="path1"></span><span class="path2"></span>
+	              </span>
+							</div>
+							<div class="list col-3 flex-box-v flex-h-ce flex-h-zhu">
+								<div class="img"></div>
+								<div class="price flex-box flex-h-ce">
+									<span>1</span>
+									<span class="diamond"></span>
+								</div>
+								<div class="xp">+<span>10</span>经验值</div>
+								<span class="ct-icon-select-yes hidden">
+	             	 	<span class="path1"></span><span class="path2"></span>
+	              </span>
+							</div>
+							<div class="list col-3 flex-box-v flex-h-ce flex-h-zhu">
+								<div class="img"></div>
+								<div class="price flex-box flex-h-ce">
+									<span>1</span>
+									<span class="diamond"></span>
+								</div>
+								<div class="xp">+<span>10</span>经验值</div>
+								<span class="ct-icon-select-yes hidden">
+	             	 	<span class="path1"></span><span class="path2"></span>
+	              </span>
+							</div>
+							
+						</div>
+					</div>
+					
+					
+					
+					
+					
+					
+					
+					<div id="slider" class="swipe hidden">
+						<div class="swipe-wrap">
+							<div class="flex-box flex-h-ce gift_wrap ">
+								<div class="flex-1 flex-box-v flex-h-ce flex-h-zhu list" onclick="selectGift(this,event)" tapmode="">
+									<div class="img"></div>
+									<div class="price flex-box flex-h-ce">
+										<span>1</span>
+										<span class="diamond"></span>
+									</div>
+									<div class="xp">+<span>10</span>经验值</div>
+									<span class="ct-icon-select-yes hidden">
+		             	 	<span class="path1"></span><span class="path2"></span>
+		              </span>
+								</div>
+								<div class="flex-1 flex-box-v flex-h-ce flex-h-zhu list"  onclick="selectGift(this,event)" tapmode="">
+									<div class="img"></div>
+									<div class="price flex-box flex-h-ce">
+										<span>1</span>
+										<span class="diamond"></span>
+									</div>
+									<div class="xp">+<span>10</span>经验值</div>
+									<span class="ct-icon-select-yes hidden">
+		             	 	<span class="path1"></span><span class="path2"></span>
+		              </span>
+								</div>
+								<div class="flex-1 flex-box-v flex-h-ce flex-h-zhu list"  onclick="selectGift(this,event)" tapmode="">
+									<div class="img"></div>
+									<div class="price flex-box flex-h-ce">
+										<span>1</span>
+										<span class="diamond"></span>
+									</div>
+									<div class="xp">+<span>10</span>经验值</div>
+									<span class="ct-icon-select-yes hidden">
+		             	 	<span class="path1"></span><span class="path2"></span>
+		              </span>
+								</div>
+								<div class="flex-1 flex-box-v flex-h-ce flex-h-zhu list" onclick="selectGift(this,event)" tapmode="">
+									<div class="img"></div>
+									<div class="price flex-box flex-h-ce">
+										<span>1</span>
+										<span class="diamond"></span>
+									</div>
+									<div class="xp">+<span>10</span>经验值</div>
+									<span class="ct-icon-select-yes hidden">
+		             	 	<span class="path1"></span><span class="path2"></span>
+		              </span>
+								</div>
+							</div>
+						</div>
+						<div id="pointer">
+							<a id="p0" class="point active"></a>
+							<a id="p1" class="point"></a>
+							<a id="p2" class="point"></a>
+						</div>
+					</div>
+					
+					<!-- 充值 -->
+					<div class="flex-box flex-h-ce recharge ">
+						<div class="flex-1 flex-box flex-h-ce">
+							<div onclick="openWin('recharge','recharge','充值','mine','recharge')" tapmode="">
+								充值：<span>0</span>
+								<span class="diamond"></span>
+								<span class="ct-icon-arrow-right"></span>
+							</div>
+						</div>
+						<div class="send ">发送</div>
+						<div class="hidden liansong flex-box-v flex-h-ce flex-h-zhu">8<div>连送</div></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/swipe.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/template" template="main">
+		<!-- 礼物 充值 -->
+		<div class="gift_box ">
+			<!-- 礼物 -->
+			<div id="slider" class="swipe">
+				<div class="swipe-wrap">
+					{{? it instanceof Array && it.length != 0}}
+					<!--<div class="gift_wrap">-->
+						
+						{{ for(var i=0;i< getPage(it.length);i++) { }}
+						<div class="row">
+							{{ for(var j=(i*8);j<getP(i, it.length);j++) { }}
+								<div class="list col-3 flex-box-v flex-h-ce flex-h-zhu"  onclick="selectGift(this,event)" tapmode="">
+									<div class="img"></div>
+									<div class="price flex-box flex-h-ce">
+										<span>{{= it[j].num }}</span>
+										<span class="diamond"></span>
+									</div>
+									<div class="xp">+<span></span>经验值</div>
+									<span class="ct-icon-select-yes hidden">
+		             	 	<span class="path1"></span><span class="path2"></span>
+		              </span>
+								</div>
+							{{ } }}
+						</div>
+						{{ } }}
+					
+					{{?}}
+				</div>
+				<!--</div>-->
+				<div id="pointer" class="">
+					{{ for(var i=0;i< getPage(it.length);i++) { }}
+						<a id="p{{=i}}" class="point{{? i==0}} active{{?}}"></a>
+					{{ } }}
+				</div>
+			</div>
+			<!-- 充值 -->
+			<div class="flex-box flex-h-ce recharge ">
+				<div class="flex-1 flex-box flex-h-ce">
+					<div onclick="openWin('recharge','recharge','充值','mine','recharge')" tapmode="">
+						充值：<span>0</span>
+						<span class="diamond"></span>
+						<span class="ct-icon-arrow-right"></span>
+					</div>
+				</div>
+				<div class="send ">发送</div>
+				<div class="hidden liansong flex-box-v flex-h-ce flex-h-zhu">8<div>连送</div></div>
+			</div>
+		</div>
+	</script>
+	
+	<script type="text/javascript">
+		var ct = [{
+				num: 1,
+				exp: 10
+			},{
+				num: 2,
+				exp: 20
+			},{
+				num: 3,
+				exp: 30
+			},{
+				num: 4,
+				exp: 40
+			},{
+				num: 5,
+				exp: 50
+			},{
+				num: 6,
+				exp: 60
+			},{
+				num: 7,
+				exp: 70
+			},{
+				num: 8,
+				exp: 80
+			},{
+				num: 9,
+				exp: 90
+			},{
+				num: 10,
+				exp: 100
+			},{
+				num: 11,
+				exp: 110
+			},{
+				num: 12,
+				exp: 120
+			},{
+				num: 13,
+				exp: 130
+			},{
+				num: 14,
+				exp: 140
+			},{
+				num: 15,
+				exp: 150
+			},{
+				num: 16,
+				exp: 150
+			},{
+				num: 17,
+				exp: 150
+			}]
+
+	function getN(j) {
+		// console.log(j)
+		return ct[j];
+	}
+
+	function getP(i, it) {
+		var page = 0;
+		page = parseInt(it/8);
+		if(it%8!= 0) {
+			page += 1;
+		}
+		var more = it%8;
+		if(i == parseInt(page -1)) {
+			if(more == 0) {
+				more = 8;
+			}
+			return parseInt(8*(i) + more);
+		}
+		return parseInt(8*(i+1));
+	}
+
+	function getPage(page) {
+		var len = 0;
+		len = parseInt(page/8);
+		if(page%8!= 0) {
+			len += 1;
+		}
+		// console.log(len)
+		return len;
+	}
+
+
+		function selectGift(_this,event){
+			event.stopPropagation();
+			var select_yes = $api.dom(_this,'.ct-icon-select-yes'),
+					check = $api.domAll('.check');
+			if(check.length != 0){
+				$api.addCls(check[0],'hidden');
+				$api.removeCls(check[0],'check');
+			}
+			if($api.hasCls(select_yes),'hidden'){
+				$api.removeCls(select_yes,'hidden');
+				$api.addCls(select_yes,'check');
+			}
+		}
+		
+//轮播
+function picSwipe() {
+	window.mySwipe = new Swipe(document.getElementById('slider'), {
+		startSlide: 0,
+		auto: 4000,
+		speed: 400,
+		continuous: true,
+		disableScroll: false,
+		stopPropagation: false,
+		callback: function(index, elem) {
+			try {
+				var pointer = $api.byId('pointer');
+				var p = $api.domAll(pointer, '.point');
+				if (index == p.length) {
+					for (var i = 0; i < p.length; i++) {
+						$api.removeCls(p[i], 'active');
+					}
+					$api.addCls($api.byId('p0'), 'active');
+				} else if (index - p.length == 1) {
+					for (var i = 0; i < p.length; i++) {
+						$api.removeCls(p[i], 'active');
+					}
+					$api.addCls($api.byId('p1'), 'active');
+				} else {
+					for (var i = 0; i < p.length; i++) {
+						$api.removeCls(p[i], 'active');
+					}
+					$api.addCls($api.byId('p' + index), 'active');
+				}
+			} catch (e) {}
+		},
+		transitionEnd: function(index, elem) {}
+	});
+}
+		
+		picSwipe() 
+		apiready = function(){
+			
+			T.html('#footer','main',ct);
+			picSwipe() 
+			$api.addEvt($api.dom('#main'),'click',function(){
+				api.closeFrame();
+				api.sendEvent({
+					name: 'bottom'
+				});
+			})
+		}
+	</script>
+</html>

@@ -1,0 +1,244 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>开播申请</title>
+		<link rel="stylesheet" type="text/css" href="../css/ct.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/sweetalert.css"/>
+		<style type="text/css">
+			#main {
+				padding: 0 10px;
+				font-size: 14px;
+			}
+			.tel,
+			.pwd,
+			.code{
+				padding-top: 30px;
+				padding-bottom: 10px;
+				border-bottom: 1px solid #d9d9d9;
+			}
+			input {
+				padding-left: 10px;
+				width: 100%;
+			}
+			.tel input::-webkit-input-placeholder,
+			.pwd input::-webkit-input-placeholder,
+			.code input::-webkit-input-placeholder{ 
+				color: #909090; 
+			} 
+			.tel input:-moz-placeholder,
+			.pwd input:-moz-placeholder,
+			.code input:-moz-placeholder{ 
+				color: #909090;
+			} 
+			.tel input::-moz-placeholder,
+			.pwd input::-moz-placeholder,
+			.code input::-moz-placeholder { 
+				color: #909090; 
+			} 
+			.tel input:-ms-input-placeholder,
+			.pwd input:-ms-input-placeholder,
+			.code input:-ms-input-placeholder{ 
+				color: #909090;
+			} 
+			.login_btn {
+				padding: 0 25px;
+				padding-top: 40px;
+			}
+			.login_btn > div {
+				border: 1px solid #FE5F99;
+				background-color: #f8dce6;
+				padding: 10px 0;
+				color: #FE5F99;
+				border-radius: 20px;
+			}
+			.forget {
+				color: #909090;
+				border-bottom: 1px solid #909090;
+			}
+			.get_code {
+				color: #909090;
+				font-size: 12px;
+				border-bottom: 1px solid #909090;
+			}
+			
+			textarea{
+				height: 180px;
+				width: 100%;
+				outline: none;
+				resize: none;
+				line-height: 1.5em;
+				font-size: 14px;
+				color: #909090;
+				border-bottom: 1px solid #909090;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main" >
+				<div class="pwd">
+					<input name="nickname" type="input" placeholder="违规主播昵称" />
+				</div>
+				<div class="pwd">
+					<input name="userID" type="input" placeholder="违规主播ID" />
+				</div>
+				<div class="text">
+					<textarea  name="details" maxlength="32"  >举报违规详情</textarea>
+				</div>
+				
+				<!--<div class="pwd">
+					<input name="pwd" type="password" placeholder="请输入6至16位密码" />
+				</div>-->
+				<div class="login_btn">
+					<div class="text-center" onclick="commit()" tapmode="">提交审核</div>
+				</div>
+				<!--<div class="text-center" style="padding-top: 30px;">
+					<span class="forget" onclick="openWin('win','agreement','用户协议','component','agreement')" tapmode="">用户许可及服务协议</span>
+				</div>-->
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../script/common.js" ></script>
+	<script type="text/javascript" src="../script/sweetalert.min.js" ></script>
+	<script type="text/javascript" src="../script/crypto-js.js" ></script>
+	<script type="text/javascript">
+		//点击获取验证码
+		function get_code(){
+			var tel = $api.trimAll($api.val($api.dom('[name=tel]')));
+			if(!validatePhone(tel)){
+				return;
+			}
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'sendmsg',
+				data: {
+					values: {
+						username: tel,
+						type: 1
+					}
+				},
+				showError: true,
+				showProgress: true,
+				hideLoading: true,
+				success: function(ct){
+					setTime();
+					Tool.toast('验证码发送成功，请注意查收~');
+				}
+			})
+		}
+		//倒计时
+		function setTime(){
+			var count = 60,
+					code = $api.dom('.get_code');
+			code.disabled = true;
+			var InterValObj = setInterval(function() {
+				if(count > 0) {
+					$api.text(code, (count--) + 's后再发送');
+				}else {
+					clearInterval(InterValObj);
+					code.disabled = false;
+					$api.text(code,'获取验证码');
+				}
+			},1000);
+		}
+		//点击 注册
+		function commit(){
+			var realname = $api.trimAll($api.val($api.dom('[name=realname]'))),
+					cardid = $api.trimAll($api.val($api.dom('[name=cardid]'))),
+			        tel = $api.trimAll($api.val($api.dom('[name=tel]'))),
+					code = $api.trimAll($api.val($api.dom('[name=code]')));
+					//pwd = $api.trimAll($api.val($api.dom('[name=pwd]')));
+			$api.dom('[name=realname]').blur();
+			$api.dom('[name=cardid]').blur();
+			$api.dom('[name=tel]').blur();
+			//$api.dom('[name=pwd]').blur();
+			if(realname == ''){
+				Tool.toast('姓名不能为空~');
+				return;
+			}
+			if(cardid == ''){
+				Tool.toast('身份证号码不能为空~');
+				return;
+			}
+			if(!validatePhone(tel)){
+				return;
+			}
+			if(!code){
+				Tool.toast('验证码不能为空~');
+				return;
+			}
+//			if(!validatePassword(pwd)){
+//				return;
+//			}
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'commitReview',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						realname:realname,
+						cardid:cardid,
+						tel: tel,
+						code: code
+					}
+				},
+				showError: true,
+				showProgress: true,
+				hideLoading: true,
+				success: function(ct){
+					if(ct.state == 1){
+					Tool.toast('验证码错误！');
+					}
+					if(ct.state == 2){
+					Tool.toast('审核已拒绝！');
+					}
+					if(ct.state == 3){
+					Tool.toast('正在审核！');
+					}
+					if(ct.state == 4){
+					Tool.toast('提交成功,正在审核中！');
+					}
+				}
+			})
+		}
+		//注册成功 自动登录
+		function autoLogin(param){
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'login',
+				data: {
+					values: {
+						username: param.username,
+						password: CryptoJS.MD5(param.password).toString(CryptoJS.enc.Hex),
+					}
+				},
+				showError: true,
+				showProgress: {
+					title: '登录中...'
+				},
+				hideLoading: true,
+				success: function(ct){
+					$api.setStorage(CONFIG.memberId,ct.id);
+					$api.setStorage(CONFIG.token,ct.token);
+					$api.setStorage(CONFIG.memberInfo,ct);
+					$api.setStorage('logints',new Date().getTime());
+					memberInfo();
+					setTimeout(function(){
+						Tool.initApp();
+					},300);
+				}
+			});
+		}
+		
+		
+		apiready = function(){
+		}
+	</script>
+</html>

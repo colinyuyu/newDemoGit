@@ -1,0 +1,75 @@
+﻿<!doctype html>
+<html>
+<head design-width="750">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<title>Demo</title>
+<link rel="stylesheet" href="../../xiaowucss/style.css" /><!--页面样式-->
+<link rel="stylesheet" href="../../xiaowucss/common.css" /><!--常用样式-->
+<link rel="stylesheet" href="../../xiaowucss/animate.min.css" /><!--CSS3动画库-->
+<script src="../../xiaowucss/auto-size.js"></script><!--设置字体大小-->
+</head>
+<body>
+	<div class="play">
+		<div class="focus" id="focus">
+			
+		</div>
+		
+		<div class="play-func">
+		
+		
+		
+			<div class="play-func-list" id="main">
+				
+			</div>
+			
+		</div>
+	</div>
+</body>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript" src="../../script/jquery.lazyload.min.js" ></script><script src="../../xiaowucss/version-3.2.8.js"></script><!--封装函数-->
+<script type="text/javascript">
+
+
+	
+	
+	apiready = function() {
+
+	//打开一个页面
+	var header = $api.dom('#focus');
+	
+			$api.fixIos7Bar(header);
+			var main = $api.dom('#main'), mainPos = $api.offset(main), headerPos = $api.offset(header)
+			//alert('gg'+JSON.stringify(api.pageParam));
+	api.openFrame({
+                name: 'bofangqi',
+                url: api.wgtRootDir + '/zhibo/html/live/bofangqi.html',
+                useWKWebView : true,
+                bounces: false,
+                rect: {
+                    x: 0,
+                    y: 0,
+                    w: api.winWidth,
+                    h: api.winHeight
+                },pageParam:{
+                             		name:api.pageParam.name,
+                             		touxiangshiping : api.pageParam.img,
+                             		id:api.pageParam.id,
+                             		uid:api.pageParam.uid,
+                             		videourl:api.pageParam.videourl
+                                     
+                                }
+            });
+	
+				
+				
+
+		}
+</script>
+
+</html>

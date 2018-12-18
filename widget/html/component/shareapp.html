@@ -1,0 +1,202 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>分享</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			html,
+			body,
+			#wrap,
+			#main {
+				background-color: transparent;
+			}
+			body{
+				overflow: hidden;
+			}
+			#main,
+			#footer {
+				font-size: 14px;
+			}
+			.share {
+				border-radius: 10px 10px 0 0;
+				background-color: #fff;
+				position: absolute;
+				width: 100%;
+				bottom: -150px;
+				transition: bottom linear 0.2s;
+				-moz-transition: bottom linear 0.2s;
+				-webkit-transition: bottom linear 0.2s;
+				-o-transition: bottom linear 0.2s;
+			}
+			.border_bottom{
+				padding: 10px 0;
+				border-bottom: 1px solid #D9D9D9;
+			}
+			.icon {
+				font-size: 40px;
+				padding-bottom: 10px;
+			}
+			.friend {
+				background-image: url(../../image/share-moments.png);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				width: 40px;
+				height: 40px;
+				margin: 0 auto;
+			}
+			.ct-icon-wechat{
+				color: #54C855;
+			}
+			.ct-icon-weibo{
+				color: #FA6820;
+			}
+			.ct-icon-qq{
+				color: #0085D8;
+			}
+			.share_btn {
+				padding: 15px 0;
+			}
+			.share_btn > div {
+				color: #767C7E;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+				
+			</div>
+			<div id="footer">
+				<div class="share">
+					<div class="border_bottom">
+						<div class="text-center">分享</div>
+					</div>
+					<div class="share_btn flex-box text-center">
+						<div class="flex-1" onclick="wx(1)" tapmode>
+							<div class="ct-icon-wechat icon"></div>
+							微信
+						</div>
+						<div class="flex-1" onclick="wx(2)" tapmode>
+							<div class="friend" style="margin-bottom: 10px;"></div>
+							朋友圈
+						</div>
+						<div class="flex-1" onclick="weibo()" tapmode>
+							<div class="ct-icon-weibo icon"></div>
+							微博
+						</div>
+						<div class="flex-1" onclick="qq()" tapmode>
+							<div class="ct-icon-qq icon"></div>
+							QQ
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/wx.js" ></script>
+	<script type="text/javascript" src="../../script/qq.js" ></script>
+	<script type="text/javascript" src="../../script/weibo.js" ></script>
+	<script type="text/javascript">
+		var param;
+		//微信好友   小吴修改整合了 
+		function wx(wxxx){
+		
+	
+		if(wxxx == 1){
+		wxxxxx = 'session';
+		}
+		if(wxxx == 2){
+		wxxxxx = 'timeline';
+		}
+		var wx = api.require('wx');
+			wx.shareWebpage({
+				apiKey: '',
+				scene: wxxxxx,
+				title: '我在看'+ param.roomname + '的直播,一起来看吧~',
+				thumb: 'widget://zhibo/image/fenxiang.png',
+				//contentUrl: param.shareurl
+				contentUrl: window.DOMAIN  + '/User/app/id/'+$api.getStorage(CONFIG.memberId)
+			},function(ret,err){
+			//alert(JSON.stringify(err.code))
+			if(err.code == '0'){
+			//如果到了那表示已经分享出去了
+				ajax.get({
+					ctrl : 'XIAOWUApp',
+					fn : 'weixinfenxiang',
+					data : {
+						values : {
+							id: $api.getStorage(CONFIG.memberId),
+						memberid: api.pageParam.memberid
+						}
+					},
+					hideLoading : true,
+					showError : true,
+					showProgress : false,
+					success : function(ct) {
+					Tool.toast('分享成功~');
+					}
+				});
+			}else if(err.code == '2'){
+			//进这里的话表示退出来  没分享出去
+			Tool.toast('您已取消分享~');
+			
+			}
+			})
+		}
+		//微信朋友圈
+		/*function wxfriend(){
+			WX.shareWebpage({
+				apiKey: '',
+				scene: 'timeline',
+				title: '我在看'+ param.roomname + '的直播,一起来看吧~',
+				thumb: 'widget://image/logo.png',
+				contentUrl: param.shareurl
+			},function(ret,err){
+				Tool.toast('分享成功~');
+			})
+		}*/
+		//微博
+		function weibo(){
+			Weibo.shareWebPage({
+				title: '我在看'+ param.roomname + '的直播,一起来看吧~',
+				thumb: 'widget://zhibo/image/fenxiang.png',
+				description: '',
+				contentUrl: window.DOMAIN  + '/User/app/id/'+$api.getStorage(CONFIG.memberId),
+			},function(ret,err){
+				Tool.toast('分享成功~');
+			});
+		}
+		//QQ
+		function qq(){
+			QQ.shareWebPage({
+				type: 'QFriend',
+				url: window.DOMAIN  + '/User/app/id/'+$api.getStorage(CONFIG.memberId),
+				title: '我在看'+ param.roomname + '的直播,一起来看吧~',
+				description: '',
+				imgUrl: 'widget://zhibo/image/fenxiang.png',
+			},function(ret,err){
+				Tool.toast('分享成功~');
+			})
+		}
+		apiready = function(){
+			$api.css($api.dom('.share'),'bottom:0');
+			param = api.pageParam;
+			$api.addEvt($api.dom('#main'),'click',function(){
+				$api.css($api.dom('.share'),'bottom:-150px');
+				api.sendEvent({
+					name: 'bottom'
+				});
+				setTimeout(function(){
+					api.closeFrame();
+				},300);
+			})
+		}
+	</script>
+</html>

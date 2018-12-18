@@ -1,0 +1,103 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>Document</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			html,body,#main {
+				font-size: 14px;
+				background-color: #fff;
+			}
+			.input-group{
+				margin: 15px;
+			}
+			.input{
+				margin-top: 20px;
+				padding: 15px 20px;
+				border-bottom: 1px solid #E2E2E2;
+			}
+			.btn{
+				margin: 50px 0px 30px 0px;
+				width: 65%;
+				border-radius: 50px;
+				padding: 12px 0;
+				border: 1px solid #FE5F99;
+				background-color: #f8dce6;
+				color: #FE5F99;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+				<div class="input-group">
+					<div class="input">
+						<input type="password" name="oldpwd" placeholder="请输入原密码"/>
+					</div>
+					<div class="input">
+						<input type="password" name="newpwd" placeholder="请输入6至16位新密码"/>
+					</div>
+				</div>
+				<div class="flex-box flex-h-zhu">
+					<div class="btn" onclick="confirm()" tapmode>确定</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/crypto-js.js" ></script>
+	<script type="text/javascript">
+		//点击修改密码
+		function confirm(){
+			var oldpwd = $api.val($api.dom('[name=oldpwd]')),
+					newpwd = $api.val($api.dom('[name=newpwd]'));
+			if(!validatePassword(oldpwd)){
+				return;
+			}
+			if(!validatePassword(newpwd)){
+				return;
+			}
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'newPwds',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						oldpassword: CryptoJS.MD5(oldpwd).toString(CryptoJS.enc.Hex),
+						newpassword: CryptoJS.MD5(newpwd).toString(CryptoJS.enc.Hex)
+					}
+				},
+				showError: true,
+				hideLoading: true,
+				showProgress: true,
+				success: function(ct){
+					api.alert({
+						title: '提示消息',
+						msg: '修改登录密码成功,需重新登录',
+						buttons: ['确定']
+					},function(ret){
+						if(ret.buttonIndex == 1){
+							$api.rmStorage(CONFIG.memberId);
+							$api.rmStorage(CONFIG.token);
+							$api.rmStorage(CONFIG.memberInfo);
+							api.sendEvent({
+								name: 'relogin'
+							});
+							api.closeToWin({name:'root'});
+						}
+					});
+				}
+			});
+		}
+	
+		apiready = function(){
+			
+		}
+	</script>
+</html>

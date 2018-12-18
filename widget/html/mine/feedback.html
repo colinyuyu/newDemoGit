@@ -1,0 +1,155 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>举报</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			#main {
+				background-color: #FBFBF5;
+				font-size: 14px;
+			}
+			input,
+			textarea {
+				width: 100%;
+				outline: none;
+				font-size: 12px;
+			}
+			.pd20{
+				padding-top: 20px;
+			}
+			.content {
+				padding: 5px 15px;
+				background-color: #fff;
+				border-bottom: 1px solid #F5F5F5;
+				border-top: 1px solid #F5F5F5;
+			}
+			textarea[name=content]{
+				padding-top: 10px;
+				resize: none;
+				height: 150px;
+				line-height: 1.5em;
+			}
+			.pd10 {
+				padding-top: 10px;
+			}
+			.send_btn > div{
+				padding: 15px 0;
+				border: 1px solid #FE5F99;
+				border-radius: 25px;
+				color: #FE5F99;
+				background-color: #fff;
+			}
+			.send_btn {
+				padding: 0 40px;
+			}
+			.pic {
+				padding-top: 10px;
+			}
+			.icon{
+				font-size: 30px;
+				color: #D9D9D9;
+			}
+			.add-img {
+				width: 40px;
+				height: 40px;
+				border: 2px solid #D9D9D9;
+				background-color: #FFF;
+				float: right;
+			}
+			.img-frm,
+			.img{
+				width: 40px;
+				height: 40px;
+				background-size: cover;
+				background-repeat: no-repeat;
+				background-position: center;
+			}
+			.img-frm{
+				background-image: url(../../image/avatar.jpg);
+			}
+			.close {
+				color: #FE5F99;
+				border: 1px solid #FE5F99;
+				border-radius: 50%;
+				position: absolute;
+				top: -4px;
+				right: -5px;
+				background-color: #fff;
+				font-size: 12px;
+			}
+			input[name=tel] {
+				line-height: 13px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">
+				<div class="pd20">
+					<div class="content">
+						<textarea name="content" type="text" placeholder="请输入反馈，我们将为您不断改进"></textarea>
+					</div>
+				</div>
+				<div class="pd10">
+					<div class="content flex-box flex-h-ce" style="padding: 15px;">
+						<div style="padding-right: 20px;">联系方式</div>
+						<div class="flex-1">
+							<input type="text" name="tel" placeholder="邮箱/手机号码，可不填"/>
+						</div>
+					</div>
+				</div>
+				<div class="pd20">
+					<div class="send_btn text-center">
+						<div onclick="feedback()" tapmode>发送</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript">
+		//意见反馈
+		function feedback(){
+			var content = $api.val($api.dom('[name=content]')),
+			    tel = $api.val($api.dom('[name=tel]'));
+	    if(!content){
+	    	Tool.toast('请填写反馈内容，我们将会为您不断改进~');
+	    	return;
+	    }
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'feedback',
+				data: {
+					values: {
+						id: $api.getStorage(CONFIG.memberId),
+						token: $api.getStorage(CONFIG.token),
+						content: content,
+						email: tel
+					}
+				},
+				showError: true,
+				hideLoading: true,
+				showProgress: true,
+				success: function(ct){
+					api.toast({
+						msg: '反馈成功,感谢您的支持~',
+						duration: 500,
+						location: 'middle'
+					});
+					setTimeout(function(){
+						api.closeWin();
+					},800);
+				}
+			});
+		}
+		
+		apiready = function(){
+			
+		}
+	</script>
+</html>

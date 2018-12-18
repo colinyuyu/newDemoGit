@@ -1,0 +1,122 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>找回密码</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			#main {
+				padding: 0 10px;
+				font-size: 14px;
+			}
+			.price,
+			.alipay{
+				padding-top: 30px;
+				padding-bottom: 10px;
+				border-bottom: 1px solid #d9d9d9;
+			}
+			input {
+				padding-left: 10px;
+				width: 100%;
+			}
+			.login_btn {
+				padding: 0 25px;
+				padding-top: 40px;
+			}
+			.login_btn > div {
+				border: 1px solid #FE5F99;
+				background-color: #f8dce6;
+				padding: 10px 0;
+				color: #FE5F99;
+				border-radius: 20px;
+			}
+			.forget {
+				padding-top: 30px;
+				color: #909090;
+			}
+			.get_code {
+				color: #909090;
+				font-size: 12px;
+				border-bottom: 1px solid #909090;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main" >
+				<div class="price">
+					<input name="price" type="number" placeholder="请输入提现金额" />
+				</div>
+				<div class="alipay">
+					<input name="alipay" type="text" placeholder="请输入支付宝账号" />
+				</div>
+				<div class="login_btn">
+					<div class="text-center" onclick="confirm()"tapmode="">确定</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript">
+		var param;
+		//点击确定提现
+		function confirm(){
+			var price = $api.val($api.dom('[name=price]')),
+					alipay = $api.val($api.dom('[name=alipay]')),
+					charm;
+			$api.dom('[name=price]').blur();
+			$api.dom('[name=alipay]').blur();
+			if(!price){
+				Tool.toast('请填写提现金额~');
+				return;
+			}
+			if(!alipay){
+				Tool.toast('请填写支付宝账号~');
+				return;
+			}
+			if(param.withdraw_status == '1'){
+				if(parseFloat(price) < parseFloat(param.withdraw)){
+					Tool.toast('提现金额不得少于下限金额' + param.withdraw + '元~');
+					return;
+				}
+			}
+			charm = price * param.cash;
+			var values = {
+				id: $api.getStorage(CONFIG.memberId),
+				token: $api.getStorage(CONFIG.token),
+				money: price,
+				alipay: alipay,
+				charm: parseFloat(charm)
+			}
+			ajax.get({
+				ctrl: 'zhiboApp',
+				fn: 'withdrawals',
+				data: {
+					values: values 
+				},
+				hideLoading: true,
+				showError: true,
+				showProgress: true,
+				success: function(ct) {
+					Tool.toast('提现申请已提交,请等待工作人员的审核~');
+					api.sendEvent({
+						name: 'withdrawals_success',
+						extra:{
+							charm: charm.toFixed(0)
+						}
+					});
+					setTimeout(function(){
+						api.closeWin();
+					},700);
+				}
+			});
+		}
+		apiready = function(){
+			param = api.pageParam;
+		}
+	</script>
+</html>

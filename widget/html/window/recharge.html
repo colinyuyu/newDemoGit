@@ -1,0 +1,102 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<title>win</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<style type="text/css">
+			body {
+				font-size: 14px;
+			}
+			.ct-icon-arrow-left {
+				color: #FFFFFF;
+			}
+			#header,.topbar {
+				background-color: #FE5F99;
+			}
+			#header .tit_icon {
+				top: 1px;
+				font-size: 13px;
+				width: 55px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="header" class="header">
+				<div class="topbar" style="">
+					<span class="ct-icon-arrow-left" onclick="close_win()" tapmode=""></span>
+	        <span class="title text-overflow" style="max-width: 200px;"></span>
+	        <span class="tit_icon " onclick="openWin('win','recharge_record','充值记录','mine','recharge_record')" tapmode>充值记录</span>
+				</div>
+			</div>
+			<div id="main">
+				<div class="null">
+					<div class="small_font text-center">加载中</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript">
+		function setTitle(title){
+			$api.text($api.dom('span.title'), title);
+		}
+		
+		function close_win(winname) {
+			api.closeWin();
+		}
+		
+		apiready = function(){
+			var header = $api.byId('header');
+			$api.fixIos7Bar(header);
+			var main = $api.byId('main'),
+					headerPos = $api.offset(header),
+					winParam = api.pageParam,
+					mainPos = $api.offset(main);
+			
+			api.addEventListener({
+				name: 'keyback'
+			}, function(ret, err){
+				api.closeWin();
+			});
+			
+			
+			if(typeof winParam.frameParam != "undefined"){
+				api.openFrame({
+					name: winParam.frameName,
+					url: winParam.frameUrl,
+					bounces: winParam.bounces||false,
+					pageParam: winParam.frameParam,
+					rect: {
+						x: 0,
+						y: headerPos.h,
+						w: 'auto',
+						h: mainPos.h
+					},
+					bgColor: '#fff',
+					reload: true,
+					allowEdit: true
+				});
+			}else{
+				api.openFrame({
+					name: winParam.frameName,
+					url: winParam.frameUrl,
+					bounces: winParam.bounces||false,
+					rect: {
+						x: 0,
+						y: headerPos.h,
+						w: 'auto',
+						h: mainPos.h
+					},
+					bgColor: '#fff',
+					reload:true,
+					allowEdit: true
+				});
+			}
+			$api.html($api.dom(header, '.title'), winParam.headerTitle||'');
+		}
+	</script>
+</html>

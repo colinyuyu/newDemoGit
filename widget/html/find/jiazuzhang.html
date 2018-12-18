@@ -1,0 +1,478 @@
+<!doctype html>
+<html >
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no">
+		<title>开播加入家族长</title>
+		<link rel="stylesheet" type="text/css" href="../../css/ct.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/sweetalert.css"/>
+		<style type="text/css">
+			#main {
+				padding: 0 10px;
+				font-size: 14px;
+			}
+			.tel, .pwd, .code {
+				padding-top: 30px;
+				padding-bottom: 10px;
+				border-bottom: 1px solid #d9d9d9;
+			}
+			input {
+				padding-left: 10px;
+				width: 100%;
+			}
+			.tel input::-webkit-input-placeholder, .pwd input::-webkit-input-placeholder, .code input::-webkit-input-placeholder {
+				color: #909090;
+			}
+			.tel input:-moz-placeholder, .pwd input:-moz-placeholder, .code input:-moz-placeholder {
+				color: #909090;
+			}
+			.tel input::-moz-placeholder, .pwd input::-moz-placeholder, .code input::-moz-placeholder {
+				color: #909090;
+			}
+			.tel input:-ms-input-placeholder, .pwd input:-ms-input-placeholder, .code input:-ms-input-placeholder {
+				color: #909090;
+			}
+			.login_btn {
+				padding: 0 25px;
+				padding-top: 40px;
+			}
+			.login_btn > div {
+				border: 1px solid #FE5F99;
+				background-color: #f8dce6;
+				padding: 10px 0;
+				color: #FE5F99;
+				border-radius: 20px;
+			}
+			.forget {
+				color: #909090;
+				border-bottom: 1px solid #909090;
+			}
+			.get_code {
+				color: #909090;
+				font-size: 12px;
+				border-bottom: 1px solid #909090;
+			}
+			
+			.item-box{
+				margin-top: 10px;
+				background-color: #fff;
+				border-top: 0px solid #EBEBE9;
+				border-bottom: 1px solid #d9d9d9;
+			}
+			
+			.item{
+				padding-bottom: 10px;
+				margin-left: 10px;
+				min-height: 61px;
+			}
+			
+			.item-box .item:(:last-child){
+				border-bottom: 1px solid #EBEBE9;
+			}
+			
+			.item>div{
+				color: #909090;
+			}
+			
+			.text-right {
+				width: 35px;
+			}
+			
+			.ct-icon-arrow-right {
+				color: #909090;
+				font-size: 20px;
+				display: inline-block;
+				height: 100%;
+				z-index: 997;
+			}
+			
+			.img-frm,
+			.img {
+				background-image: url(../../image/avatar.jpg);
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				border-radius: 10%;
+				width: 70px;
+				height: 70px;
+			}
+			.text-over,
+			.name {
+				display:-webkit-box!important;
+				overflow:hidden;
+				text-overflow:ellipsis;
+				word-break:break-all;
+				-webkit-box-orient:vertical;
+				-webkit-line-clamp:2;
+			}
+			select{
+				border: none;
+				border-radius: 0;
+				background-color: rgba(0,0,0,0);
+				margin: auto 0;
+				outline: none;
+				-webkit-appearance: none;
+				direction: rtl;
+				color: #909090;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main" >
+				<div class="pwd">
+					<input name="realname" type="input" placeholder="真实姓名" />
+				</div>
+				<div class="pwd">
+					<input name="cardid" type="input" placeholder="身份证号码" />
+				</div>
+				
+				<!-- <div class="tel">
+					<input name="tel" type="tel" placeholder="请输入手机号" />
+				</div> -->
+				<!-- <div class="code flex-box">
+					<input name="code" class="flex-1" type="tel" placeholder="请输入验证码" />
+					<button class="get_code" onclick="get_code()" tapmode>
+						获取验证码
+					</button>
+				</div> -->
+				<!--<div class="pwd">
+				<input name="pwd" type="password" placeholder="请输入6至16位密码" />
+				</div>-->
+				<!-- <div class="item-box">
+				<div class="item avatar flex-box flex-h-ce" imgUrl="" data-status="" data-key="" data-callbackEvent="uploadAvatar" onclick="uploadAvatar()" tapmode>
+					<div class="flex-1">
+						上传身份证
+					</div>
+					<div class="img-frm">
+						<div class="img relative" data-original="">
+								<div class="upload-status flex-box hidden" style="background-color: rgba(0,0,0,0.4);border-radius:10%;-webkit-border-radius:10%;font-size: 11px;">
+									<div class="flex-1" style="color: #fff;">
+										等待上传
+									</div>
+								</div>
+							</div>
+					</div>
+				</div>
+				</div> -->
+				<div class="login_btn">
+					<div class="text-center" onclick="commit()" tapmode="">
+						提交审核
+					</div>
+				</div> 
+				<!--<div class="text-center" style="padding-top: 30px;">
+				<span class="forget" onclick="openWin('win','agreement','用户协议','component','agreement')" tapmode="">用户许可及服务协议</span>
+				</div>-->
+			</div>
+		</div>
+	</body>
+	<script type="text/template" template="avatar">
+		<div class="close hidden"></div>
+		<div class="img relative" style="background-image: url({{= Tool.imageCompressByQiNiu(it, 0, 800, 800) }});background-size: cover;background-position: center;">
+			<div class="upload-status flex-box " style="background-color: rgba(0,0,0,0.4);border-radius:50%;-webkit-border-radius:50%;font-size: 11px;">
+				<div class="flex-1 status" style="color: #fff;">
+					等待上传
+				</div>
+			</div>
+		</div>
+	</script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/doT.min.js" ></script>
+	<script type="text/javascript" src="../../script/common.js" ></script>
+	<script type="text/javascript" src="../../script/sweetalert.min.js" ></script>
+	<script type="text/javascript" src="../../script/crypto-js.js" ></script>
+	<script type="text/javascript" src="../../script/upload.js" ></script>
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js" ></script>
+	<script type="text/javascript" src="../../script/jquery.lazyload.min.js" ></script>
+	<script type="text/javascript" src="../../script/jquery.ellipsis.js" ></script>
+	<script type="text/javascript">
+	
+		/*var avatar = '';
+		//上传头像
+		function uploadAvatar(){*、
+			Tool.actionSheet({
+				buttons:['拍照上传','上传手机中的照片'],
+				success:function(buttonIndex){
+					if(buttonIndex < 3){
+						Tool.getOnePic({
+							encodingType: 'jpg',
+							sourceType: buttonIndex === 1 ? 'camera' : 'library',
+							allowEdit: true,
+							success:function(ret){
+								avatar = ret.data;
+								if('ios' == api.systemType){
+									T.html('.img-frm', 'avatar', ret.data);
+									Upload.init({
+										file: {
+											url: ret.data,
+											callbackEvent: 'uploadAvatar'
+										}
+									});
+								}else{
+									/*若为android系统，则使用screenClip模块进行截图*/
+									/*if(ret.data){
+										api.openWin({
+											name: 'imageClip',
+											url: api.wgtRootDir + '/html/window/image_clip.html',
+											pageParam: {
+												imgSrc: ret.data,
+												callbackEvent: 'getAvatarClipImage'
+											}
+										});	
+									}
+								}
+							}
+						});
+					}
+				}
+			})
+		}*/
+		//点击获取验证码
+		/*function get_code() {
+			var tel = $api.trimAll($api.val($api.dom('[name=tel]')));
+			if (!validatePhone(tel)) {
+				return;
+			}
+			ajax.get({
+				ctrl : 'zhiboApp',
+				fn : 'sendmsg',
+				data : {
+					values : {
+						username : tel,
+						type : 10
+					}
+				},
+				showError : true,
+				showProgress : true,
+				hideLoading : true,
+				success : function(ct) {
+					setTime();
+					Tool.toast('验证码发送成功，请注意查收~');
+				}
+			})
+		}*/
+
+		//倒计时
+		/*function setTime() {
+			var count = 60, code = $api.dom('.get_code');
+			code.disabled = true;
+			var InterValObj = setInterval(function() {
+				if (count > 0) {
+					$api.text(code, (count--) + 's后再发送');
+				} else {
+					clearInterval(InterValObj);
+					code.disabled = false;
+					$api.text(code, '获取验证码');
+				}
+			}, 1000);
+		}*/
+
+		//点击 注册
+		function commit() {
+			var realname = $api.trimAll($api.val($api.dom('[name=realname]'))), cardid = $api.trimAll($api.val($api.dom('[name=cardid]')));
+			//pwd = $api.trimAll($api.val($api.dom('[name=pwd]')));
+			$api.dom('[name=realname]').blur();
+			$api.dom('[name=cardid]').blur();
+			//$api.dom('[name=pwd]').blur();
+			/*if (!avatar) {
+				Tool.toast('请上传身份证照片~');
+				return;
+			}*/
+			if (realname == '') {
+				Tool.toast('姓名不能为空~');
+				return;
+			}
+			reg = /^[\u4E00-\u9FA5]{2,4}$/;
+			if (!reg.test(realname)) {
+				Tool.toast('请输入正确姓名');
+				return;
+			}
+			if (cardid == '') {
+				Tool.toast('身份证号码不能为空~');
+				return;
+			}
+			/*if (!code) {
+				Tool.toast('验证码不能为空~');
+				return;
+			}*/
+			
+			
+			
+			//			if(!validatePassword(pwd)){
+			//				return;
+			//			}
+			ajax.get({
+				ctrl : 'zhiboApp',
+				fn : 'jiazuzhangshenqing',
+				data : {
+					values : {
+						id : $api.getStorage(CONFIG.memberId),
+						token : $api.getStorage(CONFIG.token),
+						realname : realname,
+						cardid : cardid,
+						//avatar : avatar
+					}
+				},
+				showError : true,
+				showProgress : true,
+				hideLoading : true,
+				success : function(ct) {
+					/*if (ct.state == 1) {
+						Tool.toast('验证码错误！');
+					}*/
+					if (ct.state == 2) {
+						Tool.toast('审核已拒绝！');
+					}
+					if (ct.state == 3) {
+						Tool.toast('正在审核！');
+					}
+					if (ct.state == 4) {
+						Tool.toast('提交成功,正在审核中！');
+					}
+				
+				}
+			})
+		}
+
+		function IdentityCodeValid(code) {
+			var city = {
+				11 : "北京",
+				12 : "天津",
+				13 : "河北",
+				14 : "山西",
+				15 : "内蒙古",
+				21 : "辽宁",
+				22 : "吉林",
+				23 : "黑龙江 ",
+				31 : "上海",
+				32 : "江苏",
+				33 : "浙江",
+				34 : "安徽",
+				35 : "福建",
+				36 : "江西",
+				37 : "山东",
+				41 : "河南",
+				42 : "湖北 ",
+				43 : "湖南",
+				44 : "广东",
+				45 : "广西",
+				46 : "海南",
+				50 : "重庆",
+				51 : "四川",
+				52 : "贵州",
+				53 : "云南",
+				54 : "西藏 ",
+				61 : "陕西",
+				62 : "甘肃",
+				63 : "青海",
+				64 : "宁夏",
+				65 : "新疆",
+				71 : "台湾",
+				81 : "香港",
+				82 : "澳门",
+				91 : "国外 "
+			};
+			var tip = "";
+			var pass = true;
+			if (!code || !/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[12])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$/i.test(code)) {
+				tip = "身份证号格式错误";
+				pass = false;
+			} else if (!city[code.substr(0, 2)]) {
+				tip = "地址编码错误";
+				pass = false;
+			} else {
+				//18位身份证需要验证最后一位校验位
+				if (code.length == 18) {
+					code = code.split('');
+					//∑(ai×Wi)(mod 11)
+					//加权因子
+					var factor = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+					//校验位
+					var parity = [1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2];
+					var sum = 0;
+					var ai = 0;
+					var wi = 0;
+					for (var i = 0; i < 17; i++) {
+						ai = code[i];
+						wi = factor[i];
+						sum += ai * wi;
+					}
+					var last = parity[sum % 11];
+					if (parity[sum % 11] != code[17]) {
+						tip = "校验位错误";
+						pass = false;
+					}
+				}
+			}
+			if (!pass)
+				alert(tip);
+			return pass;
+		}
+
+		//注册成功 自动登录
+		function autoLogin(param) {
+			ajax.get({
+				ctrl : 'zhiboApp',
+				fn : 'login',
+				data : {
+					values : {
+						username : param.username,
+						password : CryptoJS.MD5(param.password).toString(CryptoJS.enc.Hex),
+					}
+				},
+				showError : true,
+				showProgress : {
+					title : '登录中...'
+				},
+				hideLoading : true,
+				success : function(ct) {
+					$api.setStorage(CONFIG.memberId, ct.id);
+					$api.setStorage(CONFIG.token, ct.token);
+					$api.setStorage(CONFIG.memberInfo, ct);
+					$api.setStorage('logints', new Date().getTime());
+					memberInfo();
+					setTimeout(function() {
+						Tool.initApp();
+					}, 300);
+				}
+			});
+		}
+
+		apiready = function() {
+			$api.attr($api.dom('.img'), 'data-original', Tool.imageCompressByQiNiu('../image/avatar.jpg', 0, 200, 200));
+			
+			$('div.img').lazyload({
+				effect : "fadeIn"
+			});
+			
+			//上传头像
+			api.addEventListener({
+				name: 'uploadAvatar'
+			}, function(ret, err) {
+				var key = $api.attr($api.dom('.avatar'), 'data-key');
+				if(key) {
+					avatar = key;
+					//console.log(avatar);
+					Tool.toast('上传身份证成功~');
+				}else {
+					Tool.toast('上传身份证失败，请重新上传~');
+				}
+			});
+			
+			//监听头像截图
+			api.addEventListener({
+				name: 'getAvatarClipImage'
+			},function(ret,err){
+				T.html('.img-frm', 'avatar', ret.value.url);
+				avatar = ret.value.url;
+				Upload.init({
+					file: {
+						url: ret.value.url,
+						callbackEvent: 'uploadAvatar'
+					}
+				});
+			});
+		}
+	</script>
+</html>
